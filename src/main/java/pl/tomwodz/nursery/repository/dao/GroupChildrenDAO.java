@@ -3,12 +3,12 @@ package pl.tomwodz.nursery.repository.dao;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+import pl.tomwodz.nursery.controllers.errors.GroupChildrenNotFoundException;
 import pl.tomwodz.nursery.model.GroupChildren;
 import pl.tomwodz.nursery.repository.IGroupChildrenDAO;
-import pl.tomwodz.nursery.repository.dao.spingdata.IGroupChildrenRepository;
+import pl.tomwodz.nursery.repository.dao.springdata.IGroupChildrenRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Repository
@@ -23,8 +23,10 @@ public class GroupChildrenDAO implements IGroupChildrenDAO {
     }
 
     @Override
-    public Optional<GroupChildren> findById(Long id) {
-        return this.groupChildrenRepository.findById(id);
+    public GroupChildren findById(Long id) {
+
+        return this.groupChildrenRepository.findById(id).
+                orElseThrow(()-> new GroupChildrenNotFoundException("Nie znaleziono grupy dzieci o id: " + id));
     }
 
     @Override
@@ -34,6 +36,6 @@ public class GroupChildrenDAO implements IGroupChildrenDAO {
 
     @Override
     public void updateById(Long id, GroupChildren newGroupChildren) {
-        this.groupChildrenRepository.updateById(id,newGroupChildren);
+        this.groupChildrenRepository.updateById(id, newGroupChildren);
     }
 }

@@ -20,7 +20,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Optional<User> findById(Long id) {
+    public User findById(Long id) {
         return this.userDAO.findById(id);
     }
 }

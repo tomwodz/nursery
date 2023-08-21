@@ -23,14 +23,9 @@ public class GroupChildrenViewController {
     }
 
     @GetMapping(path = "/{id}")
-    public String getGroupChildrenById(Model model, @PathVariable Long id){
-        Optional<GroupChildren> groupChildrenBox = this.groupChildrenService.findById(id);
-        if(groupChildrenBox.isPresent()){
-            model.addAttribute("group", groupChildrenBox.get());
-            return "sample-groupchildren";
-        }
-        model.addAttribute("message", "Nie znaleziono grupy o id: " + id);
-        return "message";
+    public String getGroupChildrenById(Model model, @PathVariable Long id) {
+        model.addAttribute("group", this.groupChildrenService.findById(id));
+        return "sample-groupchildren";
     }
 
     @GetMapping(path = "/")
@@ -49,13 +44,8 @@ public class GroupChildrenViewController {
 
     @GetMapping(path = "/update/{id}")
     public String getGroupChildrenByUpdate(Model model, @PathVariable Long id) {
-        Optional<GroupChildren> groupChildrenToUpdate = this.groupChildrenService.findById(id);
-        if(groupChildrenToUpdate.isPresent()){
-            model.addAttribute("groupChildrenModel", groupChildrenToUpdate.get());
+            model.addAttribute("groupChildrenModel", this.groupChildrenService.findById(id));
             return "add-groupchildren";
-        }
-        model.addAttribute("message", "Nie znaleziono grupy o id: " + id);
-        return "message";
     }
 
     @PostMapping(path = "/update/{id}")

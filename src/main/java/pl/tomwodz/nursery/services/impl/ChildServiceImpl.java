@@ -21,7 +21,7 @@ public class ChildServiceImpl implements IChildService {
     }
 
     @Override
-    public Optional<Child> findById(Long id) {
+    public Child findById(Long id) {
         return this.childDAO.findById(id);
     }
 }

@@ -6,10 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.tomwodz.nursery.model.Child;
 import pl.tomwodz.nursery.services.IChildService;
-
-import java.util.Optional;
 
 @Controller
 @RequestMapping(path="/view/child")
@@ -26,13 +23,8 @@ public class ChildViewController {
 
     @GetMapping(path = "/{id}")
     public String getChildById(Model model, @PathVariable Long id){
-        Optional<Child> childBox = this.childService.findById(id);
-        if(childBox.isPresent()){
-            model.addAttribute("child", childBox.get());
+            model.addAttribute("child", this.childService.findById(id));
             return "sample-child";
-        }
-        model.addAttribute("message", "Nie znaleziono dziecka o id: " + id);
-        return "message";
     }
 
 }

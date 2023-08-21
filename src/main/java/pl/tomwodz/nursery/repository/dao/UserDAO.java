@@ -2,12 +2,12 @@ package pl.tomwodz.nursery.repository.dao;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+import pl.tomwodz.nursery.controllers.errors.UserNotFoundException;
 import pl.tomwodz.nursery.model.User;
 import pl.tomwodz.nursery.repository.IUserDAO;
-import pl.tomwodz.nursery.repository.dao.spingdata.IUserRepository;
+import pl.tomwodz.nursery.repository.dao.springdata.IUserRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Repository
@@ -21,7 +21,9 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
-    public Optional<User> findById(Long id) {
-        return this.userRepository.findById(id);
+    public User findById(Long id) {
+
+        return this.userRepository.findById(id).
+                orElseThrow(()-> new UserNotFoundException("Nie znaleziono użytkownika o id: " + id));
     }
 }

@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface IChildDAO {
     List<Child> findAll();
 
-    Optional<Child> findById(Long id);
+    Child findById(Long id);
 
 }

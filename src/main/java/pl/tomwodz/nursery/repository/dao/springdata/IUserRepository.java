@@ -1,7 +1,6 @@
-package pl.tomwodz.nursery.repository.dao.spingdata;
+package pl.tomwodz.nursery.repository.dao.springdata;
 
 import org.springframework.data.repository.Repository;
-import pl.tomwodz.nursery.model.GroupChildren;
 import pl.tomwodz.nursery.model.User;
 
 import java.util.List;
