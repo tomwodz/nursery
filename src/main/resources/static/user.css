@@ -30,6 +30,12 @@
     width: 10%;
 }
 
+.user  .role {
+    text-align: center;
+    display: inline-block;
+    width: 6%;
+}
+
 .user .details {
     text-align: center;
     display: inline-block;

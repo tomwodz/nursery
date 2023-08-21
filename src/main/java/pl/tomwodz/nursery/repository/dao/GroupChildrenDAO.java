@@ -25,4 +25,9 @@ public class GroupChildrenDAO implements IGroupChildrenDAO {
     public Optional<GroupChildren> findById(Long id) {
         return this.groupChildrenRepository.findById(id);
     }
+
+    @Override
+    public GroupChildren save(GroupChildren groupChildren) {
+        return this.groupChildrenRepository.save(groupChildren);
+    }
 }

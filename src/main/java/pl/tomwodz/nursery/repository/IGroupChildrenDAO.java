@@ -10,4 +10,6 @@ public interface IGroupChildrenDAO {
     List<GroupChildren> finAll();
 
     Optional<GroupChildren> findById(Long id);
+
+    GroupChildren save(GroupChildren groupChildren);
 }

@@ -19,6 +19,9 @@
         <div class="login">Login:</div>
         <div class="phone-number">Numer telefonu:</div>
         <div class="email">E-mail:</div>
+        <div class="street">Ulica:</div>
+        <div class="zipcode">Kod podcztowy:</div>
+        <div class="city">Miasto:</div>
     </div>
     <div class="sample-user">
         <div th:text="${user.name}" class="name"></div>
@@ -26,6 +29,9 @@
         <div th:text="${user.login}" class="login"></div>
         <div th:text="${user.phoneNumber}" class="phone-number"></div>
         <div th:text="${user.email}" class="email"></div>
+        <div th:text="${user.address.street}" class="street"></div>
+        <div th:text="${user.address.zipCode}" class="zipcode"></div>
+        <div th:text="${user.address.city}" class="city"></div>
     </div>
     <div class="child">
         <div class="name">Imię dziecka:</div>

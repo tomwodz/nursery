@@ -20,6 +20,7 @@
         <div class="surname">Nazwisko:</div>
         <div class="email">E-mail:</div>
         <div class="phone-number">Numer telefonu:</div>
+        <div class="role">Rola:</div>
         <div class="details">Szczegóły:</div>
     </div>
 
@@ -29,6 +30,7 @@
         <div th:text="${user.surname}" class="surname"></div>
         <div th:text="${user.email}" class="email"></div>
         <div th:text="${user.phoneNumber}" class="phone-number"></div>
+        <div th:text="${user.role}" class="phone-number"></div>
         <div class="details">
             <a th:href="@{/view/user/{id}(id=${user.id})}" class="button">Szczegóły</a>
         </div>

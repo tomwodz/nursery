@@ -1,7 +1,6 @@
 package pl.tomwodz.nursery.model;
 
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.*;
 
 import java.util.List;
@@ -25,6 +24,8 @@ public class User {
     private String surname;
     private String email;
     private String phoneNumber;
+    @OneToOne(mappedBy = "user")
+    private Address address;
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent")

@@ -3,7 +3,6 @@ package pl.tomwodz.nursery.services.impl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.tomwodz.nursery.model.GroupChildren;
-import pl.tomwodz.nursery.model.User;
 import pl.tomwodz.nursery.repository.IGroupChildrenDAO;
 import pl.tomwodz.nursery.services.IGroupChildrenService;
 
@@ -23,5 +22,10 @@ public class GroupChildrenServiceImpl implements IGroupChildrenService {
     @Override
     public Optional<GroupChildren> findById(Long id) {
         return this.groupChildrenDAO.findById(id);
+    }
+
+    @Override
+    public GroupChildren save(GroupChildren groupChildren) {
+        return this.groupChildrenDAO.save(groupChildren);
     }
 }

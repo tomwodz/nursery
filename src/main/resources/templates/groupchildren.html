@@ -14,18 +14,24 @@
 
 <div id="content">
 
+
+
     <div class="groupchildren">
         <div class="name">Nazwa grupy:</div>
+        <div class="size">Ilość dzieci:</div>
         <div class="details">Szczegóły:</div>
     </div>
 
     <div th:each="group : ${groupChildren}" class="groupchildren">
-
         <div th:text="${group.name}" class="name"></div>
+        <div th:text="${group.child.size()}" class="size"></div>
         <div class="details">
             <a th:href="@{/view/groupchildren/{id}(id=${group.id})}" class="button">Szczegóły</a>
         </div>
+    </div>
 
+    <div>
+        <a href="/view/groupchildren/" class="button">Dodaj grupę</a>
     </div>
 
 </div>

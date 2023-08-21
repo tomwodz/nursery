@@ -21,6 +21,20 @@
     display: block;
 }
 
+.sample-user .street {
+    display: block;
+}
+
+.sample-user .zipcode {
+    display: block;
+}
+
+.sample-user .city {
+    display: block;
+}
+
+
+
 .sample-child .email {
     display: block;
 }
@@ -46,6 +60,7 @@
     display: inline-block;
     width: 20%;
 }
+
 
 .child .details {
     text-align: center;

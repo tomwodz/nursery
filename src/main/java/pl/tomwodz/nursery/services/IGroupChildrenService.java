@@ -10,4 +10,6 @@ public interface IGroupChildrenService {
     List<GroupChildren> findAll();
 
     Optional<GroupChildren> findById(Long id);
+
+    GroupChildren save(GroupChildren groupChildren);
 }

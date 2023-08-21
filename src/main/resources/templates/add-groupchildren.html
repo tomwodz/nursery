@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/common.css">
+<link rel="stylesheet" href="/groupchildren.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Nursery - Tomasz Wodziński</title>
+</head>
+<body>
+
+<div th:replace="~{fragments.html :: header}"></div>
+<div th:replace="~{fragments.html :: logo}"></div>
+<div th:replace="~{fragments.html :: menu}"></div>
+
+<div id="content">
+
+    <form method="post">
+        <input type="text" name="name" id="name" class="input" placeholder="Nazwa grupy" th:field="*{groupChildrenModel.name}">
+        <input type="submit" value="Dodaj grupę" class="button">
+    </form>
+
+</div>
+
+</body>
+</html>

@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface IGroupChildrenRepository extends Repository<GroupChildren, Long> {
     List<GroupChildren> findAll();
-
     Optional<GroupChildren> findById(Long id);
+    GroupChildren save(GroupChildren groupChildren);
 }
