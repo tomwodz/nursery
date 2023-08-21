@@ -1,0 +1,36 @@
+.sample-groupchildren {
+    text-align: left;
+    display: inline-block;
+    padding: 5px 5px;
+    background-color: #FAFAD2;
+}
+
+.sample-groupchildren .name {
+    display: block;
+}
+
+.child .name {
+    text-align: left;
+    display: inline-block;
+    width: 20%;
+}
+
+.child .surname {
+    text-align: left;
+    display: inline-block;
+    width: 20%;
+}
+
+.child .age {
+    text-align: left;
+    display: inline-block;
+    width: 10%;
+}
+
+.child .details {
+    text-align: center;
+    display: inline-block;
+    width: 10%;
+}
+
+

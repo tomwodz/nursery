@@ -1,0 +1,39 @@
+.sample-child {
+    text-align: left;
+    display: inline-block;
+    padding: 5px 5px;
+    background-color: #FAFAD2;
+}
+
+.sample-child .name {
+    display: block;
+}
+
+.sample-child .surname {
+    display: block;
+}
+
+.sample-child .groupchildren {
+    display: block;
+}
+
+.sample-child .age {
+    display: block;
+}
+
+.sample-child .parent-name{
+    display: block;
+}
+
+.sample-child .parent-surname {
+    display: block;
+}
+
+.sample-child .parent-email {
+    display: block;
+}
+
+.sample-child .parent-phonenumber {
+    display: block;
+}
+

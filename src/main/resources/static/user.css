@@ -1,0 +1,37 @@
+.users {
+    display: block;
+}
+
+.user {
+    background-color: #FAFAD2;
+}
+
+.user .name {
+    text-align: left;
+    display: inline-block;
+    width: 20%;
+}
+
+.user .surname {
+    text-align: left;
+    display: inline-block;
+    width: 20%;
+}
+
+.user  .email {
+    text-align: center;
+    display: inline-block;
+    width: 20%;
+}
+
+.user  .phone-number {
+    text-align: center;
+    display: inline-block;
+    width: 10%;
+}
+
+.user .details {
+    text-align: center;
+    display: inline-block;
+    width: 10%;
+}

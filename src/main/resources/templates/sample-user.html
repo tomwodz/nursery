@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/common.css">
+<link rel="stylesheet" href="/sample-user.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Nursery - Tomasz Wodziński</title>
+</head>
+<body>
+
+<div th:replace="~{fragments.html :: header}"></div>
+<div th:replace="~{fragments.html :: logo}"></div>
+<div th:replace="~{fragments.html :: menu}"></div>
+
+<div id="content">
+    <div class="sample-user">
+        <div class="name">Imię:</div>
+        <div class="surname">Nazwisko:</div>
+        <div class="login">Login:</div>
+        <div class="phone-number">Numer telefonu:</div>
+        <div class="email">E-mail:</div>
+    </div>
+    <div class="sample-user">
+        <div th:text="${user.name}" class="name"></div>
+        <div th:text="${user.surname}" class="surname"></div>
+        <div th:text="${user.login}" class="login"></div>
+        <div th:text="${user.phoneNumber}" class="phone-number"></div>
+        <div th:text="${user.email}" class="email"></div>
+    </div>
+    <div class="child">
+        <div class="name">Imię dziecka:</div>
+        <div class="surname">Nazwisko dziecka:</div>
+        <div class="groupchildren">Grupa:</div>
+        <div class="details"></div>
+        <div>
+    <div th:each="child : ${user.child}" class="child">
+        <div th:text="${child.name}" class="name"></div>
+        <div th:text="${child.surname}" class="surname"></div>
+        <div th:text="${child.groupChildren.name}" class="groupchildren"></div>
+        <div class="details">
+            <a th:href="@{/view/child/{id}(id=${child.id})}" class="button">Szczegóły</a>
+        </div>
+    <div>
+</div>
+
+
+</div>
+
+</body>
+</html>

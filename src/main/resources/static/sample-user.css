@@ -1,0 +1,56 @@
+.sample-user {
+    text-align: left;
+    display: inline-block;
+    padding: 5px 5px;
+    background-color: #FAFAD2;
+}
+
+.sample-user .name {
+    display: block;
+}
+
+.sample-user .surname {
+    display: block;
+}
+
+.sample-user .login {
+    display: block;
+}
+
+.sample-user .phone-number {
+    display: block;
+}
+
+.sample-child .email {
+    display: block;
+}
+
+.child {
+    background-color: #FAFAD2;
+}
+
+.child .name {
+    text-align: left;
+    display: inline-block;
+    width: 20%;
+}
+
+.child .surname {
+    text-align: left;
+    display: inline-block;
+    width: 20%;
+}
+
+.child .groupchildren {
+    text-align: center;
+    display: inline-block;
+    width: 20%;
+}
+
+.child .details {
+    text-align: center;
+    display: inline-block;
+    width: 10%;
+}
+
+

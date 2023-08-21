@@ -1,0 +1,15 @@
+.groupchildren {
+    background-color: #FAFAD2;
+}
+
+.groupchildren .name {
+    text-align: left;
+    display: inline-block;
+    width: 20%;
+}
+
+.groupchildren .details {
+    text-align: center;
+    display: inline-block;
+    width: 10%;
+}

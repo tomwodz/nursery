@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/common.css">
+<link rel="stylesheet" href="/user.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Nursery - Tomasz Wodziński</title>
+</head>
+<body>
+
+<div th:replace="~{fragments.html :: header}"></div>
+<div th:replace="~{fragments.html :: logo}"></div>
+<div th:replace="~{fragments.html :: menu}"></div>
+
+<div id="content">
+
+    <div class="users">Użytkownicy:</div>
+    <div class="user">
+        <div class="name">Imię:</div>
+        <div class="surname">Nazwisko:</div>
+        <div class="email">E-mail:</div>
+        <div class="phone-number">Numer telefonu:</div>
+        <div class="details">Szczegóły:</div>
+    </div>
+
+    <div th:each="user : ${users}" class="user">
+
+        <div th:text="${user.name}" class="name"></div>
+        <div th:text="${user.surname}" class="surname"></div>
+        <div th:text="${user.email}" class="email"></div>
+        <div th:text="${user.phoneNumber}" class="phone-number"></div>
+        <div class="details">
+            <a th:href="@{/view/user/{id}(id=${user.id})}" class="button">Szczegóły</a>
+        </div>
+
+    </div>
+
+
+</div>
+
+</body>
+</html>

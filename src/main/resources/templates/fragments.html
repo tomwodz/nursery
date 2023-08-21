@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div class="header" th:fragment="header">
+</div>
+<div id="logo" th:fragment="logo">
+    <p>Nursery - Tomasz Wodziński</p>
+</div>
+<div id="menu" th:fragment="menu">
+    <div>
+        <a href="/view/" class="button">Strona Główna</a>
+    </div>
+    <div>
+        <a href="/view/child" class="button">Dzieci</a>
+        <a href="/view/groupchildren" class="button">Grupy</a>
+    </div>
+    <div>
+        <a href="/view/user" class="button">Użytkownicy</a>
+    </div>
+</div>
+</body>
+</html>
