@@ -28,4 +28,9 @@ public class GroupChildrenServiceImpl implements IGroupChildrenService {
     public GroupChildren save(GroupChildren groupChildren) {
         return this.groupChildrenDAO.save(groupChildren);
     }
+
+    @Override
+    public void updateById(Long id, GroupChildren newGroupChildren) {
+        this.groupChildrenDAO.updateById(id,newGroupChildren);
+    }
 }

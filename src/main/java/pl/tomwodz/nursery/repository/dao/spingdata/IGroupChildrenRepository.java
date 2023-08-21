@@ -1,5 +1,7 @@
 package pl.tomwodz.nursery.repository.dao.spingdata;
 
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import pl.tomwodz.nursery.model.GroupChildren;
 
@@ -10,4 +12,8 @@ public interface IGroupChildrenRepository extends Repository<GroupChildren, Long
     List<GroupChildren> findAll();
     Optional<GroupChildren> findById(Long id);
     GroupChildren save(GroupChildren groupChildren);
+
+    @Modifying
+    @Query("UPDATE GroupChildren g SET g.name = :#{#newGroupChildren.name} WHERE g.id = :id")
+    void updateById(Long id, GroupChildren newGroupChildren);
 }

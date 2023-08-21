@@ -1,9 +1,9 @@
 package pl.tomwodz.nursery.repository.dao;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.tomwodz.nursery.model.GroupChildren;
-import pl.tomwodz.nursery.model.User;
 import pl.tomwodz.nursery.repository.IGroupChildrenDAO;
 import pl.tomwodz.nursery.repository.dao.spingdata.IGroupChildrenRepository;
 
@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Repository
+@Transactional
 public class GroupChildrenDAO implements IGroupChildrenDAO {
 
     private final IGroupChildrenRepository groupChildrenRepository;
@@ -29,5 +30,10 @@ public class GroupChildrenDAO implements IGroupChildrenDAO {
     @Override
     public GroupChildren save(GroupChildren groupChildren) {
         return this.groupChildrenRepository.save(groupChildren);
+    }
+
+    @Override
+    public void updateById(Long id, GroupChildren newGroupChildren) {
+        this.groupChildrenRepository.updateById(id,newGroupChildren);
     }
 }

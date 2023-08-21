@@ -12,4 +12,6 @@ public interface IGroupChildrenService {
     Optional<GroupChildren> findById(Long id);
 
     GroupChildren save(GroupChildren groupChildren);
+
+    void updateById(Long id, GroupChildren newGroupChildren);
 }

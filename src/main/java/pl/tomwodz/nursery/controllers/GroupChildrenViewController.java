@@ -62,8 +62,9 @@ public class GroupChildrenViewController {
     public String updateGroupChildrenById(Model model,
                                        @ModelAttribute GroupChildren groupChildren,
                                        @PathVariable Long id) {
-        groupChildren.setId(id);
-        this.groupChildrenService.save(groupChildren);
+        GroupChildren newGroupChildren = new GroupChildren();
+        newGroupChildren.setName(groupChildren.getName());
+        this.groupChildrenService.updateById(id, newGroupChildren);
         model.addAttribute("message", "Zmieniono nazwę grupy na: " + groupChildren.getName());
         return "message";
     }
