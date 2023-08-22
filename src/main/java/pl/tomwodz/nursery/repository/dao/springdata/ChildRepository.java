@@ -9,7 +9,7 @@ import pl.tomwodz.nursery.model.Child;
 import java.util.List;
 import java.util.Optional;
 
-public interface IChildRepository extends Repository<Child, Long> {
+public interface ChildRepository extends Repository<Child, Long> {
 
     List<Child> findAll();
     Optional<Child> findById(Long id);
@@ -22,5 +22,8 @@ public interface IChildRepository extends Repository<Child, Long> {
     @Query("DELETE FROM Child c WHERE c.id = :id")
     void deleteById(Long id);
 
+    @Modifying
+    @Query("UPDATE Child c SET c.name = :#{#newChild.name}, c.surname = :#{#newChild.surname}, c.age = :#{#newChild.age}, c.groupChildren = :#{#newChild.groupChildren}, c.parent = :#{#newChild.parent}  WHERE c.id = :id")
+    void updateById(Long id, Child newChild);
 
 }

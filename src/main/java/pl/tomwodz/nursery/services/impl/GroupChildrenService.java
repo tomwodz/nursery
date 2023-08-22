@@ -3,16 +3,15 @@ package pl.tomwodz.nursery.services.impl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.tomwodz.nursery.model.GroupChildren;
-import pl.tomwodz.nursery.repository.IGroupChildrenDAO;
-import pl.tomwodz.nursery.services.IGroupChildrenService;
+import pl.tomwodz.nursery.repository.GroupChildrenDAO;
 
 import java.util.List;
 
 @AllArgsConstructor
 @Service
-public class GroupChildrenServiceImpl implements IGroupChildrenService {
+public class GroupChildrenService implements pl.tomwodz.nursery.services.GroupChildrenService {
 
-    private final IGroupChildrenDAO groupChildrenDAO;
+    private final GroupChildrenDAO groupChildrenDAO;
     @Override
     public List<GroupChildren> findAll() {
         return this.groupChildrenDAO.finAll();

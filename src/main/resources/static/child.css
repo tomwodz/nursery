@@ -35,3 +35,9 @@
     display: inline-block;
     width: 10%;
 }
+
+.child .parent {
+    text-align: center;
+    display: inline-block;
+    width: 10%;
+}

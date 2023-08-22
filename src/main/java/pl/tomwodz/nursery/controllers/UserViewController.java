@@ -6,14 +6,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.tomwodz.nursery.services.IUserService;
+import pl.tomwodz.nursery.services.UserService;
 
 @Controller
 @RequestMapping(path="/view/user")
 @AllArgsConstructor
 public class UserViewController {
 
-    private final IUserService userService;
+    private final UserService userService;
 
     @GetMapping
     public String getAll(Model model){

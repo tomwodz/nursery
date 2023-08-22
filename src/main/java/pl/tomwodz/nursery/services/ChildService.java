@@ -3,11 +3,14 @@ package pl.tomwodz.nursery.services;
 import pl.tomwodz.nursery.model.Child;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface IChildService {
+public interface ChildService {
     List<Child> findAll();
 
     Child findById(Long id);
+
+    Child save(Child child);
+
+    void updateById(Long id, Child newChild);
 
 }

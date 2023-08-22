@@ -1,11 +1,11 @@
-package pl.tomwodz.nursery.services;
+package pl.tomwodz.nursery.repository;
 
 import pl.tomwodz.nursery.model.GroupChildren;
 
 import java.util.List;
 
-public interface IGroupChildrenService {
-    List<GroupChildren> findAll();
+public interface GroupChildrenDAO {
+    List<GroupChildren> finAll();
 
     GroupChildren findById(Long id);
 

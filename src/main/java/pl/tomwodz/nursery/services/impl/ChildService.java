@@ -3,18 +3,16 @@ package pl.tomwodz.nursery.services.impl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.tomwodz.nursery.model.Child;
-import pl.tomwodz.nursery.repository.IChildDAO;
-import pl.tomwodz.nursery.services.IChildService;
+import pl.tomwodz.nursery.repository.ChildDAO;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
 @AllArgsConstructor
-public class ChildServiceImpl implements IChildService {
+public class ChildService implements pl.tomwodz.nursery.services.ChildService {
 
-    private final IChildDAO childDAO;
+    private final ChildDAO childDAO;
     @Override
     public List<Child> findAll() {
         return this.childDAO.findAll();
@@ -23,5 +21,15 @@ public class ChildServiceImpl implements IChildService {
     @Override
     public Child findById(Long id) {
         return this.childDAO.findById(id);
+    }
+
+    @Override
+    public Child save(Child child) {
+        return this.childDAO.save(child);
+    }
+
+    @Override
+    public void updateById(Long id, Child newChild) {
+        this.childDAO.updateById(id, newChild);
     }
 }

@@ -3,17 +3,15 @@ package pl.tomwodz.nursery.services.impl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.tomwodz.nursery.model.User;
-import pl.tomwodz.nursery.repository.IUserDAO;
-import pl.tomwodz.nursery.services.IUserService;
+import pl.tomwodz.nursery.repository.UserDAO;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class UserServiceImpl implements IUserService {
+public class UserService implements pl.tomwodz.nursery.services.UserService {
 
-    private final IUserDAO userDAO;
+    private final UserDAO userDAO;
     @Override
     public List<User> findAll() {
         return this.userDAO.findAll();

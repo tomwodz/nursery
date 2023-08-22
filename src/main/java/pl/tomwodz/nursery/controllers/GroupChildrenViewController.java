@@ -5,16 +5,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.tomwodz.nursery.model.GroupChildren;
-import pl.tomwodz.nursery.services.IGroupChildrenService;
-
-import java.util.Optional;
+import pl.tomwodz.nursery.services.GroupChildrenService;
 
 @Controller
 @RequestMapping(path="/view/groupchildren")
 @AllArgsConstructor
 public class GroupChildrenViewController {
 
-    private final IGroupChildrenService groupChildrenService;
+    private final GroupChildrenService groupChildrenService;
 
     @GetMapping
     public String getAll(Model model){

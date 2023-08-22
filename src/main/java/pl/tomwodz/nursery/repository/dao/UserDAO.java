@@ -4,16 +4,15 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.tomwodz.nursery.controllers.errors.UserNotFoundException;
 import pl.tomwodz.nursery.model.User;
-import pl.tomwodz.nursery.repository.IUserDAO;
-import pl.tomwodz.nursery.repository.dao.springdata.IUserRepository;
+import pl.tomwodz.nursery.repository.dao.springdata.UserRepository;
 
 import java.util.List;
 
 @AllArgsConstructor
 @Repository
-public class UserDAO implements IUserDAO {
+public class UserDAO implements pl.tomwodz.nursery.repository.UserDAO {
 
-    private final IUserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public List<User> findAll() {

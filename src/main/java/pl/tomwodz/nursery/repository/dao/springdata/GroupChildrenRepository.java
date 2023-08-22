@@ -8,7 +8,7 @@ import pl.tomwodz.nursery.model.GroupChildren;
 import java.util.List;
 import java.util.Optional;
 
-public interface IGroupChildrenRepository extends Repository<GroupChildren, Long> {
+public interface GroupChildrenRepository extends Repository<GroupChildren, Long> {
     List<GroupChildren> findAll();
     Optional<GroupChildren> findById(Long id);
     GroupChildren save(GroupChildren groupChildren);

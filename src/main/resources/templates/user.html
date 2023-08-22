@@ -25,16 +25,14 @@
     </div>
 
     <div th:each="user : ${users}" class="user">
-
         <div th:text="${user.name}" class="name"></div>
         <div th:text="${user.surname}" class="surname"></div>
         <div th:text="${user.email}" class="email"></div>
         <div th:text="${user.phoneNumber}" class="phone-number"></div>
-        <div th:text="${user.role}" class="phone-number"></div>
+        <div th:text="${user.role}" class="role"></div>
         <div class="details">
             <a th:href="@{/view/user/{id}(id=${user.id})}" class="button">Szczegóły</a>
         </div>
-
     </div>
 
 

@@ -1,0 +1,34 @@
+.child {
+    background-color: #FAFAD2;
+    display: block;
+}
+
+.child .name {
+    text-align: center;
+    display: block;
+}
+
+.child .surname {
+    text-align: center;
+    display: block;
+}
+
+.child .groupchildren {
+    text-align: center;
+    display: block;
+}
+
+.child .age {
+    text-align: center;
+    display: block;
+}
+
+.child .parent {
+    text-align: center;
+    display: block;
+}
+
+.child .details {
+    text-align: center;
+    display: block;
+}
