@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.tomwodz.nursery.controllers.errors.GroupChildrenNotFoundException;
 import pl.tomwodz.nursery.model.GroupChildren;
+import pl.tomwodz.nursery.repository.GroupChildrenDAO;
 import pl.tomwodz.nursery.repository.dao.springdata.GroupChildrenRepository;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Repository
 @Transactional
-public class GroupChildrenDAO implements pl.tomwodz.nursery.repository.GroupChildrenDAO {
+public class GroupChildrenDAOImpl implements GroupChildrenDAO {
 
     private final GroupChildrenRepository groupChildrenRepository;
 

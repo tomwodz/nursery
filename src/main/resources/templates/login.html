@@ -12,13 +12,13 @@
 <div th:replace="~{fragments.html :: menu}"></div>
 
 <div id="content">
-    Zapraszam do zapoznania się z tym projektem.<br><br>
-    Login admina: tomwodz Hasło: tomwodz<br><br>
-    Login pracownika: employee Hasło: tomwodz<br><br>
-    Login rodzica: parent Hasło: tomwodz<br><br>
-    Funkcjonalności:<br><br>
-    W przypadku pytań prosze o kontakt:<br>
-    twodzinski@op.pl
+    <form method="post" >
+        <div id="info" th:text="${info}"></div>
+        <input type="text" name="login"  id="login" class="input" placeholder="Login">
+        <input type="password" name="password" id="password" class="input" placeholder="Hasło">
+        <input type="submit" value="ZALOGUJ" class="button">
+ <!--       <a href="/view/register" class="button">ZAREJESTRUJ</a>-->
+    </form>
 </div>
 
 </body>

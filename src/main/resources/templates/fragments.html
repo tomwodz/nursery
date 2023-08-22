@@ -11,14 +11,16 @@
 </div>
 <div id="menu" th:fragment="menu">
     <div>
-        <a href="/view/" class="button">Strona Główna</a>
+        <a href="/" class="button">Strona Główna</a>
+        <a th:if="${!logged}" href="/view/login" class="button">Zaloguj</a>
+        <a th:if="${logged}" href="/view/logout" class="button">Wyloguj</a>
     </div>
     <div>
-        <a href="/view/child" class="button">Dzieci</a>
-        <a href="/view/groupchildren" class="button">Grupy</a>
+        <a th:if="${admin || employee}" href="/view/child" class="button">Dzieci</a>
+        <a th:if="${admin || employee}" href="/view/groupchildren" class="button">Grupy</a>
     </div>
     <div>
-        <a href="/view/user" class="button">Użytkownicy</a>
+        <a th:if="${admin}" href="/view/user" class="button">Użytkownicy</a>
     </div>
 </div>
 </body>

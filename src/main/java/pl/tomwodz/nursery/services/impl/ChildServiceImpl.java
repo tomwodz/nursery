@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class ChildService implements pl.tomwodz.nursery.services.ChildService {
+public class ChildServiceImpl implements pl.tomwodz.nursery.services.ChildService {
 
     private final ChildDAO childDAO;
     @Override

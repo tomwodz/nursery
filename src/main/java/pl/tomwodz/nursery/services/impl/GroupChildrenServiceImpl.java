@@ -9,7 +9,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
-public class GroupChildrenService implements pl.tomwodz.nursery.services.GroupChildrenService {
+public class GroupChildrenServiceImpl implements pl.tomwodz.nursery.services.GroupChildrenService {
 
     private final GroupChildrenDAO groupChildrenDAO;
     @Override

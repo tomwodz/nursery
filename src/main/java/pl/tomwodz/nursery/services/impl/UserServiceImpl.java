@@ -6,10 +6,11 @@ import pl.tomwodz.nursery.model.User;
 import pl.tomwodz.nursery.repository.UserDAO;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class UserService implements pl.tomwodz.nursery.services.UserService {
+public class UserServiceImpl implements pl.tomwodz.nursery.services.UserService {
 
     private final UserDAO userDAO;
     @Override
@@ -20,5 +21,10 @@ public class UserService implements pl.tomwodz.nursery.services.UserService {
     @Override
     public User findById(Long id) {
         return this.userDAO.findById(id);
+    }
+
+    @Override
+    public Optional<User> findByLogin(String login) {
+        return this.userDAO.findByLogin(login);
     }
 }

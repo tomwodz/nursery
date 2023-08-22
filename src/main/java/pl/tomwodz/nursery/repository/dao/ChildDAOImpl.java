@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.tomwodz.nursery.controllers.errors.ChildNotFoundException;
 import pl.tomwodz.nursery.model.Child;
+import pl.tomwodz.nursery.repository.ChildDAO;
 import pl.tomwodz.nursery.repository.dao.springdata.ChildRepository;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Repository
 @Transactional
-public class ChildDAO implements pl.tomwodz.nursery.repository.ChildDAO {
+public class ChildDAOImpl implements ChildDAO {
 
     private final ChildRepository childRepository;
     @Override
