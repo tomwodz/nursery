@@ -34,7 +34,7 @@
         <div th:text="${child.parent.phoneNumber}" class="parent-phonenumber"></div>
     </div>
     <div>
-        <a th:href="@{/view/user/{id}(id=${child.parent.id})}" class="button">Więcej danych Rodzica</a>
+        <a th:if="${!parent}" th:href="@{/view/user/{id}(id=${child.parent.id})}" class="button">Więcej danych Rodzica</a>
     </div>
     <div>
         <a th:href="@{/view/child/update/{id}(id=${child.id})}" class="button">Edytuj dziecko</a>

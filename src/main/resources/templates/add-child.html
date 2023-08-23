@@ -35,7 +35,7 @@
                                     th:field="*{childModel.age}">
             </div>
 
-            <div class="groupchildren">Grupa:</div>
+            <div class="groupchildren">Grupa: </div>
             <div class="groupchildren">
                 <select class="select" th:field="*{childModel.groupChildren.id}">
                 <option th:each="group : ${groupChildren}"
@@ -45,7 +45,7 @@
             </select>
             </div>
 
-            <div class="parent">Rodzic:</div>
+            <div class="parent">Rodzic: </div>
             <div class="parent"><select class="select" th:field="*{childModel.parent.id}">
                 <option th:each="parent : ${parents}"
                         th:value="${parent.id}"

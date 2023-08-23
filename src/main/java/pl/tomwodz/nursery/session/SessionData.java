@@ -52,5 +52,12 @@ public class SessionData {
         }
     }
 
+    public long isId() {
+        if (this.user == null) {
+            return 0;
+        }
+        return this.user.getId();
+    }
+
 
 }

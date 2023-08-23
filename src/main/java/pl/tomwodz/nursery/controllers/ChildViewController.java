@@ -13,6 +13,9 @@ import pl.tomwodz.nursery.services.GroupChildrenService;
 import pl.tomwodz.nursery.services.UserService;
 import pl.tomwodz.nursery.session.SessionData;
 
+import java.util.List;
+import java.util.Optional;
+
 @Controller
 @RequestMapping(path = "/view/child")
 @AllArgsConstructor
@@ -42,6 +45,17 @@ public class ChildViewController {
         if (this.sessionData.isEmployee() || this.sessionData.isAdmin()) {
             model.addAttribute("child", this.childService.findById(id));
             return "sample-child";
+        }
+        if (this.sessionData.isParent()) {
+            Optional<Child> childFromUser = this.sessionData.getUser()
+                    .getChild()
+                    .stream()
+                    .filter(child -> child.getId() == id)
+                    .findFirst();
+            if (childFromUser.isPresent()) {
+                model.addAttribute("child", this.childService.findById(id));
+                return "sample-child";
+            }
         }
         return "redirect:/view/login";
     }
@@ -85,6 +99,7 @@ public class ChildViewController {
                     .toList());
             return "add-child";
         }
+      //TODO for parent or new method
         return "redirect:/view/login";
     }
 

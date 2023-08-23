@@ -16,20 +16,37 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name ="id")
     private Long id;
-    @Column(unique = true)
+
+    @Column(unique = true, nullable = false)
     private String login;
+
+    @Column(columnDefinition = "varchar(50)", nullable = false)
     private String password;
+
+    @Column(columnDefinition = "varchar(50)", nullable = false)
     private String name;
+
+    @Column(columnDefinition = "varchar(50)", nullable = false)
     private String surname;
+
+    @Column(columnDefinition = "varchar(50)", nullable = false)
     private String email;
+
+    @Column(columnDefinition = "varchar(20)", nullable = false)
     private String phoneNumber;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
+
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Role role = Role.PARENT;
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent")
     private List<Child> child;
+
 
     public enum Role {
         ADMIN,

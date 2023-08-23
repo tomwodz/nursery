@@ -15,10 +15,19 @@ public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
+    @Column(columnDefinition = "varchar(50)", nullable = false)
     private String street;
+
+    @Column(columnDefinition = "varchar(50)", nullable = false)
     private String zipCode;
+
+    @Column(columnDefinition = "varchar(50)", nullable = false)
     private String city;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+    @OneToOne(mappedBy = "address")
     private User user;
+
 }

@@ -18,7 +18,10 @@ public class GroupChildren {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(columnDefinition = "varchar(50)", nullable = false)
     private String name;
+
     @OneToMany(mappedBy = "groupChildren")
     private List<Child> child;
 

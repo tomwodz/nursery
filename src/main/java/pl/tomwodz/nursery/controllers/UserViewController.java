@@ -41,7 +41,16 @@ public class UserViewController {
         }
         if(this.sessionData.isEmployee()){
             User userBox = this.userService.findById(id);
-            if(userBox.getRole().equals(User.Role.PARENT)) {
+            if(userBox.getRole().equals(User.Role.PARENT) ||
+            this.sessionData.getUser().getId().equals(id)
+            ) {
+                model.addAttribute("user", userBox);
+                return "sample-user";
+            }
+        }
+        if(this.sessionData.isParent()){
+            User userBox = this.userService.findById(id);
+            if(userBox.getId()==this.sessionData.isId()) {
                 model.addAttribute("user", userBox);
                 return "sample-user";
             }
@@ -65,9 +74,7 @@ public class UserViewController {
         }
         else {
             if(!this.sessionData.isLogged()){
-            user.setRole(User.Role.PARENT);
-            user.setId(0L);
-            user.getAddress().setUser(user);
+            //user.setRole(User.Role.PARENT);
             }
             this.userService.save(user);
             return "redirect:/view/login";

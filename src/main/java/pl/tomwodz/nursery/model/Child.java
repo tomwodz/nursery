@@ -16,12 +16,19 @@ public class Child {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(columnDefinition = "varchar(50)", nullable = false)
     private String name;
+
+    @Column(columnDefinition = "varchar(50)", nullable = false)
     private String surname;
     @ManyToOne
     private GroupChildren groupChildren;
+
+    @Column(columnDefinition = "varchar(50)", nullable = false)
     private int age;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.EAGER)
     private User parent;
 
 }

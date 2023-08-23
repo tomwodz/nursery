@@ -1,26 +1,21 @@
-INSERT INTO tuser (name, surname, login, password, email, phone_number, role)
-VALUES ('Tomek','Wodz', 'tomwodz','6e43a6632d8f44360736762f86f66d1d','twodzinski@op.pl','123 456 789','ADMIN');
+INSERT INTO public.taddress (id, city, street, zip_code)
+VALUES (nextval('taddress_id_seq'), 'Akacjowa','77-777','Warszawa');
 
-INSERT INTO tuser (name, surname, login, password, email, phone_number, role)
-VALUES ('Tomek','Wodz', 'parent','6e43a6632d8f44360736762f86f66d1d','twodzinski@op.pl','123 456 789','PARENT');
+INSERT INTO public.taddress (id, city, street, zip_code)
+VALUES (nextval('taddress_id_seq'),'Akacjowa','77-777','Warszawa');
 
-INSERT INTO tuser (name, surname, login, password, email, phone_number, role)
-VALUES ('Iwona','Nowak', 'nowak','6e43a6632d8f44360736762f86f66d1d','twodzinski@op.pl','123 456 789','PARENT');
+INSERT INTO public.taddress (id, city, street, zip_code)
+VALUES (nextval('taddress_id_seq'),'Akacjowa','77-777','Warszawa');
 
-INSERT INTO tuser (name, surname, login, password, email, phone_number, role)
-VALUES ('Iwona','Nowak', 'employee','6e43a6632d8f44360736762f86f66d1d','twodzinski@op.pl','123 456 789','EMPLOYEE');
 
-INSERT INTO taddress (user_id, city, street, zip_code)
-VALUES (1,'Akacjowa','77-777','Warszawa');
+INSERT INTO public.tuser (address_id, id, name, surname, login, password, email, phone_number, role)
+VALUES (1, nextval('tuser_id_seq'), 'Tomek','Wodz', 'tomwodz','6e43a6632d8f44360736762f86f66d1d','twodzinski@op.pl','123 456 789','ADMIN');
 
-INSERT INTO taddress (user_id, city, street, zip_code)
-VALUES (2,'Akacjowa','77-777','Warszawa');
+INSERT INTO public.tuser  (address_id, id, name, surname, login, password, email, phone_number, role)
+VALUES (2 ,nextval('tuser_id_seq'),'Iwona','Nowak', 'parent','6e43a6632d8f44360736762f86f66d1d','twodzinski@op.pl','123 456 789','PARENT');
 
-INSERT INTO taddress (user_id, city, street, zip_code)
-VALUES (3,'Akacjowa','77-777','Warszawa');
-
-INSERT INTO taddress (user_id, city, street, zip_code)
-VALUES (4,'Akacjowa','77-777','Warszawa');
+INSERT INTO public.tuser  (address_id, id, name, surname, login, password, email, phone_number, role)
+VALUES (3, nextval('tuser_id_seq'),'Iwona','Nowak', 'employee','6e43a6632d8f44360736762f86f66d1d','twodzinski@op.pl','123 456 789','EMPLOYEE');
 
 INSERT INTO tgroupchildren (name)
 VALUES ('Domyślna');

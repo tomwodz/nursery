@@ -9,5 +9,6 @@ public class ModelUtils {
         model.addAttribute("admin", sessionData.isAdmin());
         model.addAttribute("parent", sessionData.isParent());
         model.addAttribute("employee", sessionData.isEmployee());
+        model.addAttribute("getid", sessionData.isId());
     }
 }
