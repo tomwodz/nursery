@@ -19,6 +19,6 @@ public class Address {
     private String street;
     private String zipCode;
     private String city;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private User user;
 }

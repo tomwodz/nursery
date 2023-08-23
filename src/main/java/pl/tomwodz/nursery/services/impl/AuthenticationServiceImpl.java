@@ -38,8 +38,4 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
     }
 
-    @Override
-    public void register(User user) {
-
-    }
 }

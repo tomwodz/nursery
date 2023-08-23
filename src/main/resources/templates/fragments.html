@@ -14,6 +14,7 @@
         <a href="/" class="button">Strona Główna</a>
         <a th:if="${!logged}" href="/view/login" class="button">Zaloguj</a>
         <a th:if="${logged}" href="/view/logout" class="button">Wyloguj</a>
+        <a th:if="${!logged}"  href="/view/user/register" class="button">Zarejestruj</a>
     </div>
     <div>
         <a th:if="${admin || employee}" href="/view/child" class="button">Dzieci</a>

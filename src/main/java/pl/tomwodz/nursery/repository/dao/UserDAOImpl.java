@@ -31,4 +31,9 @@ public class UserDAOImpl implements UserDAO {
     public Optional<User> findByLogin(String login) {
         return this.userRepository.findByLogin(login);
     }
+
+    @Override
+    public User save(User user) {
+        return this.userRepository.save(user);
+    }
 }

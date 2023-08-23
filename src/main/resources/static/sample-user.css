@@ -1,42 +1,39 @@
 .sample-user {
-    text-align: left;
-    display: inline-block;
+    display: block;
     padding: 5px 5px;
     background-color: #FAFAD2;
 }
 
 .sample-user .name {
-    display: block;
+    display: inline-block;
 }
 
 .sample-user .surname {
-    display: block;
+    display: inline-block;
 }
 
 .sample-user .login {
-    display: block;
+    display: inline-block;
+}
+
+.sample-user .email {
+    display: inline-block;
 }
 
 .sample-user .phone-number {
-    display: block;
+    display: inline-block;
 }
 
 .sample-user .street {
-    display: block;
+    display: inline-block;
 }
 
 .sample-user .zipcode {
-    display: block;
+    display: inline-block;
 }
 
 .sample-user .city {
-    display: block;
-}
-
-
-
-.sample-child .email {
-    display: block;
+    display: inline-block;
 }
 
 .child {
@@ -67,5 +64,4 @@
     display: inline-block;
     width: 10%;
 }
-
 

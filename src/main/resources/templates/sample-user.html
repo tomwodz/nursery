@@ -13,40 +13,55 @@
 <div th:replace="~{fragments.html :: menu}"></div>
 
 <div id="content">
+
     <div class="sample-user">
         <div class="name">Imię:</div>
-        <div class="surname">Nazwisko:</div>
-        <div class="login">Login:</div>
-        <div class="phone-number">Numer telefonu:</div>
-        <div class="email">E-mail:</div>
-        <div class="street">Ulica:</div>
-        <div class="zipcode">Kod podcztowy:</div>
-        <div class="city">Miasto:</div>
+        <div th:text="${user.name}" class="name"></div>
     </div>
     <div class="sample-user">
-        <div th:text="${user.name}" class="name"></div>
+        <div class="surname">Nazwisko:</div>
         <div th:text="${user.surname}" class="surname"></div>
+    </div>
+    <div class="sample-user">
+        <div class="login">Login:</div>
         <div th:text="${user.login}" class="login"></div>
+    </div>
+    <div class="sample-user">
+        <div class="phone-number">Numer telefonu:</div>
         <div th:text="${user.phoneNumber}" class="phone-number"></div>
+    </div>
+    <div class="sample-user">
+        <div class="email">E-mail:</div>
         <div th:text="${user.email}" class="email"></div>
+    </div>
+    <div class="sample-user">
+        <div class="street">Ulica:</div>
         <div th:text="${user.address.street}" class="street"></div>
+    </div>
+    <div class="sample-user">
+        <div class="zipcode">Kod pocztowy:</div>
         <div th:text="${user.address.zipCode}" class="zipcode"></div>
+    </div>
+    <div class="sample-user">
+        <div class="city">Miasto:</div>
         <div th:text="${user.address.city}" class="city"></div>
     </div>
+
     <div class="child">
         <div class="name">Imię dziecka:</div>
         <div class="surname">Nazwisko dziecka:</div>
         <div class="groupchildren">Grupa:</div>
         <div class="details"></div>
         <div>
-    <div th:each="child : ${user.child}" class="child">
-        <div th:text="${child.name}" class="name"></div>
-        <div th:text="${child.surname}" class="surname"></div>
-        <div th:text="${child.groupChildren.name}" class="groupchildren"></div>
-        <div class="details">
-            <a th:href="@{/view/child/{id}(id=${child.id})}" class="button">Szczegóły</a>
-        </div>
-    <div>
+            <div th:each="child : ${user.child}" class="child">
+                <div th:text="${child.name}" class="name"></div>
+                <div th:text="${child.surname}" class="surname"></div>
+                <div th:text="${child.groupChildren.name}" class="groupchildren"></div>
+                <div class="details">
+                    <a th:href="@{/view/child/{id}(id=${child.id})}" class="button">Szczegóły</a>
+                </div>
+                <div>
+
 </div>
 
 

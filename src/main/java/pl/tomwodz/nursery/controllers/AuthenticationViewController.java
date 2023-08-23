@@ -5,9 +5,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import pl.tomwodz.nursery.model.User;
 import pl.tomwodz.nursery.services.AuthenticationService;
 import pl.tomwodz.nursery.session.SessionData;
 
@@ -21,7 +20,7 @@ public class AuthenticationViewController {
     @Resource
     SessionData sessionData;
 
-    @RequestMapping(path="/login", method = RequestMethod.GET)
+    @GetMapping(path="/login")
     public String login(Model model
     ){
         ModelUtils.addCommonDataToModel(model, this.sessionData);
@@ -29,7 +28,7 @@ public class AuthenticationViewController {
         return "login";
     }
 
-    @RequestMapping(path="/login", method = RequestMethod.POST)
+    @PostMapping(path="/login")
     public String login(@RequestParam String login, @RequestParam String password){
         try {
             this.authenticationService.authenticate(login, password);
@@ -42,10 +41,14 @@ public class AuthenticationViewController {
         return "redirect:/view/login";
     }
 
-    @RequestMapping(path = "/logout", method = RequestMethod.GET)
+    @GetMapping(path = "/logout")
     public String logout(HttpServletRequest request){
         this.authenticationService.logout(request);
         return "redirect:/main";
     }
+
+
+
+
 
 }

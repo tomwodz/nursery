@@ -4,11 +4,13 @@ import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import pl.tomwodz.nursery.model.Address;
+import pl.tomwodz.nursery.model.User;
 import pl.tomwodz.nursery.services.UserService;
 import pl.tomwodz.nursery.session.SessionData;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping(path = "/view/user")
@@ -23,15 +25,53 @@ public class UserViewController {
     @GetMapping
     public String getAll(Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        model.addAttribute("users", this.userService.findAll());
-        return "user";
+        if(this.sessionData.isAdmin()){
+            model.addAttribute("users", this.userService.findAll());
+            return "user";
+        }
+        return "redirect:/view/login";
     }
 
     @GetMapping(path = "/{id}")
     public String getUserById(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        model.addAttribute("user", this.userService.findById(id));
-        return "sample-user";
+        if(this.sessionData.isAdmin()){
+            model.addAttribute("user", this.userService.findById(id));
+            return "sample-user";
+        }
+        if(this.sessionData.isEmployee()){
+            User userBox = this.userService.findById(id);
+            if(userBox.getRole().equals(User.Role.PARENT)) {
+                model.addAttribute("user", userBox);
+                return "sample-user";
+            }
+        }
+        return "redirect:/view/login";
+    }
+
+    @GetMapping(path = "/register")
+    public String getUserToRegister(Model model){
+        ModelUtils.addCommonDataToModel(model, this.sessionData);
+        model.addAttribute("userModel", new User());
+        return "register";
+    }
+
+    @PostMapping(path = "/register")
+    public String postUser(@ModelAttribute User user, Model model){
+        ModelUtils.addCommonDataToModel(model, this.sessionData);
+        Optional<User> userBox = this.userService.findByLogin(user.getLogin());
+        if (userBox.isPresent()) {
+            return "redirect:/view/user/register";
+        }
+        else {
+            if(!this.sessionData.isLogged()){
+            user.setRole(User.Role.PARENT);
+            user.setId(0L);
+            user.getAddress().setUser(user);
+            }
+            this.userService.save(user);
+            return "redirect:/view/login";
+        }
     }
 
 }

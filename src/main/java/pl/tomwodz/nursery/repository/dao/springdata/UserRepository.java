@@ -11,5 +11,6 @@ public interface UserRepository extends Repository<User, Long> {
     List<User> findAll();
     Optional<User> findById(Long id);
     Optional<User> findByLogin(String login);
+    User save(User user);
 
 }

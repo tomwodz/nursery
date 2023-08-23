@@ -8,6 +8,4 @@ public interface AuthenticationService {
 
     void logout(HttpServletRequest request);
 
-    void register(User user);
-
 }

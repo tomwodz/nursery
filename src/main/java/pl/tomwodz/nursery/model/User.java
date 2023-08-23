@@ -24,7 +24,7 @@ public class User {
     private String surname;
     private String email;
     private String phoneNumber;
-    @OneToOne(mappedBy = "user")
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
     private Address address;
     @Enumerated(EnumType.STRING)
     private Role role;
