@@ -3,6 +3,8 @@ package pl.tomwodz.nursery.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -52,6 +54,10 @@ public class User {
         ADMIN,
         PARENT,
         EMPLOYEE
+    }
+
+    public List<Role> getTypeOfRole(){
+        return new ArrayList<>(Arrays.asList(Role.values()));
     }
 
 }

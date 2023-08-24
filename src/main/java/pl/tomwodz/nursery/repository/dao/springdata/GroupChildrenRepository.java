@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface GroupChildrenRepository extends Repository<GroupChildren, Long> {
     List<GroupChildren> findAll();
     Optional<GroupChildren> findById(Long id);
+    Optional<GroupChildren> findByName(String name);
     GroupChildren save(GroupChildren groupChildren);
 
     @Modifying

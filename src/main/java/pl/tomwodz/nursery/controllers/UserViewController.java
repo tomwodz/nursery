@@ -5,11 +5,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.tomwodz.nursery.model.Address;
 import pl.tomwodz.nursery.model.User;
+import pl.tomwodz.nursery.repository.dao.springdata.UserRepository;
 import pl.tomwodz.nursery.services.UserService;
 import pl.tomwodz.nursery.session.SessionData;
 
+import java.util.EnumSet;
 import java.util.Optional;
 
 @Controller
@@ -73,12 +74,32 @@ public class UserViewController {
             return "redirect:/view/user/register";
         }
         else {
-            if(!this.sessionData.isLogged()){
-            //user.setRole(User.Role.PARENT);
-            }
             this.userService.save(user);
             return "redirect:/view/login";
         }
+    }
+
+    @GetMapping(path = "/update/{id}")
+    public String getUserByUpdate(Model model, @PathVariable Long id) {
+        ModelUtils.addCommonDataToModel(model, this.sessionData);
+        if(this.sessionData.isAdmin()){
+            model.addAttribute("userModel", this.userService.findById(id));
+            return "edit-user";
+        }
+        return "redirect:/view/login";
+    }
+    @PostMapping(path = "/update/{id}")
+    public String updateUserById(Model model,
+                                  @ModelAttribute User user,
+                                  @PathVariable Long id) {
+        ModelUtils.addCommonDataToModel(model, this.sessionData);
+        if (this.sessionData.isAdmin()) {
+            //TODO update address
+            this.userService.updateById(id,user);
+            model.addAttribute("message", "Uaktualniono użytkownika.");
+            return "message";
+        }
+        return "redirect:/view/login";
     }
 
 }

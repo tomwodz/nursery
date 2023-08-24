@@ -34,4 +34,9 @@ public class UserServiceImpl implements pl.tomwodz.nursery.services.UserService 
         user.setPassword(DigestUtils.md5Hex(user.getPassword()));
         return this.userDAO.save(user);
     }
+
+    @Override
+    public void updateById(Long id, User newUser) {
+        this.userDAO.updateById(id, newUser);
+    }
 }

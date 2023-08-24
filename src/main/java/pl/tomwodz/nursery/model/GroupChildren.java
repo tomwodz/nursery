@@ -25,4 +25,7 @@ public class GroupChildren {
     @OneToMany(mappedBy = "groupChildren")
     private List<Child> child;
 
+    public GroupChildren(String name) {
+        this.name = name;
+    }
 }

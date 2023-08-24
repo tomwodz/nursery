@@ -9,6 +9,7 @@ import pl.tomwodz.nursery.repository.GroupChildrenDAO;
 import pl.tomwodz.nursery.repository.dao.springdata.GroupChildrenRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Repository
@@ -24,9 +25,13 @@ public class GroupChildrenDAOImpl implements GroupChildrenDAO {
 
     @Override
     public GroupChildren findById(Long id) {
-
         return this.groupChildrenRepository.findById(id).
                 orElseThrow(()-> new GroupChildrenNotFoundException("Nie znaleziono grupy dzieci o id: " + id));
+    }
+
+    @Override
+    public Optional<GroupChildren> findByName(String name) {
+        return this.groupChildrenRepository.findByName(name);
     }
 
     @Override

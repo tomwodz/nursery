@@ -35,6 +35,7 @@
                                     th:field="*{childModel.age}">
             </div>
 
+        <div  th:if="${!parent}">
             <div class="groupchildren">Grupa: </div>
             <div class="groupchildren">
                 <select class="select" th:field="*{childModel.groupChildren.id}">
@@ -53,6 +54,7 @@
                 </option>
             </select>
             </div>
+        </div>
 
         <div class="details">
             <input type="submit" value="Dodaj dziecko" class="button">

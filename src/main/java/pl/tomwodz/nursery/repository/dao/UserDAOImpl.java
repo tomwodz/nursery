@@ -1,5 +1,6 @@
 package pl.tomwodz.nursery.repository.dao;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.tomwodz.nursery.controllers.errors.UserNotFoundException;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Repository
+@Transactional
 public class UserDAOImpl implements UserDAO {
 
     private final UserRepository userRepository;
@@ -35,5 +37,10 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User save(User user) {
         return this.userRepository.save(user);
+    }
+
+    @Override
+    public void updateById(Long id, User newUser) {
+        this.userRepository.updateById(id, newUser);
     }
 }

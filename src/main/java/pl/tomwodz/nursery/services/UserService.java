@@ -12,4 +12,6 @@ public interface UserService {
     Optional<User> findByLogin(String login);
     User save(User user);
 
+    void updateById(Long id, User newUser);
+
 }

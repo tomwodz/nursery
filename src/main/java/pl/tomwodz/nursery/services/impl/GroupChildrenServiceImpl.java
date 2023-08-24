@@ -6,6 +6,7 @@ import pl.tomwodz.nursery.model.GroupChildren;
 import pl.tomwodz.nursery.repository.GroupChildrenDAO;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -20,6 +21,11 @@ public class GroupChildrenServiceImpl implements pl.tomwodz.nursery.services.Gro
     @Override
     public GroupChildren findById(Long id) {
         return this.groupChildrenDAO.findById(id);
+    }
+
+    @Override
+    public Optional<GroupChildren> findByName(String name) {
+        return this.groupChildrenDAO.findByName(name);
     }
 
     @Override

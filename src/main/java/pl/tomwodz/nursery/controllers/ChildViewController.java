@@ -7,13 +7,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.tomwodz.nursery.model.Child;
+import pl.tomwodz.nursery.model.GroupChildren;
 import pl.tomwodz.nursery.model.User;
 import pl.tomwodz.nursery.services.ChildService;
 import pl.tomwodz.nursery.services.GroupChildrenService;
 import pl.tomwodz.nursery.services.UserService;
 import pl.tomwodz.nursery.session.SessionData;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Controller
@@ -63,6 +65,10 @@ public class ChildViewController {
     @GetMapping(path = "/")
     public String getChildByCreate(Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
+        if (this.sessionData.isParent()) {
+            model.addAttribute("childModel", new Child());
+            return "add-child";
+        }
         if (this.sessionData.isEmployee() || this.sessionData.isAdmin()) {
             model.addAttribute("childModel", new Child());
             model.addAttribute("groupChildren", this.groupChildrenService.findAll());
@@ -78,6 +84,15 @@ public class ChildViewController {
     @PostMapping(path = "/")
     public String postChild(@ModelAttribute Child child, Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
+        if (this.sessionData.isParent()) {
+            child.setId(0L);
+            child.setParent(this.sessionData.getUser());
+            child.setGroupChildren(getGroupChildrenByNewChild());
+            Child childSaved = this.childService.save(child);
+            this.sessionData.getUser().getChild().add(childSaved);
+            model.addAttribute("message", "Dodano dziecko.");
+            return "message";
+        }
         if (this.sessionData.isEmployee() || this.sessionData.isAdmin()) {
             child.setId(0L);
             this.childService.save(child);
@@ -99,21 +114,60 @@ public class ChildViewController {
                     .toList());
             return "add-child";
         }
-      //TODO for parent or new method
+        if (this.sessionData.isParent()) {
+            Optional<Child> childFromUser = this.sessionData.getUser()
+                    .getChild()
+                    .stream()
+                    .filter(child -> child.getId() == id)
+                    .findFirst();
+            if (childFromUser.isPresent()) {
+                model.addAttribute("childModel", this.childService.findById(id));
+                return "add-child";
+            }
+        }
         return "redirect:/view/login";
     }
 
     @PostMapping(path = "/update/{id}")
-    public String updateGroupChildrenById(Model model,
-                                          @ModelAttribute Child child,
-                                          @PathVariable Long id) {
+    public String updateChildById(Model model,
+                                  @ModelAttribute Child child,
+                                  @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         if (this.sessionData.isEmployee() || this.sessionData.isAdmin()) {
             this.childService.updateById(id, child);
             model.addAttribute("message", "Uaktualniono dziecko.");
             return "message";
         }
+        if (this.sessionData.isParent()) {
+            Child childToUpdate = this.childService.findById(id);
+            Optional<Child> childFromParent = this.sessionData.getUser()
+                    .getChild()
+                    .stream()
+                    .filter(child1 -> child1.getId() == id)
+                    .findFirst();
+            if (childToUpdate.getId() == childFromParent.get().getId()) {
+                childToUpdate.setName(child.getName());
+                childToUpdate.setSurname(child.getSurname());
+                childToUpdate.setAge(child.getAge());
+                this.childService.updateById(id, childToUpdate);
+                model.addAttribute("message", "Uaktualniono dziecko.");
+                return "message";
+            }
+        }
         return "redirect:/view/login";
+    }
+
+    private GroupChildren getGroupChildrenByNewChild(){
+        Optional<GroupChildren> groupChildrenBox = this.groupChildrenService.findByName("Rekrutacja " +
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
+        if(groupChildrenBox.isPresent()){
+            return groupChildrenBox.get();
+        } else {
+            GroupChildren groupChildren = new GroupChildren("Rekrutacja " +
+                    LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
+            GroupChildren groupChildrenSaved = this.groupChildrenService.save(groupChildren);
+            return groupChildrenSaved;
+        }
     }
 
 }
