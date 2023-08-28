@@ -34,7 +34,7 @@ public class ChildViewController {
     @GetMapping
     public String getAll(Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if (this.sessionData.isEmployee() || this.sessionData.isAdmin()) {
+        if (this.sessionData.isAdminOrEmployee()) {
             model.addAttribute("children", this.childService.findAll());
             return "child";
         }
@@ -44,20 +44,15 @@ public class ChildViewController {
     @GetMapping(path = "/{id}")
     public String getChildById(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if (this.sessionData.isEmployee() || this.sessionData.isAdmin()) {
+        if(this.sessionData.isLogged()){
             model.addAttribute("child", this.childService.findById(id));
+        }
+        if (this.sessionData.isAdminOrEmployee()) {
             return "sample-child";
         }
-        if (this.sessionData.isParent()) {
-            Optional<Child> childFromUser = this.sessionData.getUser()
-                    .getChild()
-                    .stream()
-                    .filter(child -> child.getId() == id)
-                    .findFirst();
-            if (childFromUser.isPresent()) {
-                model.addAttribute("child", this.childService.findById(id));
-                return "sample-child";
-            }
+        if (this.sessionData.isParent() &&
+                checkExistenceOfParentChildRelationship(id).isPresent()) {
+            return "sample-child";
         }
         return "redirect:/view/login";
     }
@@ -69,13 +64,10 @@ public class ChildViewController {
             model.addAttribute("childModel", new Child());
             return "add-child";
         }
-        if (this.sessionData.isEmployee() || this.sessionData.isAdmin()) {
+        if (this.sessionData.isAdminOrEmployee()) {
             model.addAttribute("childModel", new Child());
             model.addAttribute("groupChildren", this.groupChildrenService.findAll());
-            model.addAttribute("parents", this.userService.findAll()
-                    .stream()
-                    .filter(user -> user.getRole().equals(User.Role.PARENT))
-                    .toList());
+            model.addAttribute("parents", this.userService.findByRole(User.Role.PARENT));
             return "add-child";
         }
         return "redirect:/view/login";
@@ -93,7 +85,7 @@ public class ChildViewController {
             model.addAttribute("message", "Dodano dziecko.");
             return "message";
         }
-        if (this.sessionData.isEmployee() || this.sessionData.isAdmin()) {
+        if (this.sessionData.isAdminOrEmployee()) {
             child.setId(0L);
             this.childService.save(child);
             model.addAttribute("message", "Dodano dziecko.");
@@ -105,25 +97,16 @@ public class ChildViewController {
     @GetMapping(path = "/update/{id}")
     public String getChildByUpdate(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if (this.sessionData.isEmployee() || this.sessionData.isAdmin()) {
+        if (this.sessionData.isAdminOrEmployee()) {
             model.addAttribute("childModel", this.childService.findById(id));
             model.addAttribute("groupChildren", this.groupChildrenService.findAll());
-            model.addAttribute("parents", this.userService.findAll()
-                    .stream()
-                    .filter(user -> user.getRole().equals(User.Role.PARENT))
-                    .toList());
+            model.addAttribute("parents", this.userService.findByRole(User.Role.PARENT));
             return "add-child";
         }
-        if (this.sessionData.isParent()) {
-            Optional<Child> childFromUser = this.sessionData.getUser()
-                    .getChild()
-                    .stream()
-                    .filter(child -> child.getId() == id)
-                    .findFirst();
-            if (childFromUser.isPresent()) {
-                model.addAttribute("childModel", this.childService.findById(id));
-                return "add-child";
-            }
+        if (this.sessionData.isParent() &&
+                checkExistenceOfParentChildRelationship(id).isPresent()) {
+            model.addAttribute("childModel", this.childService.findById(id));
+            return "add-child";
         }
         return "redirect:/view/login";
     }
@@ -133,28 +116,30 @@ public class ChildViewController {
                                   @ModelAttribute Child child,
                                   @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if (this.sessionData.isEmployee() || this.sessionData.isAdmin()) {
+        if (this.sessionData.isAdminOrEmployee()) {
             this.childService.updateById(id, child);
             model.addAttribute("message", "Uaktualniono dziecko.");
             return "message";
         }
-        if (this.sessionData.isParent()) {
+        if (this.sessionData.isParent() &&
+                checkExistenceOfParentChildRelationship(id).isPresent()) {
             Child childToUpdate = this.childService.findById(id);
-            Optional<Child> childFromParent = this.sessionData.getUser()
-                    .getChild()
-                    .stream()
-                    .filter(child1 -> child1.getId() == id)
-                    .findFirst();
-            if (childToUpdate.getId() == childFromParent.get().getId()) {
-                childToUpdate.setName(child.getName());
-                childToUpdate.setSurname(child.getSurname());
-                childToUpdate.setAge(child.getAge());
-                this.childService.updateById(id, childToUpdate);
-                model.addAttribute("message", "Uaktualniono dziecko.");
-                return "message";
-            }
+            childToUpdate.setName(child.getName());
+            childToUpdate.setSurname(child.getSurname());
+            childToUpdate.setDayOfBirth(child.getDayOfBirth());
+            this.childService.updateById(id, childToUpdate);
+            model.addAttribute("message", "Uaktualniono dziecko.");
+            return "message";
         }
         return "redirect:/view/login";
+    }
+
+    private Optional<Child> checkExistenceOfParentChildRelationship(Long id){
+        return this.sessionData.getUser()
+                .getChild()
+                .stream()
+                .filter(child -> child.getId() == id)
+                .findFirst();
     }
 
     private GroupChildren getGroupChildrenByNewChild(){

@@ -23,7 +23,7 @@
         <div class="name">Imię:</div>
         <div class="surname">Nazwisko:</div>
         <div class="groupchildren">Grupa:</div>
-        <div class="age">Wiek:</div>
+        <div class="dayofbirth">Dzień urodzin:</div>
         <div class="details">Szczegóły:</div>
     </div>
 
@@ -32,7 +32,7 @@
         <div th:text="${child.name}" class="name"></div>
         <div th:text="${child.surname}" class="surname"></div>
         <div th:text="${child.groupChildren.name}" class="groupchildren"></div>
-        <div th:text="${child.age}" class="age"></div>
+        <div th:text="${child.dayOfBirth}" class="dayofbirth"></div>
         <div class="details">
             <a th:href="@{/view/child/{id}(id=${child.id})}" class="button">Szczegóły</a>
         </div>

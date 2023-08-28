@@ -21,13 +21,13 @@
 .child .groupchildren {
     text-align: center;
     display: inline-block;
-    width: 20%;
+    width: 15%;
 }
 
-.child .age {
+.child .dayofbirth {
     text-align: center;
     display: inline-block;
-    width: 10%;
+    width: 15%;
 }
 
 .child .details {

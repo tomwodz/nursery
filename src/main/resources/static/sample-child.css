@@ -1,39 +1,38 @@
 .sample-child {
-    text-align: left;
-    display: inline-block;
+    display: block;
     padding: 5px 5px;
     background-color: #FAFAD2;
 }
 
 .sample-child .name {
-    display: block;
+    display: inline-block;
 }
 
 .sample-child .surname {
-    display: block;
+    display: inline-block;
 }
 
 .sample-child .groupchildren {
-    display: block;
+    display: inline-block;
 }
 
-.sample-child .age {
-    display: block;
+.sample-child .dayofbirth {
+    display: inline-block;
 }
 
 .sample-child .parent-name{
-    display: block;
+    display: inline-block;
 }
 
 .sample-child .parent-surname {
-    display: block;
+    display: inline-block;
 }
 
 .sample-child .parent-email {
-    display: block;
+    display: inline-block;
 }
 
 .sample-child .parent-phonenumber {
-    display: block;
+    display: inline-block;
 }
 

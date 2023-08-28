@@ -23,7 +23,7 @@ public interface ChildRepository extends Repository<Child, Long> {
     void deleteById(Long id);
 
     @Modifying
-    @Query("UPDATE Child c SET c.name = :#{#newChild.name}, c.surname = :#{#newChild.surname}, c.age = :#{#newChild.age}, c.groupChildren = :#{#newChild.groupChildren}, c.parent = :#{#newChild.parent}  WHERE c.id = :id")
+    @Query("UPDATE Child c SET c.name = :#{#newChild.name}, c.surname = :#{#newChild.surname}, c.dayOfBirth = :#{#newChild.dayOfBirth}, c.groupChildren = :#{#newChild.groupChildren}, c.parent = :#{#newChild.parent}  WHERE c.id = :id")
     void updateById(Long id, Child newChild);
 
 }

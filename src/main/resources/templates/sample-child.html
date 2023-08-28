@@ -15,24 +15,37 @@
 <div id="content">
     <div class="sample-child">
         <div class="name">Imię:</div>
-        <div class="surname">Nazwisko:</div>
-        <div class="groupchildren">Grupa:</div>
-        <div class="age">Wiek:</div>
-        <div class="parent-name">Imię rodzica:</div>
-        <div class="parent-surname">Nazwisko rodzica:</div>
-        <div class="parent-email">Adres e-mail:</div>
-        <div class="parent-phonenumber">Numer telefonu:</div>
+        <div th:text="${child.name}" class="name"></div>
     </div>
     <div class="sample-child">
-        <div th:text="${child.name}" class="name"></div>
+        <div class="surname">Nazwisko:</div>
         <div th:text="${child.surname}" class="surname"></div>
+    </div>
+    <div class="sample-child">
+        <div class="groupchildren">Grupa:</div>
         <div th:text="${child.groupChildren.name}" class="groupchildren"></div>
-        <div th:text="${child.age}" class="age"></div>
-        <div th:text="${child.parent.name}" class="parent-name"></div>
+    </div>
+    <div class="sample-child">
+        <div class="dayofbirth">Data urodzenia:</div>
+        <div th:text="${child.dayOfBirth}" class="dayofbirth"></div>
+    </div>
+    <div class="sample-child">
+        <div class="parent-name">Imię rodzica:</div>
+        <div  <div th:text="${child.parent.name}" class="parent-name"></div>
+    </div>
+    <div class="sample-child">
+        <div class="parent-surname">Nazwisko rodzica:</div>
         <div th:text="${child.parent.surname}" class="parent-surname"></div>
+    </div>
+    <div class="sample-child">
+        <div class="parent-email">Adres e-mail:</div>
         <div th:text="${child.parent.email}" class="parent-email"></div>
+    </div>
+    <div class="sample-child">
+        <div class="parent-phonenumber">Numer telefonu:</div>
         <div th:text="${child.parent.phoneNumber}" class="parent-phonenumber"></div>
     </div>
+
     <div>
         <a th:if="${!parent}" th:href="@{/view/user/{id}(id=${child.parent.id})}" class="button">Więcej danych Rodzica</a>
     </div>

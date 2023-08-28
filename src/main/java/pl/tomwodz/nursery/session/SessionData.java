@@ -29,6 +29,21 @@ public class SessionData {
         return this.user.getRole() == User.Role.ADMIN;
     }
 
+    public boolean isEmployee() {
+        if (this.user == null) {
+            return false;
+        }
+        return this.user.getRole() == User.Role.EMPLOYEE;
+    }
+
+    public boolean isAdminOrEmployee() {
+        if (this.user == null) {
+            return false;
+        }
+        return this.user.getRole() == User.Role.ADMIN
+                || this.user.getRole() == User.Role.EMPLOYEE;
+    }
+
     public boolean isParent() {
         if (this.user == null) {
             return false;
@@ -36,12 +51,7 @@ public class SessionData {
         return this.user.getRole() == User.Role.PARENT;
     }
 
-    public boolean isEmployee() {
-        if (this.user == null) {
-            return false;
-        }
-        return this.user.getRole() == User.Role.EMPLOYEE;
-    }
+
     public String getInfo() {
         if (this.info == null) {
             return "";

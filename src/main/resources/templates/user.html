@@ -13,6 +13,9 @@
 <div th:replace="~{fragments.html :: menu}"></div>
 
 <div id="content">
+    <div>
+        <a th:if="${adminoremployee}"  href="/view/user/register" class="button">Dodaj rodzica:</a>
+    </div>
 
     <div class="users">Użytkownicy:</div>
     <div class="user">

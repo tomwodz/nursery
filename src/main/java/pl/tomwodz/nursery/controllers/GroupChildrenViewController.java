@@ -22,7 +22,7 @@ public class GroupChildrenViewController {
     @GetMapping
     public String getAll(Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if (this.sessionData.isEmployee() || this.sessionData.isAdmin()) {
+        if (this.sessionData.isAdminOrEmployee()) {
             model.addAttribute("groupChildren", this.groupChildrenService.findAll());
             return "groupchildren";
         }
@@ -32,7 +32,7 @@ public class GroupChildrenViewController {
     @GetMapping(path = "/{id}")
     public String getGroupChildrenById(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if (this.sessionData.isEmployee() || this.sessionData.isAdmin()) {
+        if (this.sessionData.isAdminOrEmployee()) {
             model.addAttribute("group", this.groupChildrenService.findById(id));
             return "sample-groupchildren";
         }
@@ -42,7 +42,7 @@ public class GroupChildrenViewController {
     @GetMapping(path = "/")
     public String getGroupChildrenByCreate(Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if (!this.sessionData.isEmployee() || !this.sessionData.isAdmin()) {
+        if (!this.sessionData.isAdminOrEmployee()) {
             model.addAttribute("groupChildrenModel", new GroupChildren());
             return "add-groupchildren";
         }
@@ -52,7 +52,7 @@ public class GroupChildrenViewController {
     @PostMapping(path = "/")
     public String postGroupChildren(@ModelAttribute GroupChildren groupChildren, Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if (this.sessionData.isEmployee() || this.sessionData.isAdmin()) {
+        if (this.sessionData.isAdminOrEmployee()) {
             groupChildren.setId(0L);
             this.groupChildrenService.save(groupChildren);
             model.addAttribute("message", "Dodano grupę.");
@@ -64,7 +64,7 @@ public class GroupChildrenViewController {
     @GetMapping(path = "/update/{id}")
     public String getGroupChildrenByUpdate(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if (this.sessionData.isEmployee() || this.sessionData.isAdmin()) {
+        if (this.sessionData.isAdminOrEmployee()) {
             model.addAttribute("groupChildrenModel", this.groupChildrenService.findById(id));
             return "add-groupchildren";
         }
@@ -76,7 +76,7 @@ public class GroupChildrenViewController {
                                           @ModelAttribute GroupChildren groupChildren,
                                           @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if (this.sessionData.isEmployee() || this.sessionData.isAdmin()) {
+        if (this.sessionData.isAdminOrEmployee()) {
             GroupChildren newGroupChildren = new GroupChildren();
             newGroupChildren.setName(groupChildren.getName());
             this.groupChildrenService.updateById(id, newGroupChildren);
@@ -89,7 +89,7 @@ public class GroupChildrenViewController {
     @GetMapping(path = "/delete/{id}")
     public String deleteGroupChildrenById(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if (this.sessionData.isEmployee() || this.sessionData.isAdmin()) {
+        if (this.sessionData.isAdminOrEmployee()) {
             if (this.groupChildrenService.findById(id).getChild().size() == 0) {
                 this.groupChildrenService.deleteById(id);
                 model.addAttribute("message", "Usunięto grupę o id: " + id);

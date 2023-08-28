@@ -23,9 +23,9 @@ VALUES ('Domyślna');
 INSERT INTO tgroupchildren (name)
 VALUES ('Misie');
 
-INSERT INTO tchild (name, surname, age, group_children_id, parent_id)
-VALUES ('Alicja', 'Kowalska', 2, 1, 2);
+INSERT INTO tchild (name, surname, day_of_birth, group_children_id, parent_id)
+VALUES ('Alicja', 'Kowalska', '2021-02-02', 1, 2);
 
-INSERT INTO tchild (name, surname, age, group_children_id, parent_id)
-VALUES ('Tymoteusz', 'Nowak', 2, 1, 2);
+INSERT INTO tchild (name, surname, day_of_birth, group_children_id, parent_id)
+VALUES ('Tymoteusz', 'Nowak', '2021-02-02', 1, 2);
 
