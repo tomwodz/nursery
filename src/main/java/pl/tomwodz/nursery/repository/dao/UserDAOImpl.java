@@ -24,6 +24,11 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public List<User> findByRole(User.Role role) {
+        return this.userRepository.findByRole(role);
+    }
+
+    @Override
     public User findById(Long id) {
         return this.userRepository.findById(id).
                 orElseThrow(()-> new UserNotFoundException("Nie znaleziono użytkownika o id: " + id));
@@ -43,4 +48,6 @@ public class UserDAOImpl implements UserDAO {
     public void updateById(Long id, User newUser) {
         this.userRepository.updateById(id, newUser);
     }
+
+
 }

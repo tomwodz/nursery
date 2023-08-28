@@ -86,4 +86,20 @@ public class GroupChildrenViewController {
         return "redirect:/view/login";
     }
 
+    @GetMapping(path = "/delete/{id}")
+    public String deleteGroupChildrenById(Model model, @PathVariable Long id) {
+        ModelUtils.addCommonDataToModel(model, this.sessionData);
+        if (this.sessionData.isEmployee() || this.sessionData.isAdmin()) {
+            if (this.groupChildrenService.findById(id).getChild().size() == 0) {
+                this.groupChildrenService.deleteById(id);
+                model.addAttribute("message", "Usunięto grupę o id: " + id);
+                return "message";
+            } else {
+                model.addAttribute("message", "Nie można usunąć grupy, do której przypisane są dzieci.");
+                return "message";
+            }
+        }
+        return "redirect:/view/login";
+    }
+
 }

@@ -15,4 +15,9 @@ public interface GroupChildrenDAO {
     GroupChildren save(GroupChildren groupChildren);
 
     void updateById(Long id, GroupChildren newGroupChildren);
+
+    void existsById(Long id);
+
+    void deleteById(Long id);
+
 }

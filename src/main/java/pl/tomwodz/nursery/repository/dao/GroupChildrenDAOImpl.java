@@ -43,4 +43,17 @@ public class GroupChildrenDAOImpl implements GroupChildrenDAO {
     public void updateById(Long id, GroupChildren newGroupChildren) {
         this.groupChildrenRepository.updateById(id, newGroupChildren);
     }
+
+    @Override
+    public void existsById(Long id) {
+        if(!groupChildrenRepository.existsById(id)){
+            throw new GroupChildrenNotFoundException("Nie znaleziono grupy dzieci o id: " + id);
+        }
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        this.existsById(id);
+        this.groupChildrenRepository.deleteById(id);
+    }
 }

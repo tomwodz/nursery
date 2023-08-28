@@ -6,11 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.tomwodz.nursery.model.User;
-import pl.tomwodz.nursery.repository.dao.springdata.UserRepository;
+import pl.tomwodz.nursery.services.AddressService;
 import pl.tomwodz.nursery.services.UserService;
 import pl.tomwodz.nursery.session.SessionData;
 
-import java.util.EnumSet;
 import java.util.Optional;
 
 @Controller
@@ -22,6 +21,7 @@ public class UserViewController {
     SessionData sessionData;
 
     private final UserService userService;
+    private final AddressService addressService;
 
     @GetMapping
     public String getAll(Model model) {
@@ -86,6 +86,19 @@ public class UserViewController {
             model.addAttribute("userModel", this.userService.findById(id));
             return "edit-user";
         }
+        if(this.sessionData.isEmployee()){
+            User userBox = this.userService.findById(id);
+            if(userBox.getRole().equals(User.Role.PARENT) ||
+                    this.sessionData.getUser().getId().equals(id)
+            ) {
+                model.addAttribute("userModel", this.userService.findById(id));
+                return "edit-user";
+            }
+        }
+        if(this.sessionData.isParent() && this.sessionData.isId() == id){
+            model.addAttribute("userModel", this.userService.findById(id));
+            return "edit-user";
+        }
         return "redirect:/view/login";
     }
     @PostMapping(path = "/update/{id}")
@@ -93,13 +106,35 @@ public class UserViewController {
                                   @ModelAttribute User user,
                                   @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if (this.sessionData.isAdmin()) {
-            //TODO update address
-            this.userService.updateById(id,user);
-            model.addAttribute("message", "Uaktualniono użytkownika.");
-            return "message";
+        if (this.sessionData.isAdmin() ||
+                (this.sessionData.isParent() && this.sessionData.isId() == id))
+        {
+          this.updateUser(model, user, id);
+          return "message";
+        }
+        if(this.sessionData.isEmployee()){
+            User userBox = this.userService.findById(id);
+            if(userBox.getRole().equals(User.Role.PARENT) ||
+                    this.sessionData.getUser().getId().equals(id)
+            ) {
+                this.updateUser(model, user, id);
+                return "message";
+            }
         }
         return "redirect:/view/login";
+    }
+
+    private String updateUser(Model model,User user, Long id){
+        try {
+            this.userService.updateById(id, user);
+            this.addressService.updateById(id, user.getAddress());
+            model.addAttribute("message", "Uaktualniono użytkownika.");
+        }
+        catch (Exception e){
+            model.addAttribute("message", "Błąd.");
+
+        }
+        return "message";
     }
 
 }

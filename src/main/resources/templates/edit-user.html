@@ -21,7 +21,7 @@
         <input type="text" name="street" id="street" class="input" placeholder="Ulica" th:field="*{userModel.address.street}">
         <input type="text" name="zipCode" id="zipCode" class="input" placeholder="Kod pocztowy" th:field="*{userModel.address.zipCode}">
         <input type="text" name="city" id="city" class="input" placeholder="Miasto" th:field="*{userModel.address.city}">
-            <select class="select" th:field="*{userModel.role}">
+            <select  th:if="${admin}" class="select" th:field="*{userModel.role}">
                 <option th:each="role : ${userModel.getTypeOfRole()}"
                         th:value="${role}"
                         th:text="${role}">

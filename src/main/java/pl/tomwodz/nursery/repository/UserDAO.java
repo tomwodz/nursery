@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface UserDAO {
     List<User> findAll();
+    List<User> findByRole(User.Role role);
     User findById(Long id);
     Optional<User> findByLogin(String login);
     User save(User user);

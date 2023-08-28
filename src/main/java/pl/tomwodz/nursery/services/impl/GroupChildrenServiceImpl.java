@@ -37,4 +37,14 @@ public class GroupChildrenServiceImpl implements pl.tomwodz.nursery.services.Gro
     public void updateById(Long id, GroupChildren newGroupChildren) {
         this.groupChildrenDAO.updateById(id,newGroupChildren);
     }
+
+    @Override
+    public void existsById(Long id) {
+        this.groupChildrenDAO.existsById(id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        this.groupChildrenDAO.deleteById(id);
+    }
 }

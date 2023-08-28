@@ -20,6 +20,11 @@ public class UserServiceImpl implements pl.tomwodz.nursery.services.UserService 
     }
 
     @Override
+    public List<User> findByRole(User.Role role) {
+        return this.userDAO.findByRole(role);
+    }
+
+    @Override
     public User findById(Long id) {
         return this.userDAO.findById(id);
     }
@@ -31,7 +36,8 @@ public class UserServiceImpl implements pl.tomwodz.nursery.services.UserService 
 
     @Override
     public User save(User user) {
-        user.setPassword(DigestUtils.md5Hex(user.getPassword()));
+        if(user.getPassword()!=null){
+        user.setPassword(DigestUtils.md5Hex(user.getPassword()));}
         return this.userDAO.save(user);
     }
 

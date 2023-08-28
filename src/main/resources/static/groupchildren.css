@@ -19,3 +19,9 @@
     display: inline-block;
     width: 20%;
 }
+
+.groupchildren .delete {
+    text-align: center;
+    display: inline-block;
+    width: 20%;
+}

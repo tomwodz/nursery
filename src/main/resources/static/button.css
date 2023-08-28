@@ -1,0 +1,60 @@
+.button_delete {
+    font-weight: 600;
+    font-size: 16px;
+    margin: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid #640b0b;
+    border-radius: 8px;
+    padding: 5px 20px;
+    color: #FFFFFF;
+    background-color: #800000;
+    cursor: pointer;
+    display: inline-block;
+}
+
+
+.button_delete:hover {
+    font-weight: 600;
+    font-size: 16px;
+    margin: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid #640b0b;
+    border-radius: 8px;
+    padding: 5px 20px;
+    color: #FFFFFF;
+    background-color: #640b0b;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.button_update {
+    font-weight: 600;
+    font-size: 16px;
+    margin: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid #142345;
+    border-radius: 8px;
+    padding: 5px 20px;
+    color: #FFFFFF;
+    background-color: #082567;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.button_update:hover {
+    font-weight: 600;
+    font-size: 16px;
+    margin: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid #142345;
+    border-radius: 8px;
+    padding: 5px 20px;
+    color: #FFFFFF;
+    background-color: #142345;
+    cursor: pointer;
+    display: inline-block;
+}
