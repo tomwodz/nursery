@@ -24,5 +24,6 @@ public interface UserRepository extends Repository<User, Long> {
     boolean existsById(Long id);
     @Modifying
     void deleteById(Long id);
+    boolean existsByLogin(String login);
 
 }

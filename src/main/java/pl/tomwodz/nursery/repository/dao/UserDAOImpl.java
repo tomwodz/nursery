@@ -3,7 +3,7 @@ package pl.tomwodz.nursery.repository.dao;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
-import pl.tomwodz.nursery.controllers.errors.UserNotFoundException;
+import pl.tomwodz.nursery.exception.UserNotFoundException;
 import pl.tomwodz.nursery.model.User;
 import pl.tomwodz.nursery.repository.UserDAO;
 import pl.tomwodz.nursery.repository.dao.springdata.UserRepository;
@@ -62,4 +62,8 @@ public class UserDAOImpl implements UserDAO {
         this.userRepository.deleteById(id);
     }
 
+    @Override
+    public boolean existsByLogin(String login) {
+        return this.userRepository.existsByLogin(login);
+    }
 }

@@ -1,4 +1,4 @@
-package pl.tomwodz.nursery.controllers.errors.handler;
+package pl.tomwodz.nursery.exception.handler;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import pl.tomwodz.nursery.controllers.ChildViewController;
-import pl.tomwodz.nursery.controllers.errors.ChildNotFoundException;
-import pl.tomwodz.nursery.controllers.errors.handler.response.ErrorChildResponseDto;
+import pl.tomwodz.nursery.controllers.view.ChildViewController;
+import pl.tomwodz.nursery.exception.ChildNotFoundException;
+import pl.tomwodz.nursery.exception.handler.response.ErrorChildResponseDto;
 
 import java.time.LocalDateTime;
 

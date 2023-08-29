@@ -1,4 +1,4 @@
-package pl.tomwodz.nursery.controllers.errors;
+package pl.tomwodz.nursery.exception;
 
 public class GroupChildrenNotFoundException extends RuntimeException {
     public GroupChildrenNotFoundException(String message) {

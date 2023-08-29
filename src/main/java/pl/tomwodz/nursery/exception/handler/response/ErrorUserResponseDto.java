@@ -1,4 +1,4 @@
-package pl.tomwodz.nursery.controllers.errors.handler.response;
+package pl.tomwodz.nursery.exception.handler.response;
 
 import org.springframework.http.HttpStatus;
 

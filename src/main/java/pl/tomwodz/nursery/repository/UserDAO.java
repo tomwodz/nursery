@@ -14,4 +14,5 @@ public interface UserDAO {
     void updateById(Long id, User newUser);
     void existsById(Long id);
     void deleteById(Long id);
+    boolean existsByLogin(String login);
 }

@@ -1,4 +1,4 @@
-package pl.tomwodz.nursery.controllers;
+package pl.tomwodz.nursery.controllers.view;
 
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;

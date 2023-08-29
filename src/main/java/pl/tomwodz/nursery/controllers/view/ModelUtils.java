@@ -1,4 +1,4 @@
-package pl.tomwodz.nursery.controllers;
+package pl.tomwodz.nursery.controllers.view;
 
 import org.springframework.ui.Model;
 import pl.tomwodz.nursery.session.SessionData;

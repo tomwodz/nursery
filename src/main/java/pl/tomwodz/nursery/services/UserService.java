@@ -17,6 +17,7 @@ public interface UserService {
     void changeActiveById(Long id, User userToExchangeActive);
 
     void existsById(Long id);
+    boolean existsByLogin(String login);
     void deleteById(Long id);
 
 }

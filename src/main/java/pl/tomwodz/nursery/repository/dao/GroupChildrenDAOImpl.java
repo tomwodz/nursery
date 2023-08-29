@@ -3,7 +3,7 @@ package pl.tomwodz.nursery.repository.dao;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
-import pl.tomwodz.nursery.controllers.errors.GroupChildrenNotFoundException;
+import pl.tomwodz.nursery.exception.GroupChildrenNotFoundException;
 import pl.tomwodz.nursery.model.GroupChildren;
 import pl.tomwodz.nursery.repository.GroupChildrenDAO;
 import pl.tomwodz.nursery.repository.dao.springdata.GroupChildrenRepository;

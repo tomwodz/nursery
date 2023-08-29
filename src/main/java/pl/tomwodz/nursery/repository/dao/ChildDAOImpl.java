@@ -3,7 +3,7 @@ package pl.tomwodz.nursery.repository.dao;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
-import pl.tomwodz.nursery.controllers.errors.ChildNotFoundException;
+import pl.tomwodz.nursery.exception.ChildNotFoundException;
 import pl.tomwodz.nursery.model.Child;
 import pl.tomwodz.nursery.repository.ChildDAO;
 import pl.tomwodz.nursery.repository.dao.springdata.ChildRepository;

@@ -1,10 +1,10 @@
-INSERT INTO public.taddress (id, city, street, zip_code)
+INSERT INTO public.taddress (id, street, zip_code, city)
 VALUES (nextval('taddress_id_seq'), 'Akacjowa','77-777','Warszawa');
 
-INSERT INTO public.taddress (id, city, street, zip_code)
+INSERT INTO public.taddress (id, street, zip_code, city)
 VALUES (nextval('taddress_id_seq'),'Akacjowa','77-777','Warszawa');
 
-INSERT INTO public.taddress (id, city, street, zip_code)
+INSERT INTO public.taddress(id, street, zip_code, city)
 VALUES (nextval('taddress_id_seq'),'Akacjowa','77-777','Warszawa');
 
 

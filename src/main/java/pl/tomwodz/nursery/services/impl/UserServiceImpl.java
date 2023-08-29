@@ -67,4 +67,9 @@ public class UserServiceImpl implements pl.tomwodz.nursery.services.UserService 
     public void deleteById(Long id) {
         this.userDAO.deleteById(id);
     }
+
+    @Override
+    public boolean existsByLogin(String login) {
+        return this.userDAO.existsByLogin(login);
+    }
 }

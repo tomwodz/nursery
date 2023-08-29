@@ -1,16 +1,18 @@
-package pl.tomwodz.nursery.controllers;
+package pl.tomwodz.nursery.controllers.view;
 
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.tomwodz.nursery.exception.UserValidationException;
 import pl.tomwodz.nursery.model.Child;
 import pl.tomwodz.nursery.model.User;
 import pl.tomwodz.nursery.services.AddressService;
 import pl.tomwodz.nursery.services.ChildService;
 import pl.tomwodz.nursery.services.UserService;
 import pl.tomwodz.nursery.session.SessionData;
+import pl.tomwodz.nursery.validatros.UserValidator;
 
 import java.util.List;
 import java.util.Optional;
@@ -66,20 +68,28 @@ public class UserViewController {
     @GetMapping(path = "/register")
     public String getUserToRegister(Model model){
         ModelUtils.addCommonDataToModel(model, this.sessionData);
+        model.addAttribute("info" ,this.sessionData.getInfo());
         model.addAttribute("userModel", new User());
         return "register";
     }
 
     @PostMapping(path = "/register")
-    public String postUser(@ModelAttribute User user, Model model){
+    public String postUser(@ModelAttribute User user, Model model, @RequestParam String password2) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        Optional<User> userBox = this.userService.findByLogin(user.getLogin());
-        if (userBox.isPresent()) {
+        model.addAttribute("info" ,this.sessionData.getInfo());
+        try {
+            UserValidator.validateUser(user);
+            UserValidator.validatePasswordsEquality(user.getPassword(), password2);
+            if (!this.userService.existsByLogin(user.getLogin())) {
+                this.userService.save(user);
+                return "redirect:/view/login";
+            } else {
+                this.sessionData.setInfo("Login zajęty.");
+                return "redirect:/view/user/register";
+            }
+        } catch (UserValidationException e) {
+            this.sessionData.setInfo("Dane nieporawne.");
             return "redirect:/view/user/register";
-        }
-        else {
-            this.userService.save(user);
-            return "redirect:/view/login";
         }
     }
 
