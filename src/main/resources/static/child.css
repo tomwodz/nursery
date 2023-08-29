@@ -21,7 +21,7 @@
 .child .groupchildren {
     text-align: center;
     display: inline-block;
-    width: 15%;
+    width: 10%;
 }
 
 .child .dayofbirth {
@@ -36,8 +36,9 @@
     width: 10%;
 }
 
-.child .parent {
+.child .update {
     text-align: center;
     display: inline-block;
     width: 10%;
 }
+

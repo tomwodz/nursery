@@ -37,7 +37,7 @@ public class AuthenticationViewController {
             }
         }
         catch (Exception e){}
-        this.sessionData.setInfo("Niepoprawny login i hasło.");
+        this.sessionData.setInfo("Niepoprawny login i hasło lub konto zablokowane.");
         return "redirect:/view/login";
     }
 

@@ -49,5 +49,4 @@ public class UserDAOImpl implements UserDAO {
         this.userRepository.updateById(id, newUser);
     }
 
-
 }

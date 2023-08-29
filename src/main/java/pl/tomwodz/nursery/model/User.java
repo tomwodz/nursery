@@ -49,6 +49,7 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent")
     private List<Child> child;
 
+    private boolean active = true;
 
     public enum Role {
         ADMIN,

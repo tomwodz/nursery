@@ -19,7 +19,7 @@ public class SessionData {
     private String info = null;
     
     public boolean isLogged() {
-        return this.user != null;
+        return this.user != null && this.user.isActive();
     }
 
     public boolean isAdmin() {
@@ -33,7 +33,7 @@ public class SessionData {
         if (this.user == null) {
             return false;
         }
-        return this.user.getRole() == User.Role.EMPLOYEE;
+        return this.user.getRole() == User.Role.EMPLOYEE && this.user.isActive();
     }
 
     public boolean isAdminOrEmployee() {
@@ -41,14 +41,14 @@ public class SessionData {
             return false;
         }
         return this.user.getRole() == User.Role.ADMIN
-                || this.user.getRole() == User.Role.EMPLOYEE;
+                || (this.user.getRole() == User.Role.EMPLOYEE && this.user.isActive());
     }
 
     public boolean isParent() {
         if (this.user == null) {
             return false;
         }
-        return this.user.getRole() == User.Role.PARENT;
+        return this.user.getRole() == User.Role.PARENT && this.user.isActive();
     }
 
 

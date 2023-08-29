@@ -137,4 +137,17 @@ public class UserViewController {
         return "message";
     }
 
+    @GetMapping(path = "/active/{id}")
+    public String changeActiveUserById(Model model,
+                                 @PathVariable Long id) {
+        ModelUtils.addCommonDataToModel(model, this.sessionData);
+        if (this.sessionData.isAdmin()) {
+            User userToChangeActive = this.userService.findById(id);
+            this.userService.changeActiveById(id, userToChangeActive);
+            model.addAttribute("users", this.userService.findByRole(userToChangeActive.getRole()));
+            return "user";
+        }
+        return "redirect:/view/login";
+    }
+
 }

@@ -28,6 +28,16 @@ class UserTest {
     }
 
     @Test
+    void newlyCreatedUserShouldBeActive() {
+
+        //given
+
+        //when
+        //then
+        assertTrue(user.isActive());
+    }
+
+    @Test
     void newlyCreatedUserShouldNotHaveAnyChildren() {
 
         //given

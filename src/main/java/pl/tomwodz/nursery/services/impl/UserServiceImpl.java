@@ -45,4 +45,16 @@ public class UserServiceImpl implements pl.tomwodz.nursery.services.UserService 
     public void updateById(Long id, User newUser) {
         this.userDAO.updateById(id, newUser);
     }
+
+    @Override
+    public void changeActiveById(Long id, User userToChangeActive) {
+        User userWithChangeActive = userToChangeActive;
+        if(userToChangeActive.isActive() &&
+                userToChangeActive.getRole()!= User.Role.ADMIN){
+            userWithChangeActive.setActive(false);
+        } else {
+            userWithChangeActive.setActive(true);
+        }
+        this.updateById(id, userWithChangeActive);
+    }
 }

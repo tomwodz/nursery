@@ -12,8 +12,8 @@ public interface UserService {
     User findById(Long id);
     Optional<User> findByLogin(String login);
     User save(User user);
-
     void updateById(Long id, User newUser);
 
+    void changeActiveById(Long id, User userToExchangeActive);
 
 }
