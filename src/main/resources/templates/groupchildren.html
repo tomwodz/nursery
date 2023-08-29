@@ -21,6 +21,7 @@
         <div class="name">Nazwa grupy:</div>
         <div class="size">Ilość dzieci:</div>
         <div class="details">Szczegóły:</div>
+        <div class="update">Edytuj:</div>
         <div class="delete"></div>
     </div>
 
@@ -29,6 +30,9 @@
         <div th:text="${group.child.size()}" class="size"></div>
         <div class="details">
             <a th:href="@{/view/groupchildren/{id}(id=${group.id})}" class="button">Szczegóły</a>
+        </div>
+        <div class="update">
+            <a th:href="@{/view/groupchildren/update/{id}(id=${group.id})}" class="button_update">Edytuj</a>
         </div>
         <div class="delete">
             <a th:href="@{/view/groupchildren/delete/{id}(id=${group.id})}" class="button_delete">Usuń</a>

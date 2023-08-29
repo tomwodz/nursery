@@ -5,23 +5,29 @@
 .groupchildren .name {
     text-align: left;
     display: inline-block;
-    width: 20%;
+    width: 55%;
 }
 
 .groupchildren .size {
     text-align: center;
     display: inline-block;
-    width: 20%;
+    width: 5%;
 }
 
 .groupchildren .details {
     text-align: center;
     display: inline-block;
-    width: 20%;
+    width: 10%;
 }
 
 .groupchildren .delete {
     text-align: center;
     display: inline-block;
-    width: 20%;
+    width: 10%;
+}
+
+.groupchildren .update {
+    text-align: center;
+    display: inline-block;
+    width: 10%;
 }

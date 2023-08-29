@@ -49,4 +49,17 @@ public class UserDAOImpl implements UserDAO {
         this.userRepository.updateById(id, newUser);
     }
 
+    @Override
+    public void existsById(Long id) {
+        if (!this.userRepository.existsById(id)) {
+            throw new UserNotFoundException("Nie znaleziono użytkownika o id: " + id);
+        }
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        this.existsById(id);
+        this.userRepository.deleteById(id);
+    }
+
 }

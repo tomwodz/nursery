@@ -65,3 +65,15 @@
     width: 10%;
 }
 
+.child .update {
+    text-align: center;
+    display: inline-block;
+    width: 10%;
+}
+
+.child .delete {
+    text-align: center;
+    display: inline-block;
+    width: 10%;
+}
+

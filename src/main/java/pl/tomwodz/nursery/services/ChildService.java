@@ -13,4 +13,7 @@ public interface ChildService {
 
     void updateById(Long id, Child newChild);
 
+    void existsById(Long id);
+    void deleteById(Long id);
+
 }

@@ -21,9 +21,9 @@
 
     </div>
     <div>
-        <a th:if="${admin || employee}" href="/view/child" class="button">Dzieci</a>
-        <a th:if="${admin || employee}" href="/view/groupchildren" class="button">Grupy</a>
-        <a th:if="${admin || employee}" href="/view/parent" class="button">Rodzice</a>
+        <a th:if="${adminoremployee}" href="/view/child" class="button">Dzieci</a>
+        <a th:if="${adminoremployee}" href="/view/groupchildren" class="button">Grupy</a>
+        <a th:if="${adminoremployee}" href="/view/parent" class="button">Rodzice</a>
     </div>
     <div>
         <a th:if="${admin}" href="/view/employee" class="button">Pracownicy</a>

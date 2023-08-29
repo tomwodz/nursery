@@ -57,4 +57,14 @@ public class UserServiceImpl implements pl.tomwodz.nursery.services.UserService 
         }
         this.updateById(id, userWithChangeActive);
     }
+
+    @Override
+    public void existsById(Long id) {
+        this.userDAO.existsById(id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        this.userDAO.deleteById(id);
+    }
 }

@@ -27,6 +27,8 @@
         <div class="role">Rola:</div>
         <div class="details">Szczegóły:</div>
         <div class="changeactive">Zablokuj:</div>
+        <div class="update">Edytuj:</div>
+        <div class="delete">Usuń:</div>
     </div>
 
     <div th:each="user : ${users}" class="user">
@@ -41,6 +43,12 @@
         <div class="changeactive">
             <a th:if="${user.isActive()}" th:href="@{/view/user/active/{id}(id=${user.id})}" class="button_inactive">Zablokuj</a>
             <a th:if="${!user.isActive()}" th:href="@{/view/user/active/{id}(id=${user.id})}" class="button_active">Odblokuj</a>
+        </div>
+        <div class="update">
+            <a th:href="@{/view/user/update/{id}(id=${user.id})}" class="button_update">Edytuj</a>
+        </div>
+        <div class="delete">
+            <a th:href="@{/view/user/delete/{id}(id=${user.id})}" class="button_delete">Usuń</a>
         </div>
     </div>
 

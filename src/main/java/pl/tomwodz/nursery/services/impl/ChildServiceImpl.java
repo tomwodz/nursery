@@ -32,4 +32,14 @@ public class ChildServiceImpl implements pl.tomwodz.nursery.services.ChildServic
     public void updateById(Long id, Child newChild) {
         this.childDAO.updateById(id, newChild);
     }
+
+    @Override
+    public void existsById(Long id) {
+        this.childDAO.existsById(id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        this.childDAO.deleteById(id);
+    }
 }

@@ -16,4 +16,7 @@ public interface UserService {
 
     void changeActiveById(Long id, User userToExchangeActive);
 
+    void existsById(Long id);
+    void deleteById(Long id);
+
 }

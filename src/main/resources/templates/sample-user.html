@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="/common.css">
 <link rel="stylesheet" href="/sample-user.css">
+<link rel="stylesheet" href="/button.css">
 <head>
     <meta charset="UTF-8">
     <title>Nursery - Tomasz Wodziński</title>
@@ -51,7 +52,9 @@
         <div class="name">Imię dziecka:</div>
         <div class="surname">Nazwisko dziecka:</div>
         <div class="groupchildren">Grupa:</div>
-        <div class="details"></div>
+        <div class="details">Szczegóły:</div>
+        <div class="update">Edytuj:</div>
+        <div class="delete">Usuń:</div>
         <div>
             <div th:each="child : ${user.child}" class="child">
                 <div th:text="${child.name}" class="name"></div>
@@ -60,11 +63,18 @@
                 <div class="details">
                     <a th:href="@{/view/child/{id}(id=${child.id})}" class="button">Szczegóły</a>
                 </div>
+                <div class="update">
+                    <a th:href="@{/view/child/update/{id}(id=${child.id})}" class="button_update">Edytuj</a>
+                </div>
+                <div class="delete">
+                    <a th:href="@{/view/child/delete/{id}(id=${child.id})}" class="button_delete">Usuń</a>
+                </div>
             </div>
         </div>
     </div>
     <div>
         <a th:href="@{/view/user/update/{id}(id=${user.id})}" class="button">Edytuj dane</a>
     </div>
+</div>
 </body>
 </html>

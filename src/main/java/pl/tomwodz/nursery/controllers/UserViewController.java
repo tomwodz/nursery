@@ -5,11 +5,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.tomwodz.nursery.model.Child;
 import pl.tomwodz.nursery.model.User;
 import pl.tomwodz.nursery.services.AddressService;
+import pl.tomwodz.nursery.services.ChildService;
 import pl.tomwodz.nursery.services.UserService;
 import pl.tomwodz.nursery.session.SessionData;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -22,6 +25,7 @@ public class UserViewController {
 
     private final UserService userService;
     private final AddressService addressService;
+    private final ChildService childService;
 
     @GetMapping
     public String getAll(Model model) {
@@ -146,6 +150,28 @@ public class UserViewController {
             this.userService.changeActiveById(id, userToChangeActive);
             model.addAttribute("users", this.userService.findByRole(userToChangeActive.getRole()));
             return "user";
+        }
+        return "redirect:/view/login";
+    }
+
+    @GetMapping(path = "/delete/{id}")
+    public String deleteUserById(Model model, @PathVariable Long id) {
+        ModelUtils.addCommonDataToModel(model, this.sessionData);
+        if (this.sessionData.isAdminOrEmployee()) {
+            try {
+                List<Child> childFromUserIdToDelete = this.userService.findById(id)
+                        .getChild()
+                        .stream()
+                        .toList();
+                childFromUserIdToDelete.stream()
+                        .forEach(child -> this.childService.deleteById(child.getId()));
+                this.userService.deleteById(id);
+                model.addAttribute("message", "Usunięto użytkownika (i jego dzieci) o id: " + id);
+                return "message";
+            } catch (Exception e){
+                model.addAttribute("message", "Błąd.");
+                return "message";
+            }
         }
         return "redirect:/view/login";
     }

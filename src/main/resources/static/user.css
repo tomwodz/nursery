@@ -9,19 +9,19 @@
 .user .name {
     text-align: left;
     display: inline-block;
-    width: 20%;
+    width: 10%;
 }
 
 .user .surname {
     text-align: left;
     display: inline-block;
-    width: 20%;
+    width: 15%;
 }
 
 .user  .email {
     text-align: center;
     display: inline-block;
-    width: 20%;
+    width: 10%;
 }
 
 .user  .phone-number {
@@ -43,6 +43,18 @@
 }
 
 .user .changeactive {
+    text-align: center;
+    display: inline-block;
+    width: 10%;
+}
+
+.user .update {
+    text-align: center;
+    display: inline-block;
+    width: 10%;
+}
+
+.user .delete {
     text-align: center;
     display: inline-block;
     width: 10%;

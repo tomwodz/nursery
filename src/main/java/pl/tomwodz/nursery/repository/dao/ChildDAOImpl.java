@@ -44,4 +44,10 @@ public class ChildDAOImpl implements ChildDAO {
         this.existsById(id);
         this.childRepository.updateById(id, newChild);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        this.existsById(id);
+        this.childRepository.deleteById(id);
+    }
 }

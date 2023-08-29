@@ -27,6 +27,7 @@
         <div class="dayofbirth">Dzień urodzin:</div>
         <div class="details">Szczegóły:</div>
         <div class="update">Edytuj:</div>
+        <div class="delete">Usuń:</div>
     </div>
 
     <div th:each="child : ${children}" class="child">
@@ -40,6 +41,9 @@
         </div>
         <div class="update">
             <a th:href="@{/view/child/update/{id}(id=${child.id})}" class="button_update">Edytuj</a>
+        </div>
+        <div class="delete">
+            <a th:href="@{/view/child/delete/{id}(id=${child.id})}" class="button_delete">Usuń</a>
         </div>
     </div>
 

@@ -134,6 +134,22 @@ public class ChildViewController {
         return "redirect:/view/login";
     }
 
+    @GetMapping(path = "/delete/{id}")
+    public String deleteChildById(Model model, @PathVariable Long id) {
+        ModelUtils.addCommonDataToModel(model, this.sessionData);
+        if (this.sessionData.isAdminOrEmployee()) {
+                this.childService.deleteById(id);
+                model.addAttribute("message", "Usunięto dziecko o id: " + id);
+                return "message";}
+        if (this.sessionData.isParent() &&
+                    checkExistenceOfParentChildRelationship(id).isPresent()) {
+            this.childService.deleteById(id);
+            model.addAttribute("message", "Usunięto dziecko o id: " + id);
+            return "message";
+        }
+        return "redirect:/view/login";
+    }
+
     private Optional<Child> checkExistenceOfParentChildRelationship(Long id){
         return this.sessionData.getUser()
                 .getChild()
@@ -154,5 +170,7 @@ public class ChildViewController {
             return groupChildrenSaved;
         }
     }
+
+
 
 }
