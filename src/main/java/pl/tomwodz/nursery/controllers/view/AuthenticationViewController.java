@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.tomwodz.nursery.exception.UserValidationException;
+import pl.tomwodz.nursery.exception.validation.UserValidationException;
 import pl.tomwodz.nursery.services.AuthenticationService;
 import pl.tomwodz.nursery.session.SessionData;
 import pl.tomwodz.nursery.validatros.UserValidator;

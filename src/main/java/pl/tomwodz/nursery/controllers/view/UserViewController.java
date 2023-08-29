@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.tomwodz.nursery.exception.UserValidationException;
+import pl.tomwodz.nursery.exception.validation.AddressValidationException;
+import pl.tomwodz.nursery.exception.validation.UserValidationException;
 import pl.tomwodz.nursery.model.Child;
 import pl.tomwodz.nursery.model.User;
 import pl.tomwodz.nursery.services.AddressService;
@@ -15,7 +16,6 @@ import pl.tomwodz.nursery.session.SessionData;
 import pl.tomwodz.nursery.validatros.UserValidator;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping(path = "/view/user")
@@ -68,7 +68,7 @@ public class UserViewController {
     @GetMapping(path = "/register")
     public String getUserToRegister(Model model){
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        model.addAttribute("info" ,this.sessionData.getInfo());
+        model.addAttribute("info", this.sessionData.getInfo());
         model.addAttribute("userModel", new User());
         return "register";
     }
@@ -76,7 +76,7 @@ public class UserViewController {
     @PostMapping(path = "/register")
     public String postUser(@ModelAttribute User user, Model model, @RequestParam String password2) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        model.addAttribute("info" ,this.sessionData.getInfo());
+        model.addAttribute("info", this.sessionData.getInfo());
         try {
             UserValidator.validateUser(user);
             UserValidator.validatePasswordsEquality(user.getPassword(), password2);
@@ -87,8 +87,8 @@ public class UserViewController {
                 this.sessionData.setInfo("Login zajęty.");
                 return "redirect:/view/user/register";
             }
-        } catch (UserValidationException e) {
-            this.sessionData.setInfo("Dane nieporawne.");
+        } catch (UserValidationException | AddressValidationException e) {
+            this.sessionData.setInfo("Dane niepoprawne.");
             return "redirect:/view/user/register";
         }
     }
@@ -96,6 +96,7 @@ public class UserViewController {
     @GetMapping(path = "/update/{id}")
     public String getUserByUpdate(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
+        model.addAttribute("info", this.sessionData.getInfo());
         if(this.sessionData.isAdmin()){
             model.addAttribute("userModel", this.userService.findById(id));
             return "edit-user";
@@ -115,28 +116,39 @@ public class UserViewController {
         }
         return "redirect:/view/login";
     }
+
     @PostMapping(path = "/update/{id}")
     public String updateUserById(Model model,
-                                  @ModelAttribute User user,
-                                  @PathVariable Long id) {
+                                 @ModelAttribute User user,
+                                 @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if (this.sessionData.isAdmin() ||
-                (this.sessionData.isParent() && this.sessionData.isId() == id))
-        {
-          this.updateUser(model, user, id);
-          return "message";
-        }
-        if(this.sessionData.isEmployee()){
-            User userBox = this.userService.findById(id);
-            if(userBox.getRole().equals(User.Role.PARENT) ||
-                    this.sessionData.getUser().getId().equals(id)
-            ) {
+        model.addAttribute("info", this.sessionData.getInfo());
+
+        if (this.sessionData.isAdminOrEmployee() ||
+                (this.sessionData.isParent() && this.sessionData.isId() == id)) {
+            try {
+                UserValidator.validateUserToUpdate(user);
+            } catch (UserValidationException | AddressValidationException e) {
+                this.sessionData.setInfo("Dane niepoprawne.");
+                model.addAttribute("userModel", this.userService.findById(id));
+                return "edit-user";
+            }
+            if (this.sessionData.isEmployee()) {
+                User userBox = this.userService.findById(id);
+                if (userBox.getRole().equals(User.Role.PARENT) ||
+                        this.sessionData.getUser().getId().equals(id)
+                ) {
+                    this.updateUser(model, user, id);
+                    return "message";
+                }
+            } else {
                 this.updateUser(model, user, id);
                 return "message";
             }
         }
         return "redirect:/view/login";
     }
+
 
     private String updateUser(Model model,User user, Long id){
         try {

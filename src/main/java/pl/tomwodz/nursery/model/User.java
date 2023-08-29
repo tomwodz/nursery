@@ -36,7 +36,7 @@ public class User {
     @Column(columnDefinition = "varchar(50)", nullable = false)
     private String email;
 
-    @Column(columnDefinition = "varchar(20)", nullable = false)
+    @Column(columnDefinition = "varchar(11)", nullable = false)
     private String phoneNumber;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)

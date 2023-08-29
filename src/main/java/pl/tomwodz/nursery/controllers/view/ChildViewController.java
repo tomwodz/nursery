@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.tomwodz.nursery.exception.validation.ChildValidationException;
 import pl.tomwodz.nursery.model.Child;
 import pl.tomwodz.nursery.model.GroupChildren;
 import pl.tomwodz.nursery.model.User;
@@ -13,6 +14,7 @@ import pl.tomwodz.nursery.services.ChildService;
 import pl.tomwodz.nursery.services.GroupChildrenService;
 import pl.tomwodz.nursery.services.UserService;
 import pl.tomwodz.nursery.session.SessionData;
+import pl.tomwodz.nursery.validatros.ChildValidator;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -60,6 +62,7 @@ public class ChildViewController {
     @GetMapping(path = "/")
     public String getChildByCreate(Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
+        model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isParent()) {
             model.addAttribute("childModel", new Child());
             return "add-child";
@@ -76,20 +79,28 @@ public class ChildViewController {
     @PostMapping(path = "/")
     public String postChild(@ModelAttribute Child child, Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if (this.sessionData.isParent()) {
-            child.setId(0L);
-            child.setParent(this.sessionData.getUser());
-            child.setGroupChildren(getGroupChildrenByNewChild());
-            Child childSaved = this.childService.save(child);
-            this.sessionData.getUser().getChild().add(childSaved);
-            model.addAttribute("message", "Dodano dziecko.");
-            return "message";
-        }
-        if (this.sessionData.isAdminOrEmployee()) {
-            child.setId(0L);
-            this.childService.save(child);
-            model.addAttribute("message", "Dodano dziecko.");
-            return "message";
+        model.addAttribute("info", this.sessionData.getInfo());
+        if (this.sessionData.isAdminOrEmployee() || this.sessionData.isParent()) {
+            try {
+                ChildValidator.validateChild(child);
+                child.setId(0L);
+                if (this.sessionData.isParent()) {
+                    child.setParent(this.sessionData.getUser());
+                    child.setGroupChildren(getGroupChildrenByNewChild());
+                    Child childSaved = this.childService.save(child);
+                    this.sessionData.getUser().getChild().add(childSaved);
+                    model.addAttribute("message", "Dodano dziecko.");
+                    return "message";
+                }
+                if (this.sessionData.isAdminOrEmployee()) {
+                    this.childService.save(child);
+                    model.addAttribute("message", "Dodano dziecko.");
+                    return "message";
+                }
+            } catch (ChildValidationException e) {
+                this.sessionData.setInfo("Dane niepoprawne.");
+                return "redirect:/view/child/";
+            }
         }
         return "redirect:/view/login";
     }
@@ -97,6 +108,7 @@ public class ChildViewController {
     @GetMapping(path = "/update/{id}")
     public String getChildByUpdate(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
+        model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee()) {
             model.addAttribute("childModel", this.childService.findById(id));
             model.addAttribute("groupChildren", this.groupChildrenService.findAll());
@@ -116,20 +128,23 @@ public class ChildViewController {
                                   @ModelAttribute Child child,
                                   @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if (this.sessionData.isAdminOrEmployee()) {
-            this.childService.updateById(id, child);
-            model.addAttribute("message", "Uaktualniono dziecko.");
-            return "message";
-        }
-        if (this.sessionData.isParent() &&
-                checkExistenceOfParentChildRelationship(id).isPresent()) {
-            Child childToUpdate = this.childService.findById(id);
-            childToUpdate.setName(child.getName());
-            childToUpdate.setSurname(child.getSurname());
-            childToUpdate.setDayOfBirth(child.getDayOfBirth());
-            this.childService.updateById(id, childToUpdate);
-            model.addAttribute("message", "Uaktualniono dziecko.");
-            return "message";
+        model.addAttribute("info", this.sessionData.getInfo());
+        if (this.sessionData.isAdminOrEmployee() ||
+                (this.sessionData.isParent() &&
+                        checkExistenceOfParentChildRelationship(id).isPresent())) {
+            try {
+                ChildValidator.validateChild(child);
+                Child childToUpdate = this.childService.findById(id);
+                childToUpdate.setName(child.getName());
+                childToUpdate.setSurname(child.getSurname());
+                childToUpdate.setDayOfBirth(child.getDayOfBirth());
+                model.addAttribute("message", "Uaktualniono dziecko.");
+                return "message";
+            } catch (ChildValidationException e) {
+                this.sessionData.setInfo("Dane niepoprawne.");
+                model.addAttribute("childModel", this.childService.findById(id));
+                return "redirect:/view/child/"+ id;
+            }
         }
         return "redirect:/view/login";
     }

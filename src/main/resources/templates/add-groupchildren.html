@@ -14,6 +14,7 @@
 
 <div id="content">
 
+    <div id="info" th:text="${info}"></div>
     <form method="post">
         <input type="text" name="name" id="name" class="input" placeholder="Nazwa grupy" th:field="*{groupChildrenModel.name}">
         <input type="submit" value="Dodaj/Edytuj grupę" class="button">

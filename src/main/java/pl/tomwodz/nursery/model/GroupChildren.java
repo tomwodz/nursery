@@ -19,7 +19,7 @@ public class GroupChildren {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "varchar(50)", nullable = false)
+    @Column(columnDefinition = "varchar(25)", nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "groupChildren")

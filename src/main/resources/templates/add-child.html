@@ -13,7 +13,7 @@
 <div th:replace="~{fragments.html :: menu}"></div>
 
 <div id="content">
-
+    <div id="info" th:text="${info}"></div>
 
     <form method="post">
 
@@ -29,10 +29,9 @@
                                         th:field="*{childModel.surname}">
             </div>
 
-            <div class="age">Data urodzenia:</div>
-            <div class="age">
-                <input type="text" name="name" id="age" class="input" placeholder="2"
-                                    th:field="*{childModel.dayOfBirth}">
+            <div class="dayofbirth">Data urodzenia:</div>
+            <div class="dayofbirth">
+                <input type="date" name="dayofbirth" id="dayofbirth" class="input" placeholder="2020-01-01" th:field="*{childModel.dayOfBirth}">
             </div>
 
         <div  th:if="${!parent}">

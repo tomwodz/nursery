@@ -12,7 +12,7 @@
 <div th:replace="~{fragments.html :: menu}"></div>
 
 <div id="content">
-
+    <div id="info" th:text="${info}"></div>
     <form method="post">
         <input type="text" name="name" id="name" class="input" placeholder="Imię" th:field="*{userModel.name}">
         <input type="text" name="surname" id="surname" class="input" placeholder="Nazwisko" th:field="*{userModel.surname}">

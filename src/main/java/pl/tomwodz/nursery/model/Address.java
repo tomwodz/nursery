@@ -21,10 +21,10 @@ public class Address {
     @Column(columnDefinition = "varchar(50)", nullable = false)
     private String street;
 
-    @Column(columnDefinition = "varchar(50)", nullable = false)
+    @Column(columnDefinition = "varchar(6)", nullable = false)
     private String zipCode;
 
-    @Column(columnDefinition = "varchar(50)", nullable = false)
+    @Column(columnDefinition = "varchar(24)", nullable = false)
     private String city;
 
     @OneToOne(mappedBy = "address")

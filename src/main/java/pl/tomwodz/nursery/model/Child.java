@@ -2,6 +2,7 @@ package pl.tomwodz.nursery.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -30,6 +31,7 @@ public class Child {
     private GroupChildren groupChildren;
 
     @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dayOfBirth;
 
     @ManyToOne(fetch = FetchType.EAGER)
