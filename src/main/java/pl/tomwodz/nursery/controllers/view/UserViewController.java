@@ -167,7 +167,7 @@ public class UserViewController {
     public String changeActiveUserById(Model model,
                                  @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if (this.sessionData.isAdmin()) {
+        if (this.sessionData.isAdminOrEmployee()) {
             User userToChangeActive = this.userService.findById(id);
             this.userService.changeActiveById(id, userToChangeActive);
             model.addAttribute("users", this.userService.findByRole(userToChangeActive.getRole()));

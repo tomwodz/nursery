@@ -6,7 +6,7 @@ import pl.tomwodz.nursery.model.GroupChildren;
 public class GroupChildrenValidator {
 
     public static void validateName(String name) {
-        String regex = "^.{3,25}$";
+        String regex = "^.{3,20}$";
         if (!name.matches(regex)) {
             throw new GroupChildrenValidationException();
         }

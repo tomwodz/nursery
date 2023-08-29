@@ -110,5 +110,9 @@ body {
     display: block;
 }
 
+.info {
+    min-height: 20px;
+}
+
 
 

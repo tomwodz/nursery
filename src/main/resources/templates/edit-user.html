@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="/common.css">
 <head>
     <meta charset="UTF-8">
     <title>Nursery - Tomasz Wodziński</title>
+    <link rel="stylesheet" href="/common.css">
+    <script src="/js/edituser-validator.js"></script>
 </head>
 <body>
 
@@ -12,8 +13,9 @@
 <div th:replace="~{fragments.html :: menu}"></div>
 
 <div id="content">
-    <div id="info" th:text="${info}"></div>
-    <form method="post">
+
+    <form method="post" onsubmit="return validate()">
+        <div id="info" th:text="${info}" class="info"></div>
         <input type="text" name="name" id="name" class="input" placeholder="Imię" th:field="*{userModel.name}">
         <input type="text" name="surname" id="surname" class="input" placeholder="Nazwisko" th:field="*{userModel.surname}">
         <input type="text" name="email" id="email" class="input" placeholder="E-mail" th:field="*{userModel.email}">

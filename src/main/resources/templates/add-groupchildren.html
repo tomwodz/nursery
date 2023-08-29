@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="/common.css">
-<link rel="stylesheet" href="/groupchildren.css">
 <head>
     <meta charset="UTF-8">
     <title>Nursery - Tomasz Wodziński</title>
+    <link rel="stylesheet" href="/common.css">
+    <link rel="stylesheet" href="/groupchildren.css">
+    <script src="/js/groupchildren-validator.js"></script>
 </head>
 <body>
 
@@ -14,8 +15,8 @@
 
 <div id="content">
 
-    <div id="info" th:text="${info}"></div>
-    <form method="post">
+    <form method="post" onsubmit="return validate()">
+        <div id="info" th:text="${info}" class="info"></div>
         <input type="text" name="name" id="name" class="input" placeholder="Nazwa grupy" th:field="*{groupChildrenModel.name}">
         <input type="submit" value="Dodaj/Edytuj grupę" class="button">
     </form>

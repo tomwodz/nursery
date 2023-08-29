@@ -40,7 +40,7 @@ public class UserValidator {
     }
 
     public static void validatePhoneNumber(String phoneNumber) {
-        String regex = "([0-9]{3}-[0-9]{3}-[0-9]{3})";
+        String regex = "[0-9]{3}-[0-9]{3}-[0-9]{3}";
         if (!phoneNumber.matches(regex)) {
             throw new UserValidationException();
         }

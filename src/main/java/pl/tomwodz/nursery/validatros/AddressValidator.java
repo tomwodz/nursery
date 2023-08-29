@@ -14,7 +14,7 @@ public class AddressValidator {
     }
 
     public static void validateZipCode(String zipCode) {
-        String regex = "([0-9]{2}-[0-9]{3})";
+        String regex = "[0-9]{2}-[0-9]{3}";
         if (!zipCode.matches(regex)) {
             throw new AddressValidationException();
         }

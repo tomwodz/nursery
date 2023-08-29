@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="/common.css">
 <head>
     <meta charset="UTF-8">
     <title>Nursery - Tomasz Wodziński</title>
+    <link rel="stylesheet" href="/common.css">
+    <script src="/js/register-validator.js"></script>
 </head>
 <body>
 
@@ -12,8 +13,8 @@
 <div th:replace="~{fragments.html :: menu}"></div>
 
 <div id="content">
-    <div id="info" th:text="${info}"></div>
-    <form method="post">
+    <form method="post" onsubmit="return validate()">
+        <div id="info" th:text="${info}" class="info"></div>
         <input type="text" name="login" id="login" class="input" placeholder="Login (min. 3 znaki)" th:field="*{userModel.login}">
         <input type="password" name="password"  id="password" class="input" placeholder="Hasło (min. 3 znaki)" th:field="*{userModel.password}">
         <input type="password" name="password2"  id="password2" class="input" placeholder="Powtórz hasło (min. 3 znaki)">
