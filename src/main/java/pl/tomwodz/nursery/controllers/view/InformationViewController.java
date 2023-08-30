@@ -1,13 +1,11 @@
 package pl.tomwodz.nursery.controllers.view;
 
 import jakarta.annotation.Resource;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.tomwodz.nursery.exception.validation.InformationValidationException;
-import pl.tomwodz.nursery.model.GroupChildren;
 import pl.tomwodz.nursery.model.Information;
 import pl.tomwodz.nursery.services.InformationService;
 import pl.tomwodz.nursery.session.SessionData;

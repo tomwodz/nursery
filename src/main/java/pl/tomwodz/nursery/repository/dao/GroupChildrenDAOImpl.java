@@ -41,6 +41,7 @@ public class GroupChildrenDAOImpl implements GroupChildrenDAO {
 
     @Override
     public void updateById(Long id, GroupChildren newGroupChildren) {
+        this.existsById(id);
         this.groupChildrenRepository.updateById(id, newGroupChildren);
     }
 
