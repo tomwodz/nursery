@@ -6,13 +6,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import pl.tomwodz.nursery.controllers.rest.InformationRestController;
 import pl.tomwodz.nursery.controllers.view.UserViewController;
 import pl.tomwodz.nursery.exception.UserNotFoundException;
 import pl.tomwodz.nursery.exception.handler.response.ErrorUserResponseDto;
 
 import java.time.LocalDateTime;
 
-@ControllerAdvice(assignableTypes = UserViewController.class)
+@ControllerAdvice(assignableTypes = {UserViewController.class,
+                                    InformationRestController.class})
 @Log4j2
 public class UserErrorHandler {
 

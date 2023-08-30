@@ -4,16 +4,16 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.tomwodz.nursery.controllers.rest.dto.request.CreateGroupChildrenRequestDto;
-import pl.tomwodz.nursery.controllers.rest.dto.request.UpdateGroupChildrenRequestDto;
-import pl.tomwodz.nursery.controllers.rest.dto.response.*;
-import pl.tomwodz.nursery.controllers.rest.mapper.GroupChildrenMapper;
+import pl.tomwodz.nursery.controllers.rest.groupchildren.request.CreateGroupChildrenRequestDto;
+import pl.tomwodz.nursery.controllers.rest.groupchildren.request.UpdateGroupChildrenRequestDto;
+import pl.tomwodz.nursery.controllers.rest.groupchildren.GroupChildrenMapper;
+import pl.tomwodz.nursery.controllers.rest.groupchildren.response.*;
 import pl.tomwodz.nursery.model.GroupChildren;
 import pl.tomwodz.nursery.services.GroupChildrenService;
 
 import java.util.List;
 
-import static pl.tomwodz.nursery.controllers.rest.mapper.GroupChildrenMapper.*;
+import static pl.tomwodz.nursery.controllers.rest.groupchildren.GroupChildrenMapper.*;
 
 @RestController
 @AllArgsConstructor
@@ -38,7 +38,7 @@ public class GroupChildrenRestController {
     @PostMapping
     public ResponseEntity<CreateGroupChildrenResponseDto> postGroupChildren(
             @RequestBody @Valid CreateGroupChildrenRequestDto request) {
-        GroupChildren groupChildren = GroupChildrenMapper.CreateGroupChildrenResponseDtoToGroupChildren(request);
+        GroupChildren groupChildren = CreateGroupChildrenRequestDtoToGroupChildren(request);
         GroupChildren savedGroupChildren = this.groupChildrenService.save(groupChildren);
         CreateGroupChildrenResponseDto response =
                 GroupChildrenMapper.mapFromGroupChildrenToCreateGroupChildrenResponseDto(savedGroupChildren);
@@ -47,10 +47,10 @@ public class GroupChildrenRestController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UpdateGroupChildrenResponseDto> update(@PathVariable Long id,
-                                                        @RequestBody @Valid UpdateGroupChildrenRequestDto request){
+                                                                 @RequestBody @Valid UpdateGroupChildrenRequestDto request){
         GroupChildren newGroupChildren = mapFromUpdateGroupChildrenResponseDtoToGroupChildren(request);
         this.groupChildrenService.updateById(id, newGroupChildren);
-        UpdateGroupChildrenResponseDto response = mapFromGroupChildrentoUpdateGroupChildrenResponseDto(newGroupChildren);
+        UpdateGroupChildrenResponseDto response = mapFromGroupChildrenToUpdateGroupChildrenResponseDto(newGroupChildren);
         return ResponseEntity.ok(response);
     }
 

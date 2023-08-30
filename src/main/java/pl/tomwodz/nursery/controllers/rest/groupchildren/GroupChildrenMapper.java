@@ -1,9 +1,9 @@
-package pl.tomwodz.nursery.controllers.rest.mapper;
+package pl.tomwodz.nursery.controllers.rest.groupchildren;
 
 import org.springframework.http.HttpStatus;
-import pl.tomwodz.nursery.controllers.rest.dto.request.CreateGroupChildrenRequestDto;
-import pl.tomwodz.nursery.controllers.rest.dto.request.UpdateGroupChildrenRequestDto;
-import pl.tomwodz.nursery.controllers.rest.dto.response.*;
+import pl.tomwodz.nursery.controllers.rest.groupchildren.request.CreateGroupChildrenRequestDto;
+import pl.tomwodz.nursery.controllers.rest.groupchildren.request.UpdateGroupChildrenRequestDto;
+import pl.tomwodz.nursery.controllers.rest.groupchildren.response.*;
 import pl.tomwodz.nursery.model.GroupChildren;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public class GroupChildrenMapper {
                 HttpStatus.METHOD_NOT_ALLOWED);
     }
 
-    public static GroupChildren CreateGroupChildrenResponseDtoToGroupChildren(CreateGroupChildrenRequestDto dto) {
+    public static GroupChildren CreateGroupChildrenRequestDtoToGroupChildren(CreateGroupChildrenRequestDto dto) {
         return new GroupChildren(dto.name());
     }
 
@@ -50,7 +50,7 @@ public class GroupChildrenMapper {
         return new GroupChildren(newName);
     }
 
-    public static UpdateGroupChildrenResponseDto mapFromGroupChildrentoUpdateGroupChildrenResponseDto(GroupChildren newGroupChildren) {
+    public static UpdateGroupChildrenResponseDto mapFromGroupChildrenToUpdateGroupChildrenResponseDto(GroupChildren newGroupChildren) {
         return new UpdateGroupChildrenResponseDto(newGroupChildren.getName());
     }
 }

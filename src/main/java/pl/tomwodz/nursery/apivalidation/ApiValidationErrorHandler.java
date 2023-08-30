@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import pl.tomwodz.nursery.controllers.rest.GroupChildrenRestController;
+import pl.tomwodz.nursery.controllers.rest.InformationRestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ControllerAdvice(assignableTypes = GroupChildrenRestController.class)
+@ControllerAdvice(assignableTypes = {GroupChildrenRestController.class,
+                                        InformationRestController.class})
 public class ApiValidationErrorHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

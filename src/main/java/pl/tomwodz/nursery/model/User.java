@@ -51,6 +51,10 @@ public class User {
 
     private boolean active = true;
 
+    public User(Long id) {
+        this.id = id;
+    }
+
     public enum Role {
         ADMIN,
         PARENT,

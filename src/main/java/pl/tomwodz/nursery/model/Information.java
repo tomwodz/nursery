@@ -25,10 +25,14 @@ public class Information {
     @Column(nullable = false)
     private LocalDateTime dateCreation = LocalDateTime.now();
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "varchar(255)", nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "varchar(255)", nullable = false)
     private String content;
 
+    public Information(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }

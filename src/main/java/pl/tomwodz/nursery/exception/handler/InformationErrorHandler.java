@@ -6,13 +6,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import pl.tomwodz.nursery.controllers.rest.InformationRestController;
 import pl.tomwodz.nursery.controllers.view.InformationViewController;
 import pl.tomwodz.nursery.exception.InformationNotFoundException;
 import pl.tomwodz.nursery.exception.handler.response.ErrorInformationResponseDto;
 
 import java.time.LocalDateTime;
 
-@ControllerAdvice(assignableTypes = InformationViewController.class)
+@ControllerAdvice(assignableTypes = {InformationViewController.class,
+                                    InformationRestController.class})
 @Log4j2
 public class InformationErrorHandler {
 

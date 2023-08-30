@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.tomwodz.nursery.model.Information;
 import pl.tomwodz.nursery.repository.InformationDAO;
+import pl.tomwodz.nursery.repository.UserDAO;
 import pl.tomwodz.nursery.services.InformationService;
 
 import java.util.List;
