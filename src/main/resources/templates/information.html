@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nursery - Tomasz Wodziński</title>
+    <link rel="stylesheet" href="/common.css">
+    <link rel="stylesheet" href="/information.css">
+    <link rel="stylesheet" href="/button.css">
+<body>
+
+<div th:replace="~{fragments.html :: header}"></div>
+<div th:replace="~{fragments.html :: logo}"></div>
+<div th:replace="~{fragments.html :: menu}"></div>
+
+<div id="content">
+
+    <div th:if="${adminoremployee}" class="information">
+        <a href="/view/information/" class="button">Dodaj informację</a>
+    </div>
+
+    <div th:each="information : ${informations}" class="information">
+
+        <div th:text="${information.title}" class="title"></div>
+        <div th:text="${information.content}" class="content"></div>
+        <div th:text="${#temporals.format(information.dateCreation,'dd-MM-yyyy HH:mm')}" class="dateCreation"></div>
+        <div th:text="${information.author.name}" class="author"></div>
+
+        <div th:if="${adminoremployee}" class="update">
+            <a th:href="@{/view/information/update/{id}(id=${information.id})}" class="button_update">Edytuj</a>
+        </div>
+        <div th:if="${adminoremployee}" class="delete">
+            <a th:href="@{/view/information/delete/{id}(id=${information.id})}" class="button_delete">Usuń</a>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+</body>
+</html>

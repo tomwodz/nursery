@@ -10,7 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name ="taddress")
-
 public class Address {
 
     @Id
