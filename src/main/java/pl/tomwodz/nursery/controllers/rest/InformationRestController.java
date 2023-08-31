@@ -67,9 +67,9 @@ public class InformationRestController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<DeleteInformationDto> deleteInformationById(@PathVariable Long id) {
+    public ResponseEntity<DeleteInformationResponseDto> deleteInformationById(@PathVariable Long id) {
         this.informationService.deleteById(id);
-        DeleteInformationDto response = mapFromInformationToDeleteInformationResponseDto(id);
+        DeleteInformationResponseDto response = mapFromInformationToDeleteInformationResponseDto(id);
         return ResponseEntity.ok(response);
     }
 

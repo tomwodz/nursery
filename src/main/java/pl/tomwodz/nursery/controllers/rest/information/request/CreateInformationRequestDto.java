@@ -4,7 +4,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record CreateInformationRequestDto(
-
         @NotNull(message = "title must not be null")
         @Size(min = 3, max = 255, message = "title must have 3-255 chars")
         String title,

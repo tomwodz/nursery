@@ -55,13 +55,13 @@ public class GroupChildrenRestController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<DeleteGroupChildrenDto> deleteGroupChildrenById(@PathVariable Long id) {
+    public ResponseEntity<DeleteGroupChildrenResponseDto> deleteGroupChildrenById(@PathVariable Long id) {
         if (this.groupChildrenService.findById(id).getChild().size() == 0) {
             this.groupChildrenService.deleteById(id);
-            DeleteGroupChildrenDto response = mapFromGroupChildrenToDeleteGroupChildrenResponseDto(id);
+            DeleteGroupChildrenResponseDto response = mapFromGroupChildrenToDeleteGroupChildrenResponseDto(id);
             return ResponseEntity.ok(response);
         }
-        DeleteGroupChildrenDto response = GroupChildrenMapper.NotDeleteGroupChildrenWithChild(id);
+        DeleteGroupChildrenResponseDto response = GroupChildrenMapper.NotDeleteGroupChildrenWithChild(id);
         return ResponseEntity.ok(response);
     }
 }

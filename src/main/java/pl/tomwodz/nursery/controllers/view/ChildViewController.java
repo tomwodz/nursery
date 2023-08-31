@@ -86,7 +86,7 @@ public class ChildViewController {
                 child.setId(0L);
                 if (this.sessionData.isParent()) {
                     child.setParent(this.sessionData.getUser());
-                    child.setGroupChildren(getGroupChildrenByNewChild());
+                    child.setGroupChildren(this.groupChildrenService.getGroupChildrenByNewChild());
                     Child childSaved = this.childService.save(child);
                     this.sessionData.getUser().getChild().add(childSaved);
                     model.addAttribute("message", "Dodano dziecko.");
@@ -172,20 +172,5 @@ public class ChildViewController {
                 .filter(child -> child.getId() == id)
                 .findFirst();
     }
-
-    private GroupChildren getGroupChildrenByNewChild(){
-        Optional<GroupChildren> groupChildrenBox = this.groupChildrenService.findByName("Rekrutacja " +
-                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
-        if(groupChildrenBox.isPresent()){
-            return groupChildrenBox.get();
-        } else {
-            GroupChildren groupChildren = new GroupChildren("Rekrutacja " +
-                    LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
-            GroupChildren groupChildrenSaved = this.groupChildrenService.save(groupChildren);
-            return groupChildrenSaved;
-        }
-    }
-
-
 
 }

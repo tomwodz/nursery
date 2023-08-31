@@ -8,14 +8,17 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import pl.tomwodz.nursery.controllers.rest.ChildRestController;
 import pl.tomwodz.nursery.controllers.rest.GroupChildrenRestController;
 import pl.tomwodz.nursery.controllers.rest.InformationRestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ControllerAdvice(assignableTypes = {GroupChildrenRestController.class,
-                                        InformationRestController.class})
+@ControllerAdvice(assignableTypes = {
+        GroupChildrenRestController.class,
+        InformationRestController.class,
+        ChildRestController.class})
 public class ApiValidationErrorHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

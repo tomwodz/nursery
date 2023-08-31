@@ -37,4 +37,9 @@ public class Child {
     @ManyToOne(fetch = FetchType.EAGER)
     private User parent;
 
+    public Child(String name, String surname, LocalDate dayOfBirth) {
+        this.name = name;
+        this.surname = surname;
+        this.dayOfBirth = dayOfBirth;
+    }
 }

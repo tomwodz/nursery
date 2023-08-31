@@ -25,4 +25,11 @@ public class ChildValidator {
         validateName(child.getName());
         validateSurname(child.getSurname());
     }
+
+    public static void validateDayBirth(String dayBrith) {
+        String regex = "[2]{1}[0]{1}[2]{1}[0-9]{1}-[0-9]{2}-[0-9]{2}"; //TODO regex to date
+        if (!dayBrith.matches(regex)) {
+            throw new ChildValidationException();
+        }
+    }
 }

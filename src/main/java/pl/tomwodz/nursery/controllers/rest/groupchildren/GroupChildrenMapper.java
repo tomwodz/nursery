@@ -26,12 +26,12 @@ public class GroupChildrenMapper {
         return new GetGroupChildrenDto(groupChildrenDto);
     }
 
-    public static DeleteGroupChildrenDto mapFromGroupChildrenToDeleteGroupChildrenResponseDto(Long id) {
-        return new DeleteGroupChildrenDto("You deleted groupChildren with id: " + id, HttpStatus.OK);
+    public static DeleteGroupChildrenResponseDto mapFromGroupChildrenToDeleteGroupChildrenResponseDto(Long id) {
+        return new DeleteGroupChildrenResponseDto("You deleted groupChildren with id: " + id, HttpStatus.OK);
     }
 
-    public static DeleteGroupChildrenDto NotDeleteGroupChildrenWithChild(Long id) {
-        return new DeleteGroupChildrenDto(
+    public static DeleteGroupChildrenResponseDto NotDeleteGroupChildrenWithChild(Long id) {
+        return new DeleteGroupChildrenResponseDto(
                 "You can not delete groupChildren with have children. GroupChildren id: " + id,
                 HttpStatus.METHOD_NOT_ALLOWED);
     }

@@ -7,7 +7,8 @@
 <div class="header" th:fragment="header">
 </div>
 <div id="logo" th:fragment="logo">
-    <p>Nursery - Tomasz Wodziński</p>
+    <img src="/images/logo.jpg" style="float:left;">
+    nursery - Tomasz Wodziński
 </div>
 <div id="menu" th:fragment="menu">
     <div>
@@ -29,6 +30,8 @@
     <div>
         <a th:if="${admin}" href="/view/employee" class="button">Pracownicy</a>
     </div>
+</div>
+<div id="footer" th:fragment="footer">
 </div>
 </body>
 </html>

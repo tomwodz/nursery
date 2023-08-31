@@ -19,5 +19,6 @@ public interface GroupChildrenService {
     void existsById(Long id);
 
     void deleteById(Long id);
+    GroupChildren getGroupChildrenByNewChild();
 
 }

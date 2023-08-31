@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import pl.tomwodz.nursery.model.GroupChildren;
 import pl.tomwodz.nursery.repository.GroupChildrenDAO;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,5 +48,19 @@ public class GroupChildrenServiceImpl implements pl.tomwodz.nursery.services.Gro
     @Override
     public void deleteById(Long id) {
         this.groupChildrenDAO.deleteById(id);
+    }
+
+    @Override
+    public GroupChildren getGroupChildrenByNewChild(){
+        Optional<GroupChildren> groupChildrenBox = this.findByName("Rekrutacja " +
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
+        if(groupChildrenBox.isPresent()){
+            return groupChildrenBox.get();
+        } else {
+            GroupChildren groupChildren = new GroupChildren("Rekrutacja " +
+                    LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
+            GroupChildren groupChildrenSaved = this.save(groupChildren);
+            return groupChildrenSaved;
+        }
     }
 }

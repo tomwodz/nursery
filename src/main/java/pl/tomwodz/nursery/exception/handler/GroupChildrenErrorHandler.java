@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import pl.tomwodz.nursery.controllers.rest.ChildRestController;
 import pl.tomwodz.nursery.controllers.rest.GroupChildrenRestController;
 import pl.tomwodz.nursery.controllers.view.GroupChildrenViewController;
 import pl.tomwodz.nursery.exception.handler.response.ErrorGroupChildrenResponseDto;
@@ -15,7 +16,8 @@ import java.time.LocalDateTime;
 
 @ControllerAdvice(assignableTypes = {
                 GroupChildrenViewController.class,
-                GroupChildrenRestController.class})
+                GroupChildrenRestController.class,
+                ChildRestController.class})
 @Log4j2
 public class GroupChildrenErrorHandler {
 

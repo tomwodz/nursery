@@ -9,6 +9,8 @@ body {
 .header {
     background-color: #bdcd5a;
     height: 20px;
+    bottom:0;
+    margin: 0px 0px;
 }
 
 #menu {
@@ -16,13 +18,27 @@ body {
     min-content: 50px;
     border-top: 6px solid #bdcd5a;
     background-color: #6A5ACD;
+    bottom: 0;
 }
 
 #logo {
-    text-align: center;
-    height: 100px;
-    font-size: 80px;
+    text-align: right;
+    width: 70%;
+    min-width: 700px;
+    height: 250px;
+    font-size: 50px;
     font-family: cursive;
+    color: #6A5ACD;
+    bottom: 0;
+    margin: 0px auto;
+}
+
+#footer {
+    background-color: #bdcd5a;
+    height: 25px;
+    width:100%;
+    position: absolute;
+    bottom:0;
     color: #6A5ACD;
 }
 
@@ -113,6 +129,7 @@ body {
 .info {
     min-height: 20px;
 }
+
 
 
 

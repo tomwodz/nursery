@@ -6,13 +6,16 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import pl.tomwodz.nursery.controllers.rest.ChildRestController;
 import pl.tomwodz.nursery.controllers.view.ChildViewController;
 import pl.tomwodz.nursery.exception.ChildNotFoundException;
 import pl.tomwodz.nursery.exception.handler.response.ErrorChildResponseDto;
 
 import java.time.LocalDateTime;
 
-@ControllerAdvice(assignableTypes = ChildViewController.class)
+@ControllerAdvice(assignableTypes = {
+        ChildViewController.class,
+        ChildRestController.class})
 @Log4j2
 public class ChildErrorHandler {
 

@@ -33,8 +33,8 @@ public class InformationMapper {
         return new GetInformationDto(informationDto);
     }
 
-    public static DeleteInformationDto mapFromInformationToDeleteInformationResponseDto(Long id) {
-        return new DeleteInformationDto("You deleted information with id: " + id, HttpStatus.OK);
+    public static DeleteInformationResponseDto mapFromInformationToDeleteInformationResponseDto(Long id) {
+        return new DeleteInformationResponseDto("You deleted information with id: " + id, HttpStatus.OK);
     }
 
     public static Information mapFromCreateInformationRequestDtoToInformation(CreateInformationRequestDto dto) {
