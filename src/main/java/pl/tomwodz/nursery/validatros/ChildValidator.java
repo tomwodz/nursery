@@ -7,20 +7,20 @@ public class ChildValidator {
     public static void validateName(String name) {
         String regex = "^[A-Z][a-z]+$";
         if (!name.matches(regex)) {
-            throw new ChildValidationException();
+            throw new ChildValidationException("Bad name.");
         }
     }
 
     public static void validateSurname(String surname) {
         String regex = "^[A-Z][a-z]+([ -][A-Z][a-z])?$";
         if (!surname.matches(regex)) {
-            throw new ChildValidationException();
+            throw new ChildValidationException("Bad surname.");
         }
     }
 
     public static void validateChild(Child child) {
         if (child.getDayOfBirth() == null) {
-            throw new ChildValidationException();
+            throw new ChildValidationException("Bad day of birth.");
         }
         validateName(child.getName());
         validateSurname(child.getSurname());
@@ -29,7 +29,7 @@ public class ChildValidator {
     public static void validateDayBirth(String dayBrith) {
         String regex = "[2]{1}[0]{1}[2]{1}[0-9]{1}-[0-9]{2}-[0-9]{2}"; //TODO regex to date
         if (!dayBrith.matches(regex)) {
-            throw new ChildValidationException();
+            throw new ChildValidationException("Bad day of birt.");
         }
     }
 }

@@ -29,4 +29,9 @@ public class Address {
     @OneToOne(mappedBy = "address")
     private User user;
 
+    public Address(String street, String zipCode, String city) {
+        this.street = street;
+        this.zipCode = zipCode;
+        this.city = city;
+    }
 }

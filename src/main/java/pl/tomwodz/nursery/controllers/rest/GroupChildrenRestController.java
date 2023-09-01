@@ -48,7 +48,7 @@ public class GroupChildrenRestController {
     @PutMapping("/{id}")
     public ResponseEntity<UpdateGroupChildrenResponseDto> update(@PathVariable Long id,
                                                                  @RequestBody @Valid UpdateGroupChildrenRequestDto request){
-        GroupChildren newGroupChildren = mapFromUpdateGroupChildrenResponseDtoToGroupChildren(request);
+        GroupChildren newGroupChildren = mapFromUpdateGroupChildrenRequestDtoToGroupChildren(request);
         this.groupChildrenService.updateById(id, newGroupChildren);
         UpdateGroupChildrenResponseDto response = mapFromGroupChildrenToUpdateGroupChildrenResponseDto(newGroupChildren);
         return ResponseEntity.ok(response);

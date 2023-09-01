@@ -22,7 +22,7 @@ VALUES
 INSERT INTO public.tuser
 (address_id, id, name, surname, login, password, email, phone_number, role, active)
 VALUES
-(2 ,nextval('tuser_id_seq'),'Iwona','Nowak', 'parent','d0e45878043844ffc41aac437e86b602','twodzinski@op.pl','123-456-789','PARENT', true);
+(2, nextval('tuser_id_seq'),'Iwona','Nowak', 'parent','d0e45878043844ffc41aac437e86b602','twodzinski@op.pl','123-456-789','PARENT', true);
 
 INSERT INTO public.tuser
 (address_id, id, name, surname, login, password, email, phone_number, role, active)

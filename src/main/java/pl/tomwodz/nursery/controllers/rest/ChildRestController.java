@@ -19,7 +19,6 @@ import pl.tomwodz.nursery.validatros.ChildValidator;
 import java.util.List;
 
 import static pl.tomwodz.nursery.controllers.rest.child.ChildMapper.*;
-import static pl.tomwodz.nursery.validatros.ChildValidator.validateDayBirth;
 
 @RestController
 @AllArgsConstructor
@@ -47,8 +46,8 @@ public class ChildRestController {
             @RequestBody @Valid CreateChildRequestDto request,
             @PathVariable Long id) {
         User userFromDb = this.userService.findById(id);
-        validateDayBirth(request.dayBirth());
         Child child = mapFromCreateChildRequestDtoToChild(request);
+        ChildValidator.validateChild(child);
         child.setParent(userFromDb);
         child.setGroupChildren(this.groupChildrenService.getGroupChildrenByNewChild());
         Child savedChild = this.childService.save(child);

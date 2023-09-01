@@ -45,7 +45,7 @@ public class GroupChildrenMapper {
         return new CreateGroupChildrenResponseDto(groupChildrenDto);
     }
 
-    public static GroupChildren mapFromUpdateGroupChildrenResponseDtoToGroupChildren(UpdateGroupChildrenRequestDto dto) {
+    public static GroupChildren mapFromUpdateGroupChildrenRequestDtoToGroupChildren(UpdateGroupChildrenRequestDto dto) {
         String newName = dto.name();
         return new GroupChildren(newName);
     }

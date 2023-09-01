@@ -8,7 +8,9 @@ import pl.tomwodz.nursery.controllers.rest.child.response.*;
 import pl.tomwodz.nursery.model.Child;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 public class ChildMapper {
@@ -44,7 +46,11 @@ public class ChildMapper {
         Child child = new Child();
         child.setName(dto.name());
         child.setSurname(dto.surname());
-        child.setDayOfBirth(LocalDate.parse(dto.dayBirth(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        try {
+        child.setDayOfBirth(LocalDate.parse(dto.dayBirth(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));}
+        catch (DateTimeParseException e){
+            child.setDayOfBirth(null); //TODO
+        }
         return child;
     }
 

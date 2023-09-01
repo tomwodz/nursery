@@ -10,6 +10,7 @@ import pl.tomwodz.nursery.controllers.rest.ChildRestController;
 import pl.tomwodz.nursery.controllers.view.ChildViewController;
 import pl.tomwodz.nursery.exception.ChildNotFoundException;
 import pl.tomwodz.nursery.exception.handler.response.ErrorChildResponseDto;
+import pl.tomwodz.nursery.exception.validation.ChildValidationException;
 
 import java.time.LocalDateTime;
 
@@ -25,5 +26,13 @@ public class ChildErrorHandler {
     public ErrorChildResponseDto handleException(ChildNotFoundException exception){
         log.warn("ChildNotExistException error while accessing child");
         return new ErrorChildResponseDto(exception.getMessage(), HttpStatus.NOT_FOUND, LocalDateTime.now());
+    }
+
+    @ExceptionHandler(ChildValidationException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public ErrorChildResponseDto handleException(ChildValidationException exception){
+        log.warn("ChildValidationException");
+        return new ErrorChildResponseDto(exception.getMessage(), HttpStatus.METHOD_NOT_ALLOWED, LocalDateTime.now());
     }
 }
