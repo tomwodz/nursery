@@ -62,4 +62,7 @@ VALUES
 (nextval('tinformation_id_seq'), 'Rusza rekrutacja do żłobka', 'Prosimy o składanie dokumnetów do...', '2023-08-30 11:21:07.517650', 1);
 
 
-
+INSERT INTO
+    tpresence (id, day, time_entry, time_departure, child_id, presence)
+VALUES
+    (nextval('tpresence_id_seq'),'2021-09-01', '08:07:09', '14:07:09', 1, true);

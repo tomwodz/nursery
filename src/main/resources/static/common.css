@@ -23,8 +23,7 @@ body {
 
 #logo {
     text-align: right;
-    width: 70%;
-    min-width: 700px;
+    width: 100%;
     height: 250px;
     font-size: 50px;
     font-family: cursive;
@@ -33,11 +32,17 @@ body {
     margin: 0px auto;
 }
 
+#above-footer {
+    background-color: #FFFFFF;
+    height: 370px;
+    width:100%;
+    bottom:0;
+}
+
 #footer {
     background-color: #bdcd5a;
-    height: 25px;
+    height: 30px;
     width:100%;
-    position: absolute;
     bottom:0;
     color: #6A5ACD;
 }
@@ -75,7 +80,7 @@ body {
     background-color: #FAFAD2;
     border: 2px solid #bdcd5a;
     width: 90%;
-    margin: 20px auto;
+    margin: 20px auto auto;
     text-align: center;
 }
 

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nursery - Tomasz Wodziński</title>
+    <link rel="stylesheet" href="/common.css">
+    <link rel="stylesheet" href="/presence.css">
+    <link rel="stylesheet" href="/button.css">
+</head>
+<body>
+
+<div th:replace="~{fragments.html :: header}"></div>
+<div th:replace="~{fragments.html :: logo}"></div>
+<div th:replace="~{fragments.html :: menu}"></div>
+
+<div id="content">
+
+    <div th:each="group : ${groupChildren}" class="group">
+        <div>
+        <a th:text="${group.name}"
+           th:href="@{/view/presence/groupchildren/{id}(id=${group.id})}" class="button_group"></a>
+        </div>
+    </div>
+
+<div>
+        <a href="/view/presence/" class="button">Dodaj obecność</a>
+    </div>
+
+    <div  class="presence">
+        <div class="child">Imię i nazwisko:</div>
+        <div class="day">Data:</div>
+        <div class="time-entry">Godzina wejścia:</div>
+        <div class="time-departure">Godzina wyjścia:</div>
+        <div class="update">Edytuj:</div>
+        <div class="delete">Usuń:</div>
+    </div>
+
+    <div th:each="presence : ${presences}" class="presence">
+        <div th:text="${presence.child.name} + ' ' + ${presence.child.surname}" class="child"></div>
+        <div th:text="${presence.day}" class="day"></div>
+        <div th:text="${presence.timeEntry}" class="time-entry"></div>
+        <div th:text="${presence.timeDeparture}" class="time-departure"></div>
+        <div class="update">
+            <a th:href="@{/view/presence/update/{id}(id=${presence.id})}" class="button_update">Edytuj</a>
+        </div>
+        <div class="delete">
+            <a th:href="@{/view/presence/delete/{id}(id=${presence.id})}" class="button_delete">Usuń</a>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="~{fragments.html :: above-footer}"></div>
+<div th:replace="~{fragments.html :: footer}"></div>
+
+</body>
+</html>

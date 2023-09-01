@@ -138,6 +138,10 @@ public class ChildViewController {
                 childToUpdate.setName(child.getName());
                 childToUpdate.setSurname(child.getSurname());
                 childToUpdate.setDayOfBirth(child.getDayOfBirth());
+                if(this.sessionData.isAdminOrEmployee()){
+                    childToUpdate.setGroupChildren(child.getGroupChildren());
+                }
+                this.childService.updateById(id,childToUpdate);
                 model.addAttribute("message", "Uaktualniono dziecko.");
                 return "message";
             } catch (ChildValidationException e) {

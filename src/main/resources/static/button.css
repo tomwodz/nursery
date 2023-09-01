@@ -90,7 +90,7 @@
     display: inline-block;
 }
 
-.button_active {
+.button_active, .button_group{
     font-weight: 600;
     font-size: 16px;
     margin: 5px 10px;
@@ -105,7 +105,7 @@
     display: inline-block;
 }
 
-.button_active:hover {
+.button_active:hover, .button_group:hover {
     font-weight: 600;
     font-size: 16px;
     margin: 5px 10px;

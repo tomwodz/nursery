@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nursery - Tomasz Wodziński</title>
+    <link rel="stylesheet" href="/common.css">
+</head>
+<body>
+
+<div th:replace="~{fragments.html :: header}"></div>
+<div th:replace="~{fragments.html :: logo}"></div>
+<div th:replace="~{fragments.html :: menu}"></div>
+
+<div id="content">
+
+    <form method="post">
+        <div id="info" th:text="${info}" class="info"></div>
+        <div>Dziecko: </div>
+        <select class="select" th:field="*{presenceModel.child.id}">
+            <option th:each="child : ${children}"
+                    th:value="${child.id}"
+                    th:text="${child.name} + ' ' + ${child.surname} ">
+            </option>
+        </select>
+        <div>Dzień: </div>
+        <input type="date" name="day" id="day" class="input" th:field="*{presenceModel.day}">
+        <div>Godzina wejścia: </div>
+        <input type="time" name="timeentry" id="timeentry" class="input" th:field="*{presenceModel.timeEntry}">
+        <div>Godzina wyjścia: </div>
+        <input type="time" name="timedeparture" id="timedeparture" class="input" th:field="*{presenceModel.timeDeparture}">
+        <input type="submit" value="Dodaj/Edytuj" class="button">
+    </form>
+
+</div>
+<div th:replace="~{fragments.html :: above-footer}"></div>
+<div th:replace="~{fragments.html :: footer}"></div>
+</body>
+</html>

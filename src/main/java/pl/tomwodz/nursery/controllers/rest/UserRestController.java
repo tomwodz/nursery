@@ -73,6 +73,7 @@ public class UserRestController {
         UserValidator.validateUserToUpdate(newUser);
         this.userService.updateById(id, newUser);
         newUser.setId(userFromDb.getId());
+        newUser.setRole(userFromDb.getRole()); //TODO role
         UpdateUserResponseDto response = mapFromUserToUpdateUserResponseDto(newUser);
         return ResponseEntity.ok(response);
     }

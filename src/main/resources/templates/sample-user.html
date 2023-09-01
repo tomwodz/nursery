@@ -76,5 +76,9 @@
         <a th:href="@{/view/user/update/{id}(id=${user.id})}" class="button">Edytuj dane</a>
     </div>
 </div>
+
+<div th:replace="~{fragments.html :: above-footer}"></div>
+<div th:replace="~{fragments.html :: footer}"></div>
+
 </body>
 </html>

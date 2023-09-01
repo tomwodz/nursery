@@ -13,25 +13,30 @@
 <div id="menu" th:fragment="menu">
     <div>
         <a href="/" class="button">Strona Główna</a>
-        <a th:if="${logged}"  th:href="@{/view/user/{id}(id=${getid})}" class="button">Moje dane</a>
-        <a th:if="${parent}"  href="/view/child/" class="button">Zarejestruj dziecko</a>
+        <a th:if="${logged}" th:href="@{/view/user/{id}(id=${getid})}" class="button">Moje dane</a>
+        <a th:if="${parent}" href="/view/child/" class="button">Zarejestruj dziecko</a>
         <a th:if="${logged}" href="/view/information" class="button">Informacje</a>
 
         <a th:if="${!logged}" href="/view/login" class="button">Zaloguj</a>
         <a th:if="${logged}" href="/view/logout" class="button">Wyloguj</a>
-        <a th:if="${!logged}"  href="/view/user/register" class="button">Zarejestruj</a>
+        <a th:if="${!logged}" href="/view/user/register" class="button">Zarejestruj</a>
 
     </div>
     <div>
         <a th:if="${adminoremployee}" href="/view/child" class="button">Dzieci</a>
         <a th:if="${adminoremployee}" href="/view/groupchildren" class="button">Grupy</a>
         <a th:if="${adminoremployee}" href="/view/parent" class="button">Rodzice</a>
+        <a th:if="${adminoremployee}" href="/view/presence" class="button">Obecności</a>
     </div>
     <div>
         <a th:if="${admin}" href="/view/employee" class="button">Pracownicy</a>
     </div>
 </div>
+<div id="above-footer" th:fragment="above-footer">
+    <img src="/images/above-footer.jpg" style="float:right;">
+</div>
 <div id="footer" th:fragment="footer">
+    www.devjava.pl
 </div>
 </body>
 </html>
