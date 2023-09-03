@@ -3,55 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Nursery - Tomasz Wodziński</title>
-    <link rel="stylesheet" href="/common.css">
-    <link rel="stylesheet" href="/child.css">
-    <link rel="stylesheet" href="/button.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/button.css">
+    <link rel="stylesheet" href="/css/table.css">
 </head>
 <body>
 
-<div th:replace="~{fragments.html :: header}"></div>
-<div th:replace="~{fragments.html :: logo}"></div>
-<div th:replace="~{fragments.html :: menu}"></div>
+<header th:replace="~{fragments.html :: header}"></header>
+<nav th:replace="~{fragments.html :: nav}"></nav>
+<main th:if="${adminoremployee}">
 
-<div id="content">
+    <section class="undernav">
+            <a href="/view/child/" class="button_undernav">Dodaj dziecko</a>
+    </section>
 
-    <div>
-        <a href="/view/child/" class="button">Dodaj dziecko</a>
-    </div>
+    <section class="section_content">
+        <h2>Dzieci</h2>
+        <table>
+            <tr>
+                <th>Imię:</th>
+                <th>Nazwisko:</th>
+                <th class="center">Data urodzin:</th>
+                <th class="center">Szczegóły:</th>
+                <th class="center">Grupa:</th>
+                <th class="center">Edytuj: </th>
+                <th class="center">Usuń:</th>
+            </tr>
+            <tr th:each="child : ${children}" >
+                <td th:text="${child.name}"></td>
+                <td th:text="${child.surname}"></td>
+                <td class="center"th:text="${child.dayOfBirth}"></td>
+                <td class="center"><a th:href="@{/view/child/{id}(id=${child.id})}" class="button">Szczegóły</a></td>
+                <td class="center">
+                <a th:text="${child.groupChildren.name}"
+                   th:href="@{/view/groupchildren/{id}(id=${child.groupChildren.id})}" class="button_group"></a>
+                </td>
+                <td class="center"><a th:href="@{/view/child/update/{id}(id=${child.id})}" class="button_update">Edytuj</a></td>
+                <td class="center"><a th:href="@{/view/child/delete/{id}(id=${child.id})}" class="button_delete">Usuń</a></td>
+            </tr>
+        </table>
+    </section>
 
-    <div class="children">Dzieci:</div>
-    <div class="child">
-        <div class="name">Imię:</div>
-        <div class="surname">Nazwisko:</div>
-        <div class="groupchildren">Grupa:</div>
-        <div class="dayofbirth">Dzień urodzin:</div>
-        <div class="details">Szczegóły:</div>
-        <div class="update">Edytuj:</div>
-        <div class="delete">Usuń:</div>
-    </div>
+</main>
 
-    <div th:each="child : ${children}" class="child">
-
-        <div th:text="${child.name}" class="name"></div>
-        <div th:text="${child.surname}" class="surname"></div>
-        <div th:text="${child.groupChildren.name}" class="groupchildren"></div>
-        <div th:text="${child.dayOfBirth}" class="dayofbirth"></div>
-        <div class="details">
-            <a th:href="@{/view/child/{id}(id=${child.id})}" class="button">Szczegóły</a>
-        </div>
-        <div class="update">
-            <a th:href="@{/view/child/update/{id}(id=${child.id})}" class="button_update">Edytuj</a>
-        </div>
-        <div class="delete">
-            <a th:href="@{/view/child/delete/{id}(id=${child.id})}" class="button_delete">Usuń</a>
-        </div>
-    </div>
-
-
-</div>
-
-<div th:replace="~{fragments.html :: above-footer}"></div>
-<div th:replace="~{fragments.html :: footer}"></div>
+<footer th:replace="~{fragments.html :: footer}"></footer>
 
 </body>
 </html>

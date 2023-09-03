@@ -3,62 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Nursery - Tomasz Wodziński</title>
-    <link rel="stylesheet" href="/common.css">
-    <link rel="stylesheet" href="/user.css">
-    <link rel="stylesheet" href="/button.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/button.css">
+    <link rel="stylesheet" href="/css/table.css">
     <script src="/js/register-validator.js"></script>
 </head>
 <body>
 
-<div th:replace="~{fragments.html :: header}"></div>
-<div th:replace="~{fragments.html :: logo}"></div>
-<div th:replace="~{fragments.html :: menu}"></div>
+<header th:replace="~{fragments.html :: header}"></header>
+<nav th:replace="~{fragments.html :: nav}"></nav>
+<main th:if="${adminoremployee}">
 
-<div id="content">
-    <div>
-        <a th:if="${adminoremployee}"  href="/view/user/register" class="button">Dodaj rodzica:</a>
-    </div>
+    <section class="undernav" >
+        <a href="/view/user/register" class="button_undernav">Dodaj rodzica</a>
+    </section>
 
-    <div class="users">Użytkownicy:</div>
-    <div class="user">
-        <div class="name">Imię:</div>
-        <div class="surname">Nazwisko:</div>
-        <div class="email">E-mail:</div>
-        <div class="phone-number">Numer telefonu:</div>
-        <div class="role">Rola:</div>
-        <div class="details">Szczegóły:</div>
-        <div class="changeactive">Zablokuj:</div>
-        <div class="update">Edytuj:</div>
-        <div class="delete">Usuń:</div>
-    </div>
+    <section class="section_content">
+        <h2>Użytkownicy</h2>
+        <table>
+            <tr>
+                <th>Imię:</th>
+                <th>Nazwisko:</th>
+                <th>E-mail:</th>
+                <th>Numer telefonu:</th>
+                <th class="center">Rola:</th>
+                <th class="center">Szczegóły:</th>
+                <th class="center">Zablokuj:</th>
+                <th class="center">Edytuj:</th>
+                <th class="center">Usuń:</th>
+            </tr>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.surname}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.phoneNumber}"></td>
+                <td class="center" th:text="${user.role}"></td>
+                <td class="center">
+                    <a th:href="@{/view/user/{id}(id=${user.id})}" class="button">Szczegóły</a>
+                </td>
+                <td class="center"><a th:if="${user.isActive()}" th:href="@{/view/user/active/{id}(id=${user.id})}"
+                       class="button_inactive">Zablokuj</a>
+                    <a th:if="${!user.isActive()}" th:href="@{/view/user/active/{id}(id=${user.id})}"
+                       class="button_active">Odblokuj</a>
+                </td>
+                <td class="center">
+                    <a th:href="@{/view/user/update/{id}(id=${user.id})}" class="button_update">Edytuj</a>
+                </td>
+                <td class="center">
+                    <a th:href="@{/view/user/delete/{id}(id=${user.id})}" class="button_delete">Usuń</a>
+                </td>
+            </tr>
+        </table>
+    </section>
 
-    <div th:each="user : ${users}" class="user">
-        <div th:text="${user.name}" class="name"></div>
-        <div th:text="${user.surname}" class="surname"></div>
-        <div th:text="${user.email}" class="email"></div>
-        <div th:text="${user.phoneNumber}" class="phone-number"></div>
-        <div th:text="${user.role}" class="role"></div>
-        <div class="details">
-            <a th:href="@{/view/user/{id}(id=${user.id})}" class="button">Szczegóły</a>
-        </div>
-        <div class="changeactive">
-            <a th:if="${user.isActive()}" th:href="@{/view/user/active/{id}(id=${user.id})}" class="button_inactive">Zablokuj</a>
-            <a th:if="${!user.isActive()}" th:href="@{/view/user/active/{id}(id=${user.id})}" class="button_active">Odblokuj</a>
-        </div>
-        <div class="update">
-            <a th:href="@{/view/user/update/{id}(id=${user.id})}" class="button_update">Edytuj</a>
-        </div>
-        <div class="delete">
-            <a th:href="@{/view/user/delete/{id}(id=${user.id})}" class="button_delete">Usuń</a>
-        </div>
-    </div>
+</main>
 
-
-</div>
-
-<div th:replace="~{fragments.html :: above-footer}"></div>
-<div th:replace="~{fragments.html :: footer}"></div>
-
+<footer th:replace="~{fragments.html :: footer}"></footer>
 
 </body>
 </html>

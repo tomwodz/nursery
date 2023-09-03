@@ -3,82 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <title>Nursery - Tomasz Wodziński</title>
-    <link rel="stylesheet" href="/common.css">
-    <link rel="stylesheet" href="/sample-user.css">
-    <link rel="stylesheet" href="/button.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/button.css">
+    <link rel="stylesheet" href="/css/table.css">
 </head>
 <body>
 
-<div th:replace="~{fragments.html :: header}"></div>
-<div th:replace="~{fragments.html :: logo}"></div>
-<div th:replace="~{fragments.html :: menu}"></div>
+<header th:replace="~{fragments.html :: header}"></header>
+<nav th:replace="~{fragments.html :: nav}"></nav>
+<main>
 
-<div id="content">
+    <section class="section_content_center">
+        <h2>Dane</h2>
+        <table class="table_sample">
+            <tr>
+                <td>Imię:</td>
+                <td th:text="${user.name}"></td>
+            </tr>
+            <tr>
+                <td>Nazwisko:</td>
+                <td th:text="${user.surname}"></td>
+            </tr>
+            <tr>
+                <td>Login:</td>
+                <td th:text="${user.login}"></td>
+            </tr>
+            <tr>
+                <td>Numer telefonu:</td>
+                <td th:text="${user.phoneNumber}"></td>
+            </tr>
+            <tr>
+                <td>E-mial:</td>
+                <td th:text="${user.email}"></td>
+            </tr>
+            <tr>
+                <td>Ulica:</td>
+                <td th:text="${user.address.street}"></td>
+            </tr>
+            <tr>
+                <td>Kod pocztowy:</td>
+                <td th:text="${user.address.zipCode}"></td>
+            </tr>
+            <tr>
+                <td>Miasto:</td>
+                <td th:text="${user.address.city}"></td>
+            </tr>
+        </table>
+    </section>
 
-    <div class="sample-user">
-        <div class="name">Imię:</div>
-        <div th:text="${user.name}" class="name"></div>
-    </div>
-    <div class="sample-user">
-        <div class="surname">Nazwisko:</div>
-        <div th:text="${user.surname}" class="surname"></div>
-    </div>
-    <div class="sample-user">
-        <div class="login">Login:</div>
-        <div th:text="${user.login}" class="login"></div>
-    </div>
-    <div class="sample-user">
-        <div class="phone-number">Numer telefonu:</div>
-        <div th:text="${user.phoneNumber}" class="phone-number"></div>
-    </div>
-    <div class="sample-user">
-        <div class="email">E-mail:</div>
-        <div th:text="${user.email}" class="email"></div>
-    </div>
-    <div class="sample-user">
-        <div class="street">Ulica:</div>
-        <div th:text="${user.address.street}" class="street"></div>
-    </div>
-    <div class="sample-user">
-        <div class="zipcode">Kod pocztowy:</div>
-        <div th:text="${user.address.zipCode}" class="zipcode"></div>
-    </div>
-    <div class="sample-user">
-        <div class="city">Miasto:</div>
-        <div th:text="${user.address.city}" class="city"></div>
-    </div>
+    <section class="section_content">
+        <h2>Dzieci</h2>
+        <table>
+            <tr>
+                <th>Imię:</th>
+                <th>Nazwisko:</th>
+                <th>Grupa:</th>
+                <th>Data urodzin:</th>
+                <th>Szczegóły:</th>
+                <th>Edytuj:</th>
+                <th>Usuń:</th>
+            </tr>
+            <tr th:each="child : ${user.child}">
+                <td th:text="${child.name}"></td>
+                <td th:text="${child.surname}"></td>
+                <td th:text="${child.groupChildren.name}"></td>
+                <td th:text="${child.dayOfBirth}"></td>
+                <td><a th:href="@{/view/child/{id}(id=${child.id})}" class="button">Szczegóły</a></td>
+                <td><a th:href="@{/view/child/update/{id}(id=${child.id})}" class="button_update">Edytuj</a></td>
+                <td><a th:href="@{/view/child/delete/{id}(id=${child.id})}" class="button_delete">Usuń</a></td>
+            </tr>
+        </table>
+    </section>
 
-    <div class="child">
-        <div class="name">Imię dziecka:</div>
-        <div class="surname">Nazwisko dziecka:</div>
-        <div class="groupchildren">Grupa:</div>
-        <div class="details">Szczegóły:</div>
-        <div class="update">Edytuj:</div>
-        <div class="delete">Usuń:</div>
-        <div>
-            <div th:each="child : ${user.child}" class="child">
-                <div th:text="${child.name}" class="name"></div>
-                <div th:text="${child.surname}" class="surname"></div>
-                <div th:text="${child.groupChildren.name}" class="groupchildren"></div>
-                <div class="details">
-                    <a th:href="@{/view/child/{id}(id=${child.id})}" class="button">Szczegóły</a>
-                </div>
-                <div class="update">
-                    <a th:href="@{/view/child/update/{id}(id=${child.id})}" class="button_update">Edytuj</a>
-                </div>
-                <div class="delete">
-                    <a th:href="@{/view/child/delete/{id}(id=${child.id})}" class="button_delete">Usuń</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div>
-        <a th:href="@{/view/user/update/{id}(id=${user.id})}" class="button">Edytuj dane</a>
-    </div>
-</div>
+    <section class="undernav">
+        <a th:href="@{/view/user/update/{id}(id=${user.id})}" class="button_undernav">Edytuj dane</a>
+    </section>
 
-<div th:replace="~{fragments.html :: above-footer}"></div>
-<div th:replace="~{fragments.html :: footer}"></div>
+</main>
+
+<footer th:replace="~{fragments.html :: footer}"></footer>
 
 </body>
 </html>

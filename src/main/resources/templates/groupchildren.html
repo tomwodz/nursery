@@ -3,50 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Nursery - Tomasz Wodziński</title>
-    <link rel="stylesheet" href="/common.css">
-    <link rel="stylesheet" href="/groupchildren.css">
-    <link rel="stylesheet" href="/button.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/button.css">
+    <link rel="stylesheet" href="/css/table.css">
 </head>
 <body>
 
-<div th:replace="~{fragments.html :: header}"></div>
-<div th:replace="~{fragments.html :: logo}"></div>
-<div th:replace="~{fragments.html :: menu}"></div>
+<header th:replace="~{fragments.html :: header}"></header>
+<nav th:replace="~{fragments.html :: nav}"></nav>
+<main th:if="${adminoremployee}">
 
-<div id="content">
+    <section class="undernav">
+        <a href="/view/groupchildren/" class="button_undernav">Dodaj grupę</a>
+    </section>
 
+    <section class="section_content">
+        <h2>Grupy</h2>
+        <table>
+            <tr>
+                <th>Nazwa grupy:</th>
+                <th class="center">Ilość dzieci:</th>
+                <th class="center">Szczegóły:</th>
+                <th class="center">Edytuj:</th>
+                <th class="center" >Usuń:</th>
+            </tr>
+            <tr th:each="group : ${groupChildren}">
+                <td th:text="${group.name}"></td>
+                <td class="center" th:text="${group.child.size()}"></td>
+                <td class="center">
+                    <a th:href="@{/view/groupchildren/{id}(id=${group.id})}" class="button">Szczegóły</a>
+                </td>
+                <td class="center">
+                    <a th:href="@{/view/groupchildren/update/{id}(id=${group.id})}" class="button_update">Edytuj</a>
+                </td>
+                <td class="center">
+                    <a th:href="@{/view/groupchildren/delete/{id}(id=${group.id})}" class="button_delete">Usuń</a>
+                </td>
+            </tr>
+        </table>
+    </section>
 
+</main>
 
-    <div class="groupchildren">
-        <div class="name">Nazwa grupy:</div>
-        <div class="size">Ilość dzieci:</div>
-        <div class="details">Szczegóły:</div>
-        <div class="update">Edytuj:</div>
-        <div class="delete"></div>
-    </div>
-
-    <div th:each="group : ${groupChildren}" class="groupchildren">
-        <div th:text="${group.name}" class="name"></div>
-        <div th:text="${group.child.size()}" class="size"></div>
-        <div class="details">
-            <a th:href="@{/view/groupchildren/{id}(id=${group.id})}" class="button">Szczegóły</a>
-        </div>
-        <div class="update">
-            <a th:href="@{/view/groupchildren/update/{id}(id=${group.id})}" class="button_update">Edytuj</a>
-        </div>
-        <div class="delete">
-            <a th:href="@{/view/groupchildren/delete/{id}(id=${group.id})}" class="button_delete">Usuń</a>
-        </div>
-    </div>
-
-    <div>
-        <a href="/view/groupchildren/" class="button">Dodaj grupę</a>
-    </div>
-
-</div>
-
-<div th:replace="~{fragments.html :: above-footer}"></div>
-<div th:replace="~{fragments.html :: footer}"></div>
+<footer th:replace="~{fragments.html :: footer}"></footer>
 
 </body>
 </html>

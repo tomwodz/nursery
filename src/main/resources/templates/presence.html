@@ -3,55 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Nursery - Tomasz Wodziński</title>
-    <link rel="stylesheet" href="/common.css">
-    <link rel="stylesheet" href="/presence.css">
-    <link rel="stylesheet" href="/button.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/button.css">
+    <link rel="stylesheet" href="/css/table.css">
 </head>
 <body>
 
-<div th:replace="~{fragments.html :: header}"></div>
-<div th:replace="~{fragments.html :: logo}"></div>
-<div th:replace="~{fragments.html :: menu}"></div>
+<header th:replace="~{fragments.html :: header}"></header>
+<nav th:replace="~{fragments.html :: nav}"></nav>
+<main>
 
-<div id="content">
+    <section class="undernav" th:if="${adminoremployee}">
+        <a href="/view/presence/" class="button_undernav">Dodaj obecność</a>
+    </section>
 
-    <div th:each="group : ${groupChildren}" class="group">
-        <div>
-        <a th:text="${group.name}"
-           th:href="@{/view/presence/groupchildren/{id}(id=${group.id})}" class="button_group"></a>
-        </div>
-    </div>
+    <section class="section_content" th:if="${adminoremployee}">
+        <table>
+            <tr>
+                <td th:each="group : ${groupChildren}">
+                    <a th:text="${group.name}"
+                       th:href="@{/view/presence/groupchildren/{id}(id=${group.id})}" class="button_group"></a>
+                </td>
+            </tr>
+        </table>
+    </section>
 
-<div>
-        <a href="/view/presence/" class="button">Dodaj obecność</a>
-    </div>
+    <section class="section_content">
+        <table>
+            <tr>
+                <th>Imię:</th>
+                <th>Nazwisko:</th>
+                <th class="center">Data:</th>
+                <th class="center">Godzina wejścia:</th>
+                <th class="center">Godzina wyjścia:</th>
+                <th class="center" th:if="${adminoremployee}">Edytuj:</th>
+                <th class="center" th:if="${adminoremployee}">Usuń</th>
+            </tr>
+            <tr th:each="presence : ${presences}">
+            <td th:text="${presence.child.name}"></td>
+                <td th:text=" ${presence.child.surname}"></td>
+                <td class="center" th:text="${presence.day}" ></td>
+                <td class="center" th:text="${presence.timeEntry}"></td>
+                <td class="center" th:text="${presence.timeDeparture}" ></td>
+                <td class="center">
+                    <a th:href="@{/view/presence/update/{id}(id=${presence.id})}" class="button_update"
+                       th:if="${adminoremployee}">Edytuj</a>
+                </td>
+                <td class="center"><a th:href="@{/view/presence/delete/{id}(id=${presence.id})}" class="button_delete"
+                       th:if="${adminoremployee}">Usuń</a>
+                </td>
+            </tr>
+        </table>
+    </section>
 
-    <div  class="presence">
-        <div class="child">Imię i nazwisko:</div>
-        <div class="day">Data:</div>
-        <div class="time-entry">Godzina wejścia:</div>
-        <div class="time-departure">Godzina wyjścia:</div>
-        <div class="update">Edytuj:</div>
-        <div class="delete">Usuń:</div>
-    </div>
+</main>
 
-    <div th:each="presence : ${presences}" class="presence">
-        <div th:text="${presence.child.name} + ' ' + ${presence.child.surname}" class="child"></div>
-        <div th:text="${presence.day}" class="day"></div>
-        <div th:text="${presence.timeEntry}" class="time-entry"></div>
-        <div th:text="${presence.timeDeparture}" class="time-departure"></div>
-        <div class="update">
-            <a th:href="@{/view/presence/update/{id}(id=${presence.id})}" class="button_update">Edytuj</a>
-        </div>
-        <div class="delete">
-            <a th:href="@{/view/presence/delete/{id}(id=${presence.id})}" class="button_delete">Usuń</a>
-        </div>
-    </div>
-
-</div>
-
-<div th:replace="~{fragments.html :: above-footer}"></div>
-<div th:replace="~{fragments.html :: footer}"></div>
+<footer th:replace="~{fragments.html :: footer}"></footer>
 
 </body>
 </html>

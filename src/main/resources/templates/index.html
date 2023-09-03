@@ -3,24 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <title>Nursery - Tomasz Wodziński</title>
-    <link rel="stylesheet" href="/common.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/table.css">
+    <link rel="stylesheet" href="/css/button.css">
 </head>
 <body>
-
-<div th:replace="~{fragments.html :: header}"></div>
-<div th:replace="~{fragments.html :: logo}"></div>
-<div th:replace="~{fragments.html :: menu}"></div>
-
-<div id="content">
-    Zapraszam do zapoznania się z tym projektem.<br><br>
-    Login admina: tomwodz Hasło: tomwodz<br><br>
-    Login pracownika: employee Hasło: employee<br><br>
-    Login rodzica: parent Hasło: parent<br><br>
-    Funkcjonalności:<br><br>
-    W przypadku pytań prosze o kontakt:<br>
-    twodzinski@op.pl
-</div>
-<div th:replace="~{fragments.html :: above-footer}"></div>
-<div th:replace="~{fragments.html :: footer}"></div>
+<header th:replace="~{fragments.html :: header}"></header>
+<nav th:replace="~{fragments.html :: nav}"></nav>
+<main>
+    <section class="section_content">
+        <h2>Wstęp</h2>
+        <p>
+            Witaj, <br>
+            Dziękuję, że znalazałaś/eś czas na poznanie się z moim projektem.<br>
+        <p>
+        <h3>Dane do logowania:</h3>
+        <table>
+            <tr>
+                <th>Rola:</th>
+                <th>Login:</th>
+                <th>Hasło:</th>
+            </tr>
+            <tr>
+                <td>Admin</td>
+                <td>tomwodz</td>
+                <td>tomwodz</td>
+            </tr>
+            <tr>
+                <td>Pracownik</td>
+                <td>employee</td>
+                <td>employee</td>
+            </tr>
+            <tr>
+                <td>Rodzic</td>
+                <td>parent</td>
+                <td>parent</td>
+            </tr>
+        </table>
+    </section>
+    <section class="section_content">
+        <h2>Funkcjonalności</h2>
+        <h3>Użytkownik niezalogowany:</h3>
+        <ol>
+            <li>Założenie konta</li>
+            <li>Logowanie</li>
+        </ol>
+        <h3>Rodzic:</h3>
+        <ol>
+            <li>Rejestowanie dzieci do rekrutacji</li>
+            <li>Usuwanie lub edycja danych swoich dzieci</li>
+            <li>Edycja swoich danych</li>
+            <li>Przeglądanie informacji</li>
+        </ol>
+        <h3>Pracownik:</h3>
+        <h3>Admin:</h3>
+    </section>
+    <section class="section_content">
+        <h2>Technologie i narzędzia</h2>
+        <h3>Java 17, Spring Boot, Spring Data, Hibernate, PostgreSQL, Spring MVC, Lombok, Docker, JavaScript, HTML, CSS
+        </h3>
+    </section>
+    <section class="section_content">
+        <h2>Kontakt</h2>
+        <p>W przypadku pytań proszę o kontakt:</p>
+        </p> twodzinski@op.pl</p>
+    </section>
+</main>
+<footer th:replace="~{fragments.html :: footer}"></footer>
 </body>
 </html>

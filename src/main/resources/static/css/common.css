@@ -2,18 +2,11 @@ body {
     font-size: 14px;
     font-family: Verdana,  serif;
     font-style: normal;
-    text-align: center;
+    text-align: left;
     background-color: #FFFFFF;
 }
 
-.header {
-    background-color: #bdcd5a;
-    height: 20px;
-    bottom:0;
-    margin: 0px 0px;
-}
-
-#menu {
+.nav {
     text-align: center;
     min-content: 50px;
     border-top: 6px solid #bdcd5a;
@@ -21,7 +14,7 @@ body {
     bottom: 0;
 }
 
-#logo {
+.header {
     text-align: right;
     width: 100%;
     height: 250px;
@@ -32,56 +25,50 @@ body {
     margin: 0px auto;
 }
 
-#above-footer {
-    background-color: #FFFFFF;
+.footer {
+    border-bottom: 15px solid #bdcd5a;
     height: 370px;
-    width:100%;
-    bottom:0;
-}
-
-#footer {
-    background-color: #bdcd5a;
-    height: 30px;
-    width:100%;
+    width: 100%;
     bottom:0;
     color: #6A5ACD;
 }
 
-.button {
-    font-weight: 600;
-    font-size: 16px;
-    margin: 5px 10px;
-    text-align: center;
-    text-decoration: none;
-    border: 2px solid #4333a8;
-    border-radius: 8px;
-    padding: 5px 20px;
-    color: #4333a8;
-    background-color: #FAFAD2;
-    cursor: pointer;
-    display: inline-block;
-}
 
-.button:hover{
-    font-size: 16px;
-    margin: 5px 10px;
-    text-align: center;
-    text-decoration: none;
-    border: 2px solid #4333a8;
-    border-radius: 8px;
-    padding: 5px 20px;
-    color: #4333a8;
-    background-color: #f9f9ba;
-    cursor: pointer;
-    display: inline-block;
-}
-
-#content {
-    background-color: #FAFAD2;
-    border: 2px solid #bdcd5a;
+section {
     width: 90%;
-    margin: 20px auto auto;
+    margin: 20px auto;
+}
+
+.section_content {
+    background-color: #FAFAD2;
+    border: 3px solid #bdcd5a;
+    border-radius: 25px;
+    padding: 25px 25px;
+    text-align: left;
+}
+
+.section_content_center {
+    background-color: #FAFAD2;
+    border: 3px solid #bdcd5a;
+    border-radius: 25px;
+    padding: 25px 25px;
     text-align: center;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.undernav {
+    text-align: center;
+    background-color: #6ec5d3;
+    border: 3px solid #39a9bc;
+    padding: 5px 5px;
+    border-radius: 25px;
 }
 
 .input{
@@ -107,12 +94,6 @@ body {
     border-radius: 8px;
     padding: 5px 20px;
     display: block;
-}
-
-#menu_admin {
-    text-align: center;
-    border-top: 6px solid #bdcd5a;
-    background-color: #6A5ACD;
 }
 
 .select {

@@ -1,3 +1,32 @@
+.button {
+    font-weight: 600;
+    font-size: 16px;
+    margin: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid #4333a8;
+    border-radius: 8px;
+    padding: 5px 20px;
+    color: #4333a8;
+    background-color: #FAFAD2;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.button:hover{
+    font-size: 16px;
+    margin: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid #4333a8;
+    border-radius: 8px;
+    padding: 5px 20px;
+    color: #4333a8;
+    background-color: #f9f9ba;
+    cursor: pointer;
+    display: inline-block;
+}
+
 .button_delete {
     font-weight: 600;
     font-size: 16px;
@@ -116,6 +145,36 @@
     padding: 5px 20px;
     color: #FFFFFF;
     background-color: #109010;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.button_undernav {
+    font-weight: 600;
+    font-size: 16px;
+    margin: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid #39a9bc;
+    border-radius: 8px;
+    padding: 5px 20px;
+    color: #39a9bc;
+    background-color: #FAFAD2;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.button_undernav:hover {
+    font-weight: 600;
+    font-size: 16px;
+    margin: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid #39a9bc;
+    border-radius: 8px;
+    padding: 5px 20px;
+    color: #39a9bc;
+    background-color: #f9f9ba;
     cursor: pointer;
     display: inline-block;
 }

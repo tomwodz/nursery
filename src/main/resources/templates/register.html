@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Nursery - Tomasz Wodziński</title>
-    <link rel="stylesheet" href="/common.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/button.css">
     <script src="/js/register-validator.js"></script>
 </head>
 <body>
 
-<div th:replace="~{fragments.html :: header}"></div>
-<div th:replace="~{fragments.html :: logo}"></div>
-<div th:replace="~{fragments.html :: menu}"></div>
+<header th:replace="~{fragments.html :: header}"></header>
+<nav th:replace="~{fragments.html :: nav}"></nav>
+<main>
 
-<div id="content">
+    <section>
+        <h2>Rejestracja</h2>
+    </section>
 
+    <section class="section_content_center">
     <form method="post" onsubmit="return validate()">
         <div id="info" th:text="${info}" class="info"></div>
         <input type="text" name="login" id="login" class="input" placeholder="Login (min. 3 znaki)" th:field="*{userModel.login}">
@@ -29,11 +33,11 @@
         <input type="text" name="city" id="city" class="input" placeholder="Miasto" th:field="*{userModel.address.city}">
         <input type="submit" value="Zarejestruj" class="button">
     </form>
+    </section>
 
-</div>
+</main>
 
-<div th:replace="~{fragments.html :: above-footer}"></div>
-<div th:replace="~{fragments.html :: footer}"></div>
+<footer th:replace="~{fragments.html :: footer}"></footer>
 
 </body>
 </html>

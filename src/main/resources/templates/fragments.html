@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<div class="header" th:fragment="header">
-</div>
-<div id="logo" th:fragment="logo">
-    <img src="/images/logo.jpg" style="float:left;">
+<header class="header" th:fragment="logo">
+    <img src="/images/logo.jpg" style="float:left;" alt="Piękne kwiaty">
     nursery - Tomasz Wodziński
-</div>
-<div id="menu" th:fragment="menu">
+</header>
+<nav class="nav" th:fragment="nav">
     <div>
         <a href="/" class="button">Strona Główna</a>
         <a th:if="${logged}" th:href="@{/view/user/{id}(id=${getid})}" class="button">Moje dane</a>
@@ -31,12 +29,14 @@
     <div>
         <a th:if="${admin}" href="/view/employee" class="button">Pracownicy</a>
     </div>
+</nav>
+
+
 </div>
-<div id="above-footer" th:fragment="above-footer">
-    <img src="/images/above-footer.jpg" style="float:right;">
-</div>
-<div id="footer" th:fragment="footer">
-    www.devjava.pl
-</div>
+
+<footer class="footer" th:fragment="footer">
+    <img src="/images/above-footer.jpg" style="float:right;" alt="Piękne kwiaty">
+</footer>
+
 </body>
 </html>

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.tomwodz.nursery.model.Presence;
+import pl.tomwodz.nursery.repository.PresenceDAO;
+import pl.tomwodz.nursery.repository.dao.springdata.PresenceRepository;
 import pl.tomwodz.nursery.services.ChildService;
 import pl.tomwodz.nursery.services.GroupChildrenService;
 import pl.tomwodz.nursery.services.PresenceService;
@@ -25,6 +27,7 @@ public class PresenceViewController {
     private final PresenceService presenceService;
     private final ChildService childService;
     private final GroupChildrenService groupChildrenService;
+    private final PresenceRepository presenceRepository;
 
     @GetMapping
     public String getAll(Model model) {
@@ -41,10 +44,11 @@ public class PresenceViewController {
     public String getAllByGroupChildrenId(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         if (this.sessionData.isAdminOrEmployee()) {
-            model.addAttribute("presences",
+            //model.addAttribute("presences", this.presenceRepository.findByChild_GroupChildren(id));
+       model.addAttribute("presences",
                     this.presenceService.findAll().stream()
                             .filter(child -> child.getChild().getGroupChildren().getId()==id)
-                            .toList()); //TODO wyciagać pofiltorwane z bazy danych
+                            .toList()); //TODO wyciagać pofiltorwane z bazy danych*/
             model.addAttribute("groupChildren", this.groupChildrenService.findAll());
             return "presence";
         }

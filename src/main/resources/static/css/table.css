@@ -1,0 +1,14 @@
+table {
+    width: 100%;
+    border: 0px;
+}
+
+.table_sample {
+    width: 50%;
+    text-align: left;
+}
+
+th {
+    background: #fcd78f;
+}
+

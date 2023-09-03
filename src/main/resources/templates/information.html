@@ -3,43 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Nursery - Tomasz Wodziński</title>
-    <link rel="stylesheet" href="/common.css">
-    <link rel="stylesheet" href="/information.css">
-    <link rel="stylesheet" href="/button.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/button.css">
+    <link rel="stylesheet" href="/css/table.css">
 <body>
 
-<div th:replace="~{fragments.html :: header}"></div>
-<div th:replace="~{fragments.html :: logo}"></div>
-<div th:replace="~{fragments.html :: menu}"></div>
+<header th:replace="~{fragments.html :: header}"></header>
+<nav th:replace="~{fragments.html :: nav}"></nav>
+<main>
 
-<div id="content">
+    <section class="undernav" th:if="${adminoremployee}">
+        <a href="/view/information/" class="button_undernav">Dodaj informację</a>
+    </section>
 
-    <div th:if="${adminoremployee}" class="information">
-        <a href="/view/information/" class="button">Dodaj informację</a>
-    </div>
+    <section th:each="information : ${informations}" class="section_content">
+        <h2 th:text="${information.title}"></h2>
+        <p th:text="${information.content}"></p>
+        <p th:text="${#temporals.format(information.dateCreation,'dd-MM-yyyy HH:mm')}" class="right"></p>
+        <p th:text="${information.author.name}" class="right"></p>
+        <a th:href="@{/view/information/update/{id}(id=${information.id})}"
+           th:if="${adminoremployee}" class="button_update">Edytuj</a>
+        <a th:href="@{/view/information/delete/{id}(id=${information.id})}"
+           th:if="${adminoremployee}" class="button_delete">Usuń</a>
+    </section>
 
-    <div th:each="information : ${informations}" class="information">
+</main>
 
-        <div th:text="${information.title}" class="title"></div>
-        <div th:text="${information.content}" class="content"></div>
-        <div th:text="${#temporals.format(information.dateCreation,'dd-MM-yyyy HH:mm')}" class="dateCreation"></div>
-        <div th:text="${information.author.name}" class="author"></div>
-
-        <div th:if="${adminoremployee}" class="update">
-            <a th:href="@{/view/information/update/{id}(id=${information.id})}" class="button_update">Edytuj</a>
-        </div>
-        <div th:if="${adminoremployee}" class="delete">
-            <a th:href="@{/view/information/delete/{id}(id=${information.id})}" class="button_delete">Usuń</a>
-        </div>
-
-
-    </div>
-
-
-</div>
-
-<div th:replace="~{fragments.html :: above-footer}"></div>
-<div th:replace="~{fragments.html :: footer}"></div>
+<footer th:replace="~{fragments.html :: footer}"></footer>
 
 </body>
 </html>
