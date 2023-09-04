@@ -6,6 +6,7 @@ import pl.tomwodz.nursery.model.Presence;
 import pl.tomwodz.nursery.repository.PresenceDAO;
 import pl.tomwodz.nursery.services.PresenceService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -17,6 +18,21 @@ public class PresenceServiceImpl implements PresenceService {
     @Override
     public List<Presence> findAll() {
         return this.presenceDAO.findAll();
+    }
+
+    @Override
+    public List<Presence> findAllByChildIdAndDayBetween(Long id, LocalDate dateFrom, LocalDate dateTo) {
+        return this.presenceDAO.findAllByChildIdAndDayBetween(id, dateFrom, dateTo);
+    }
+
+    @Override
+    public List<Presence> findAllByGroupChildrenIdAndDayBetween(Long id, LocalDate dateFrom, LocalDate dateTo) {
+        return this.presenceDAO.findAllByGroupChildrenIdAndDayBetween(id, dateFrom, dateTo);
+    }
+
+    @Override
+    public List<Presence> findAllByChildId(Long id) {
+        return this.presenceDAO.findAllByChildId(id);
     }
 
     @Override

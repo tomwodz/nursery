@@ -6,8 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.tomwodz.nursery.model.Presence;
-import pl.tomwodz.nursery.repository.PresenceDAO;
-import pl.tomwodz.nursery.repository.dao.springdata.PresenceRepository;
+import pl.tomwodz.nursery.model.PresenceByChildBetweenDates;
+import pl.tomwodz.nursery.model.PresenceByGroupChildrenBetweenDates;
 import pl.tomwodz.nursery.services.ChildService;
 import pl.tomwodz.nursery.services.GroupChildrenService;
 import pl.tomwodz.nursery.services.PresenceService;
@@ -15,6 +15,8 @@ import pl.tomwodz.nursery.session.SessionData;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 @RequestMapping(path = "/view/presence")
@@ -27,14 +29,12 @@ public class PresenceViewController {
     private final PresenceService presenceService;
     private final ChildService childService;
     private final GroupChildrenService groupChildrenService;
-    private final PresenceRepository presenceRepository;
 
     @GetMapping
-    public String getAll(Model model) {
+    public String getEmpty(Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         if (this.sessionData.isAdminOrEmployee()) {
-            model.addAttribute("presences", this.presenceService.findAll());
-            model.addAttribute("groupChildren", this.groupChildrenService.findAll());
+            model.addAttribute("presences", Collections.emptyList());
             return "presence";
         }
         return "redirect:/view/login";
@@ -126,5 +126,78 @@ public class PresenceViewController {
         return "redirect:/view/presence";
     }
 
+    @GetMapping("/childbetween/")
+    public String getModelByAllPresencesByChildIdBetweenDates(Model model,
+                                                              @ModelAttribute PresenceByChildBetweenDates request) {
+        ModelUtils.addCommonDataToModel(model, this.sessionData);
+        model.addAttribute("info", this.sessionData.getInfo());
+        if (this.sessionData.isAdminOrEmployee()) {
+            model.addAttribute("presences", Collections.emptyList());
+            model.addAttribute("children", this.childService.findAll());
+            model.addAttribute("PresenceByChildBetweenDatesModel", new PresenceByChildBetweenDates());
+            return "presence_child";
+        }
+        return "redirect:/view/login";
+    }
+    @PostMapping("/childbetween/")
+    public String getAllPresencesByChildIdBetweenDates(Model model,
+                                                       @ModelAttribute PresenceByChildBetweenDates request) {
+        ModelUtils.addCommonDataToModel(model, this.sessionData);
+        model.addAttribute("info", this.sessionData.getInfo());
+        if (this.sessionData.isAdminOrEmployee()) {
+            model.addAttribute("children", this.childService.findAll());
+            model.addAttribute("PresenceByChildBetweenDatesModel", new PresenceByChildBetweenDates());
+            model.addAttribute("presences", this.presenceService
+                    .findAllByChildIdAndDayBetween(request.getChild().getId(), request.getDataFrom(), request.getDataTo()));
+            return "presence_child";
+        }
+        return "redirect:/view/login";
+    }
+
+    @GetMapping("/groupchildrenbetween/")
+    public String getModelByAllPresencesByGroupChildrenIdBetweenDates(Model model,
+                                                                      @ModelAttribute PresenceByGroupChildrenBetweenDates request) {
+        ModelUtils.addCommonDataToModel(model, this.sessionData);
+        model.addAttribute("info", this.sessionData.getInfo());
+        if (this.sessionData.isAdminOrEmployee()) {
+            model.addAttribute("presences", Collections.emptyList());
+            model.addAttribute("groupsChildren", this.groupChildrenService.findAll());
+            model.addAttribute("PresenceByGroupChildrenBetweenDates", new PresenceByGroupChildrenBetweenDates());
+            return "presence_groupchildren";
+        }
+        return "redirect:/view/login";
+    }
+
+    @PostMapping("/groupchildrenbetween/")
+    public String getAllPresencesByGroupChildrenIdBetweenDates(Model model,
+                                                               @ModelAttribute PresenceByGroupChildrenBetweenDates request) {
+        ModelUtils.addCommonDataToModel(model, this.sessionData);
+        model.addAttribute("info", this.sessionData.getInfo());
+        if (this.sessionData.isAdminOrEmployee()) {
+            List<Presence> presences = this.presenceService.findAllByGroupChildrenIdAndDayBetween(
+                    request.getGroupChildren().getId(),
+                    request.getDataFrom(),
+                    request.getDataTo());
+            model.addAttribute("presences", presences);
+            model.addAttribute("groupsChildren", this.groupChildrenService.findAll());
+            model.addAttribute("PresenceByGroupChildrenBetweenDates", new PresenceByGroupChildrenBetweenDates());
+            return "presence_groupchildren";
+        }
+        return "redirect:/view/login";
+    }
+
+    @GetMapping("/child/{id}")
+    public String getAllPresencesByChildId(Model model,
+                                           @PathVariable Long id) {
+        ModelUtils.addCommonDataToModel(model, this.sessionData);
+        model.addAttribute("info", this.sessionData.getInfo());
+        if (this.sessionData.isAdminOrEmployee()) {
+            model.addAttribute("presences", this.presenceService.findAllByChildId(id));
+            model.addAttribute("children", this.childService.findAll());
+            model.addAttribute("PresenceByChildBetweenDatesModel", new PresenceByChildBetweenDates());
+            return "presence_child";
+        }
+        return "redirect:/view/login";
+    }
 
 }

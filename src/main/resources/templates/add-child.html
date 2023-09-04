@@ -17,7 +17,7 @@
         <h2>Dodaj dziecko</h2>
     </section>
 
-    <section class="section_content_center">
+    <section class="section-content-center">
         <form method="post" onsubmit="return validate()">
             <p>Imię:</p>
             <input type="text" name="name" id="name" class="input" placeholder="Imię" th:field="*{childModel.name}">
@@ -37,14 +37,14 @@
             </select>
 
             <p th:if="${!parent}">Rodzic:</p>
-            <select class="select" th:field="*{childModel.parent.id}" th:if="${!parent}">>
+            <select class="select" th:field="*{childModel.parent.id}" th:if="${!parent}">
                 <option th:each="parent : ${parents}"
                         th:value="${parent.id}"
                         th:text="${parent.name} + ' ' + ${parent.surname}">
                 </option>
             </select>
 
-            <input type="submit" value="Dodaj dziecko" class="button">
+            <input type="submit" value="Dodaj dziecko" class="btn">
         </form>
     </section>
 

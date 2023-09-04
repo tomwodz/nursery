@@ -14,10 +14,10 @@
 <main th:if="${adminoremployee}">
 
     <section class="undernav">
-        <a href="/view/groupchildren/" class="button_undernav">Dodaj grupę</a>
+        <a href="/view/groupchildren/" class="btn-undernav">Dodaj grupę</a>
     </section>
 
-    <section class="section_content">
+    <section class="section-content">
         <h2>Grupy</h2>
         <table>
             <tr>
@@ -31,13 +31,13 @@
                 <td th:text="${group.name}"></td>
                 <td class="center" th:text="${group.child.size()}"></td>
                 <td class="center">
-                    <a th:href="@{/view/groupchildren/{id}(id=${group.id})}" class="button">Szczegóły</a>
+                    <a th:href="@{/view/groupchildren/{id}(id=${group.id})}" class="btn">Szczegóły</a>
                 </td>
                 <td class="center">
-                    <a th:href="@{/view/groupchildren/update/{id}(id=${group.id})}" class="button_update">Edytuj</a>
+                    <a th:href="@{/view/groupchildren/update/{id}(id=${group.id})}" class="btn-update">Edytuj</a>
                 </td>
                 <td class="center">
-                    <a th:href="@{/view/groupchildren/delete/{id}(id=${group.id})}" class="button_delete">Usuń</a>
+                    <a th:href="@{/view/groupchildren/delete/{id}(id=${group.id})}" class="btn-delete">Usuń</a>
                 </td>
             </tr>
         </table>

@@ -15,10 +15,10 @@
 <main th:if="${adminoremployee}">
 
     <section class="undernav" >
-        <a href="/view/user/register" class="button_undernav">Dodaj rodzica</a>
+        <a href="/view/user/register" class="btn-undernav">Dodaj rodzica</a>
     </section>
 
-    <section class="section_content">
+    <section class="section-content">
         <h2>Użytkownicy</h2>
         <table>
             <tr>
@@ -39,18 +39,18 @@
                 <td th:text="${user.phoneNumber}"></td>
                 <td class="center" th:text="${user.role}"></td>
                 <td class="center">
-                    <a th:href="@{/view/user/{id}(id=${user.id})}" class="button">Szczegóły</a>
+                    <a th:href="@{/view/user/{id}(id=${user.id})}" class="btn">Szczegóły</a>
                 </td>
                 <td class="center"><a th:if="${user.isActive()}" th:href="@{/view/user/active/{id}(id=${user.id})}"
-                       class="button_inactive">Zablokuj</a>
+                       class="btn-inactive">Zablokuj</a>
                     <a th:if="${!user.isActive()}" th:href="@{/view/user/active/{id}(id=${user.id})}"
-                       class="button_active">Odblokuj</a>
+                       class="btn-active">Odblokuj</a>
                 </td>
                 <td class="center">
-                    <a th:href="@{/view/user/update/{id}(id=${user.id})}" class="button_update">Edytuj</a>
+                    <a th:href="@{/view/user/update/{id}(id=${user.id})}" class="btn-update">Edytuj</a>
                 </td>
                 <td class="center">
-                    <a th:href="@{/view/user/delete/{id}(id=${user.id})}" class="button_delete">Usuń</a>
+                    <a th:href="@{/view/user/delete/{id}(id=${user.id})}" class="btn-delete">Usuń</a>
                 </td>
             </tr>
         </table>

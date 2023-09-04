@@ -18,13 +18,13 @@
         <h2>Logowanie</h2>
     </section>
 
-    <section class="section_content_center">
+    <section class="section-content-center">
     <form method="post" onsubmit="return validate()">
         <div id="info" th:text="${info}" class="info"></div>
         <input type="text" name="login"  id="login" class="input" placeholder="Login">
         <input type="password" name="password" id="password" class="input" placeholder="Hasło">
-        <input type="submit" value="Zaloguj" class="button">
-        <a href="/view/user/register" class="button">Zarejestruj</a>
+        <input type="submit" value="Zaloguj" class="btn">
+        <a href="/view/user/register" class="btn">Zarejestruj</a>
     </form>
     </section>
 

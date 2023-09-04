@@ -14,12 +14,12 @@
 <nav th:replace="~{fragments.html :: nav}"></nav>
 <main>
 
-    <section class="section_content_center">
+    <section class="section-content-center">
     <form method="post" onsubmit="return validate()">
         <div id="info" th:text="${info}" class="info"></div>
         <input type="text" name="title" id="title" class="input" placeholder="Tytuł" th:field="*{informationModel.title}">
         <input type="text" name="content" id="contentinformation" class="input" placeholder="Treść.." th:field="*{informationModel.content}">
-        <input type="submit" value="Dodaj/Edytuj" class="button">
+        <input type="submit" value="Dodaj/Edytuj" class="btn">
     </form>
     </section>
 

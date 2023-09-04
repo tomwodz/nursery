@@ -13,18 +13,18 @@
 <main>
 
     <section class="undernav" th:if="${adminoremployee}">
-        <a href="/view/information/" class="button_undernav">Dodaj informację</a>
+        <a href="/view/information/" class="btn-undernav">Dodaj informację</a>
     </section>
 
-    <section th:each="information : ${informations}" class="section_content">
+    <section th:each="information : ${informations}" class="section-content">
         <h2 th:text="${information.title}"></h2>
         <p th:text="${information.content}"></p>
         <p th:text="${#temporals.format(information.dateCreation,'dd-MM-yyyy HH:mm')}" class="right"></p>
         <p th:text="${information.author.name}" class="right"></p>
         <a th:href="@{/view/information/update/{id}(id=${information.id})}"
-           th:if="${adminoremployee}" class="button_update">Edytuj</a>
+           th:if="${adminoremployee}" class="btn-update">Edytuj</a>
         <a th:href="@{/view/information/delete/{id}(id=${information.id})}"
-           th:if="${adminoremployee}" class="button_delete">Usuń</a>
+           th:if="${adminoremployee}" class="btn-delete">Usuń</a>
     </section>
 
 </main>

@@ -14,11 +14,11 @@
 <nav th:replace="~{fragments.html :: nav}"></nav>
 <main>
 
-    <section class="section_content_center">
+    <section class="section-content-center">
     <form method="post" onsubmit="return validate()">
         <div id="info" th:text="${info}" class="info"></div>
         <input type="text" name="name" id="name" class="input" placeholder="Nazwa grupy" th:field="*{groupChildrenModel.name}">
-        <input type="submit" value="Dodaj/Edytuj grupę" class="button">
+        <input type="submit" value="Dodaj/Edytuj grupę" class="btn">
     </form>
     </section>
 

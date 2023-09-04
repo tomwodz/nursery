@@ -10,24 +10,24 @@
 </header>
 <nav class="nav" th:fragment="nav">
     <div>
-        <a href="/" class="button">Strona Główna</a>
-        <a th:if="${logged}" th:href="@{/view/user/{id}(id=${getid})}" class="button">Moje dane</a>
-        <a th:if="${parent}" href="/view/child/" class="button">Zarejestruj dziecko</a>
-        <a th:if="${logged}" href="/view/information" class="button">Informacje</a>
+        <a href="/" class="btn">Strona Główna</a>
+        <a th:if="${logged}" th:href="@{/view/user/{id}(id=${getid})}" class="btn">Moje dane</a>
+        <a th:if="${parent}" href="/view/child/" class="btn">Zarejestruj dziecko</a>
+        <a th:if="${logged}" href="/view/information" class="btn">Informacje</a>
 
-        <a th:if="${!logged}" href="/view/login" class="button">Zaloguj</a>
-        <a th:if="${logged}" href="/view/logout" class="button">Wyloguj</a>
-        <a th:if="${!logged}" href="/view/user/register" class="button">Zarejestruj</a>
+        <a th:if="${!logged}" href="/view/login" class="btn">Zaloguj</a>
+        <a th:if="${logged}" href="/view/logout" class="btn">Wyloguj</a>
+        <a th:if="${!logged}" href="/view/user/register" class="btn">Zarejestruj</a>
 
     </div>
     <div>
-        <a th:if="${adminoremployee}" href="/view/child" class="button">Dzieci</a>
-        <a th:if="${adminoremployee}" href="/view/groupchildren" class="button">Grupy</a>
-        <a th:if="${adminoremployee}" href="/view/parent" class="button">Rodzice</a>
-        <a th:if="${adminoremployee}" href="/view/presence" class="button">Obecności</a>
+        <a th:if="${adminoremployee}" href="/view/child" class="btn">Dzieci</a>
+        <a th:if="${adminoremployee}" href="/view/groupchildren" class="btn">Grupy</a>
+        <a th:if="${adminoremployee}" href="/view/parent" class="btn">Rodzice</a>
+        <a th:if="${adminoremployee}" href="/view/presence" class="btn">Obecności</a>
     </div>
     <div>
-        <a th:if="${admin}" href="/view/employee" class="button">Pracownicy</a>
+        <a th:if="${admin}" href="/view/employee" class="btn">Pracownicy</a>
     </div>
 </nav>
 

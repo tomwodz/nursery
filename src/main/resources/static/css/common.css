@@ -39,7 +39,7 @@ section {
     margin: 20px auto;
 }
 
-.section_content {
+.section-content {
     background-color: #FAFAD2;
     border: 3px solid #bdcd5a;
     border-radius: 25px;
@@ -47,7 +47,7 @@ section {
     text-align: left;
 }
 
-.section_content_center {
+.section-content-center {
     background-color: #FAFAD2;
     border: 3px solid #bdcd5a;
     border-radius: 25px;
@@ -81,7 +81,7 @@ section {
     border-radius: 8px;
     padding: 5px 20px;
     display: block;
-    text-align: left;
+    text-align: center;
 }
 
 .input:hover{
@@ -115,6 +115,8 @@ section {
 .info {
     min-height: 20px;
 }
+
+
 
 
 

@@ -9,6 +9,7 @@ import pl.tomwodz.nursery.model.Presence;
 import pl.tomwodz.nursery.repository.PresenceDAO;
 import pl.tomwodz.nursery.repository.dao.springdata.PresenceRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -21,6 +22,21 @@ public class PresenceDAOImpl implements PresenceDAO {
     @Override
     public List<Presence> findAll() {
         return this.presenceRepository.findAll(Sort.by(Sort.Direction.DESC, "day"));
+    }
+
+    @Override
+    public List<Presence> findAllByChildIdAndDayBetween(Long id, LocalDate dateFrom, LocalDate dateTo) {
+        return this.presenceRepository.findAllByChild_IdAndDayBetween(id, dateFrom, dateTo);
+    }
+
+    @Override
+    public List<Presence> findAllByGroupChildrenIdAndDayBetween(Long id, LocalDate dateFrom, LocalDate dateTo) {
+        return this.presenceRepository.findAllByChild_GroupChildren_IdAndDayBetween(id, dateFrom, dateTo);
+    }
+
+    @Override
+    public List<Presence> findAllByChildId(Long id) {
+        return this.presenceRepository.findAllByChild_Id(id);
     }
 
     @Override

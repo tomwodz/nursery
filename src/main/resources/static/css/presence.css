@@ -1,0 +1,20 @@
+.input-search-presence {
+    background-color: #fafad2;
+    border: 2px solid #f0768b;
+    color: #f0768b;
+    font-size: 16px;
+    margin: 5px auto;
+    border-radius: 8px;
+    padding: 5px 20px;
+    display: inline-block;
+    text-align: center;
+}
+
+.section-search-presence {
+    background-color: #ffafc1;
+    border: 3px solid #f0768b;
+    border-radius: 25px;
+    padding: 5px 5px;
+    text-align: center;
+    color: #f0768b;
+}

@@ -17,7 +17,7 @@
         <h2>Rejestracja</h2>
     </section>
 
-    <section class="section_content_center">
+    <section class="section-content-center">
     <form method="post" onsubmit="return validate()">
         <div id="info" th:text="${info}" class="info"></div>
         <input type="text" name="login" id="login" class="input" placeholder="Login (min. 3 znaki)" th:field="*{userModel.login}">
@@ -31,7 +31,7 @@
         <input type="text" name="street" id="street" class="input" placeholder="Ulica" th:field="*{userModel.address.street}">
         <input type="text" name="zipCode" id="zipCode" class="input" placeholder="Kod pocztowy np. 00-000" th:field="*{userModel.address.zipCode}">
         <input type="text" name="city" id="city" class="input" placeholder="Miasto" th:field="*{userModel.address.city}">
-        <input type="submit" value="Zarejestruj" class="button">
+        <input type="submit" value="Zarejestruj" class="input-search-presence">
     </form>
     </section>
 

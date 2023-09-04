@@ -13,7 +13,7 @@
 <nav th:replace="~{fragments.html :: nav}"></nav>
 <main>
 
-    <section class="section_content_center">
+    <section class="section-content-center">
     <form method="post" onsubmit="return validate()">
         <div id="info" th:text="${info}" class="info"></div>
         <input type="text" name="name" id="name" class="input" placeholder="Imię" th:field="*{userModel.name}">
@@ -29,8 +29,8 @@
                         th:text="${role}">
                 </option>
             </select>
-        <div class="details">
-            <input type="submit" value="Edytuj użytkownika" class="button">
+        <div>
+            <input type="submit" value="Edytuj użytkownika" class="btn-update">
         </div>
     </form>
     </section>

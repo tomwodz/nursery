@@ -11,7 +11,7 @@
 <header th:replace="~{fragments.html :: header}"></header>
 <nav th:replace="~{fragments.html :: nav}"></nav>
 <main>
-    <section class="section_content">
+    <section class="section-content">
         <h2>Wstęp</h2>
         <p>
             Witaj, <br>
@@ -41,29 +41,49 @@
             </tr>
         </table>
     </section>
-    <section class="section_content">
-        <h2>Funkcjonalności</h2>
-        <h3>Użytkownik niezalogowany:</h3>
-        <ol>
-            <li>Założenie konta</li>
-            <li>Logowanie</li>
-        </ol>
-        <h3>Rodzic:</h3>
-        <ol>
-            <li>Rejestowanie dzieci do rekrutacji</li>
-            <li>Usuwanie lub edycja danych swoich dzieci</li>
-            <li>Edycja swoich danych</li>
-            <li>Przeglądanie informacji</li>
-        </ol>
-        <h3>Pracownik:</h3>
-        <h3>Admin:</h3>
-    </section>
-    <section class="section_content">
+    <section class="section-content">
         <h2>Technologie i narzędzia</h2>
         <h3>Java 17, Spring Boot, Spring Data, Hibernate, PostgreSQL, Spring MVC, Lombok, Docker, JavaScript, HTML, CSS
         </h3>
     </section>
-    <section class="section_content">
+    <section class="section-content">
+        <h2>Funkcjonalności</h2>
+        <h2>Gość:</h2>
+        <h3>(Użytkownik niezalogowany)</h3>
+        <ul>
+            <li>Rejestracja konta użytkownika (domyślna rola PARENT),</li>
+            <li>Przeglądanie ogólnodostępnych treści.</li>
+        </ul>
+        <h2>Rodzic:</h2>
+        <h3>(Użytkownik zalogowany z rolą PARENT)</h3>
+        <ul>
+            <li>Przeglądanie informacji,</li>
+            <li>Edycja swoich danych,</li>
+            <li>Rejestracja dziecka do żłobka i edycja jego danych (Domyślna grupa dziecka w żłobku „Rekrutacja + rok”.</li>
+        </ul>
+        <h2>Pracownik:</h2>
+        <h3>(Użytkownik zalogowany z rolą EMPLOYEE)</h3>
+        <ul>
+            <li>Przeglądanie, dodawanie, edycja i usuwanie informacji,</li>
+            <li>Edycja danych Rodziców oraz swoich. Brak możliwości zmiany danych innych pracowników,</li>
+            <li>Dodawanie dziecka do rodzica lub jego zmiana,</li>
+            <li>Utworzenie, edycja, usuwanie grup dzieci ze żłobka (Brak możliwości usunięcia grupy do której przypisane są dzieci),</li>
+            <li>Przypisywanie i edycja dzieci do konkretnych grup żłobkowych,</li>
+            <li>Zablokowanie konta Rodzica (użytkownik nie może się zalogować, jednak jego dane nie zostają usunięte),</li>
+            <li>Przeglądanie, dodawanie, usuwanie obecności dzieci,</li>
+            <li>Możliwość wyszukiwania obecności wg zakresu dat oraz konkretnego dziecka lub wg zakresu dat oraz konkretnej grupy./li>
+        </ul>
+        <h2>Admin:</h2>
+        <h3>(Użytkownik zalogowany z rolą ADMIN)</h3>
+        <ul>
+            <li>Uprawnienia jak pracownik oraz,</li>
+            <li>Możliwość edycji danych każdego użytkownika,</li>
+            <li>Możliwość zablokowanie konta pracownika,</li>
+            <li>Możliwość zmiany roli danego użytkownika.</li>
+        </ul>
+    </section>
+
+    <section class="section-content">
         <h2>Kontakt</h2>
         <p>W przypadku pytań proszę o kontakt:</p>
         </p> twodzinski@op.pl</p>

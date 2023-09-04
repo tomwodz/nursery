@@ -12,7 +12,14 @@
 <nav th:replace="~{fragments.html :: nav}"></nav>
 <main>
 
-    <section class="section_content_center">
+    <section class="undernav" th:if="${adminoremployee}">
+        <a href="/view/presence/" class="btn-undernav">Dodaj obecność</a>
+        <a href="/view/presence/groupchildrenbetween/" class="btn-undernav">Wyszukaj wg Grupy</a>
+        <a href="/view/presence/childbetween/" class="btn-undernav">Wyszukaj wg Dziecka</a>
+    </section>
+
+    <section class="section-content-center">
+        <h2>Dodaj obecność</h2>
     <form method="post">
         <div id="info" th:text="${info}" class="info"></div>
         <div>Dziecko: </div>
@@ -28,7 +35,7 @@
         <input type="time" name="timeentry" id="timeentry" class="input" th:field="*{presenceModel.timeEntry}">
         <div>Godzina wyjścia: </div>
         <input type="time" name="timedeparture" id="timedeparture" class="input" th:field="*{presenceModel.timeDeparture}">
-        <input type="submit" value="Dodaj/Edytuj" class="button">
+        <input type="submit" value="Dodaj/Edytuj" class="btn">
     </form>
     </section>
 
