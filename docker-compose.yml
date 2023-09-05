@@ -2,10 +2,10 @@ version: "3.8"
 services:
   db:
     image: postgres
-    container_name: local_pgdb
+    container_name: local_pgdb_nursery
     restart: always
     ports:
-      - "54320:5432"
+      - "5432:5432"
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: admin

@@ -65,4 +65,4 @@ VALUES
 INSERT INTO
     tpresence (id, day, time_entry, time_departure, child_id, presence)
 VALUES
-    (nextval('tpresence_id_seq'),'2021-09-01', '08:07:09', '14:07:09', 1, true);
+    (nextval('tpresence_id_seq'),'2021-09-01', '08:07', '14:07', 1, true);

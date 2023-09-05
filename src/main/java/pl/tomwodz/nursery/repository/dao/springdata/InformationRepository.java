@@ -5,11 +5,12 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import pl.tomwodz.nursery.model.Information;
+import pl.tomwodz.nursery.repository.InformationDAO;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface InformationRepository extends Repository<Information, Long> {
+public interface InformationRepository extends InformationDAO, Repository <Information, Long> {
 
     List<Information> findAll(Sort sort);
 

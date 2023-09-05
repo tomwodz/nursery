@@ -11,6 +11,8 @@
     background-color: #FAFAD2;
     cursor: pointer;
     display: inline-block;
+    transition: 0.3s;
+    box-shadow: 0 0 5px #4333a8;
 }
 
 .btn:hover{
@@ -18,13 +20,14 @@
     margin: 5px 10px;
     text-align: center;
     text-decoration: none;
-    border: 2px solid #4333a8;
+    border: 2px solid #bdcd5a;
     border-radius: 8px;
     padding: 5px 20px;
-    color: #4333a8;
+    color: #97a448;
     background-color: #f9f9ba;
     cursor: pointer;
     display: inline-block;
+    box-shadow: 0 0 3px #f9f9ba;
 }
 
 .btn-delete {
@@ -40,6 +43,8 @@
     background-color: #800000;
     cursor: pointer;
     display: inline-block;
+    transition: 0.3s;
+    box-shadow: 0 0 5px #640b0b;
 }
 
 
@@ -56,6 +61,7 @@
     background-color: #640b0b;
     cursor: pointer;
     display: inline-block;
+    box-shadow: 0 0 8px #640b0b;
 }
 
 .btn-update {
@@ -71,6 +77,8 @@
     background-color: #082567;
     cursor: pointer;
     display: inline-block;
+    transition: 0.3s;
+    box-shadow: 0 0 5px #142345;
 }
 
 .btn-update:hover {
@@ -86,6 +94,7 @@
     background-color: #142345;
     cursor: pointer;
     display: inline-block;
+    box-shadow: 0 0 8px #142345;
 }
 
 .btn-inactive {
@@ -101,6 +110,8 @@
     background-color: #fe7f00;
     cursor: pointer;
     display: inline-block;
+    transition: 0.3s;
+    box-shadow: 0 0 5px #ff7142;
 }
 
 
@@ -117,6 +128,7 @@
     background-color: #ff8056;
     cursor: pointer;
     display: inline-block;
+    box-shadow: 0 0 8px #ff8056;
 }
 
 .btn-active, .button_group{
@@ -132,6 +144,8 @@
     background-color: #008000;
     cursor: pointer;
     display: inline-block;
+    transition: 0.3s;
+    box-shadow: 0 0 5px #0a5c0a;
 }
 
 .btn-active:hover, .button_group:hover {
@@ -147,6 +161,7 @@
     background-color: #109010;
     cursor: pointer;
     display: inline-block;
+    box-shadow: 0 0 8px #109010;
 }
 
 .btn-undernav {
@@ -162,6 +177,8 @@
     background-color: #FAFAD2;
     cursor: pointer;
     display: inline-block;
+    transition: 0.3s;
+    box-shadow: 0 0 5px #39a9bc;
 }
 
 .btn-undernav:hover {
@@ -177,6 +194,7 @@
     background-color: #f9f9ba;
     cursor: pointer;
     display: inline-block;
+    box-shadow: 0 0 8px #f9f9ba;
 }
 
 .btn-presence {
@@ -192,6 +210,8 @@
     padding: 5px 20px;
     cursor: pointer;
     display: inline-block;
+    transition: 0.3s;
+    box-shadow: 0 0 5px #c05e6f;
 }
 
 .btn-presence:hover{
@@ -207,4 +227,5 @@
     padding: 5px 20px;
     cursor: pointer;
     display: inline-block;
+    box-shadow: 0 0 8px #f0768b;
 }

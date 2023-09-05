@@ -4,12 +4,13 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import pl.tomwodz.nursery.model.Child;
+import pl.tomwodz.nursery.repository.ChildDAO;
 
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ChildRepository extends Repository<Child, Long> {
+public interface ChildRepository extends ChildDAO, Repository<Child, Long> {
 
     List<Child> findAll();
     Optional<Child> findById(Long id);

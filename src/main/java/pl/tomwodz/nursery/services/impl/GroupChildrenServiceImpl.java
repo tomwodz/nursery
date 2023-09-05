@@ -1,9 +1,12 @@
 package pl.tomwodz.nursery.services.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.tomwodz.nursery.exception.GroupChildrenNotFoundException;
 import pl.tomwodz.nursery.model.GroupChildren;
 import pl.tomwodz.nursery.repository.GroupChildrenDAO;
+import pl.tomwodz.nursery.services.GroupChildrenService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,17 +15,19 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class GroupChildrenServiceImpl implements pl.tomwodz.nursery.services.GroupChildrenService {
+@Transactional
+public class GroupChildrenServiceImpl implements GroupChildrenService {
 
     private final GroupChildrenDAO groupChildrenDAO;
     @Override
     public List<GroupChildren> findAll() {
-        return this.groupChildrenDAO.finAll();
+        return this.groupChildrenDAO.findAll();
     }
 
     @Override
     public GroupChildren findById(Long id) {
-        return this.groupChildrenDAO.findById(id);
+        return this.groupChildrenDAO.findById(id).
+                orElseThrow(()-> new GroupChildrenNotFoundException("Nie znaleziono grupy dzieci o id: " + id));
     }
 
     @Override
@@ -36,18 +41,22 @@ public class GroupChildrenServiceImpl implements pl.tomwodz.nursery.services.Gro
     }
 
     @Override
-    public void updateById(Long id, GroupChildren newGroupChildren) {
-        this.groupChildrenDAO.updateById(id,newGroupChildren);
-    }
-
-    @Override
     public void existsById(Long id) {
-        this.groupChildrenDAO.existsById(id);
+        if(!groupChildrenDAO.existsById(id)){
+            throw new GroupChildrenNotFoundException("Nie znaleziono grupy dzieci o id: " + id);
+        }
     }
 
     @Override
     public void deleteById(Long id) {
+        this.existsById(id);
         this.groupChildrenDAO.deleteById(id);
+    }
+
+    @Override
+    public void updateById(Long id, GroupChildren newGroupChildren) {
+        this.existsById(id);
+        this.groupChildrenDAO.updateById(id,newGroupChildren);
     }
 
     @Override

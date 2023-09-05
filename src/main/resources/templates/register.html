@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nursery - Tomasz Wodziński</title>
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/button.css">
@@ -31,7 +32,7 @@
         <input type="text" name="street" id="street" class="input" placeholder="Ulica" th:field="*{userModel.address.street}">
         <input type="text" name="zipCode" id="zipCode" class="input" placeholder="Kod pocztowy np. 00-000" th:field="*{userModel.address.zipCode}">
         <input type="text" name="city" id="city" class="input" placeholder="Miasto" th:field="*{userModel.address.city}">
-        <input type="submit" value="Zarejestruj" class="input-search-presence">
+        <input type="submit" value="Zarejestruj" class="btn">
     </form>
     </section>
 

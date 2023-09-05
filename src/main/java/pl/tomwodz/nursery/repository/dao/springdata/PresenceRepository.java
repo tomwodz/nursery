@@ -5,12 +5,13 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import pl.tomwodz.nursery.model.Presence;
+import pl.tomwodz.nursery.repository.PresenceDAO;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public interface PresenceRepository extends Repository<Presence, Long> {
+public interface PresenceRepository extends PresenceDAO, Repository<Presence, Long> {
 
     List<Presence> findAll(Sort sort);
 

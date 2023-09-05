@@ -1,8 +1,10 @@
 package pl.tomwodz.nursery.services.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
+import pl.tomwodz.nursery.exception.UserNotFoundException;
 import pl.tomwodz.nursery.model.User;
 import pl.tomwodz.nursery.repository.UserDAO;
 
@@ -11,6 +13,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class UserServiceImpl implements pl.tomwodz.nursery.services.UserService {
 
     private final UserDAO userDAO;
@@ -26,7 +29,8 @@ public class UserServiceImpl implements pl.tomwodz.nursery.services.UserService 
 
     @Override
     public User findById(Long id) {
-        return this.userDAO.findById(id);
+        return this.userDAO.findById(id).
+                orElseThrow(()-> new UserNotFoundException("Nie znaleziono użytkownika o id: " + id));
     }
 
     @Override
@@ -43,6 +47,7 @@ public class UserServiceImpl implements pl.tomwodz.nursery.services.UserService 
 
     @Override
     public void updateById(Long id, User newUser) {
+        this.existsById(id);
         this.userDAO.updateById(id, newUser);
     }
 
@@ -60,11 +65,14 @@ public class UserServiceImpl implements pl.tomwodz.nursery.services.UserService 
 
     @Override
     public void existsById(Long id) {
-        this.userDAO.existsById(id);
+        if (!this.userDAO.existsById(id)) {
+            throw new UserNotFoundException("Nie znaleziono użytkownika o id: " + id);
+        }
     }
 
     @Override
     public void deleteById(Long id) {
+        this.userDAO.existsById(id);
         this.userDAO.deleteById(id);
     }
 

@@ -4,11 +4,12 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import pl.tomwodz.nursery.model.GroupChildren;
+import pl.tomwodz.nursery.repository.GroupChildrenDAO;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface GroupChildrenRepository extends Repository<GroupChildren, Long> {
+public interface GroupChildrenRepository extends GroupChildrenDAO, Repository<GroupChildren, Long> {
     List<GroupChildren> findAll();
     Optional<GroupChildren> findById(Long id);
     Optional<GroupChildren> findByName(String name);

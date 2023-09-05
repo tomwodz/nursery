@@ -4,11 +4,12 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import pl.tomwodz.nursery.model.User;
+import pl.tomwodz.nursery.repository.UserDAO;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository extends Repository<User, Long> {
+public interface UserRepository extends UserDAO, Repository<User, Long> {
 
     List<User> findAll();
 

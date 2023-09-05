@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nursery - Tomasz Wodziński</title>
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/button.css">
@@ -49,7 +50,7 @@
     </section>
 
     <section class="undernav">
-        <a th:if="${!parent}" th:href="@{/view/user/{id}(id=${child.parent.id})}" class="btn">Więcej danych Rodzica</a>
+        <a th:if="${!parent}" th:href="@{/view/user/{id}(id=${child.parent.id})}" class="btn-undernav">Więcej danych Rodzica</a>
         <a th:href="@{/view/child/update/{id}(id=${child.id})}" class="btn-update">Edytuj dziecko</a>
         <a th:href="@{/view/child/delete/{id}(id=${child.id})}" class="btn-delete">Usuń</a>
     </section>

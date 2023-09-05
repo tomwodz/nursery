@@ -2,11 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <header class="header" th:fragment="logo">
-    <img src="/images/logo.jpg" style="float:left;" alt="Piękne kwiaty">
-    nursery - Tomasz Wodziński
+    <img src="/images/logo.jpg" class="img-header" alt="Piękne kwiaty">
+    <p><strong>nursery</strong><p>
+    <p>Tomasz Wodziński</p>
 </header>
 <nav class="nav" th:fragment="nav">
     <div>
@@ -35,7 +37,6 @@
 </div>
 
 <footer class="footer" th:fragment="footer">
-    <img src="/images/above-footer.jpg" style="float:right;" alt="Piękne kwiaty">
 </footer>
 
 </body>
