@@ -13,6 +13,11 @@ public.taddress(id, street, zip_code, city)
 VALUES
 (nextval('taddress_id_seq'),'Akacjowa','77-777','Warszawa');
 
+INSERT INTO
+    public.taddress(id, street, zip_code, city)
+VALUES
+    (nextval('taddress_id_seq'),'Olimpijczyków','42-600','Tarnowskie Góry');
+
 
 INSERT INTO
 public.tuser (address_id, id, name, surname, login, password, email, phone_number, role, active)
@@ -27,7 +32,12 @@ VALUES
 INSERT INTO public.tuser
 (address_id, id, name, surname, login, password, email, phone_number, role, active)
 VALUES
-(3, nextval('tuser_id_seq'),'Iwona','Nowak', 'employee','fa5473530e4d1a5a1e1eb53d2fedb10c','twodzinski@op.pl','123-456-789','EMPLOYEE', true);
+(3, nextval('tuser_id_seq'),'Iza','Fiołek', 'employee','fa5473530e4d1a5a1e1eb53d2fedb10c','twodzinski@op.pl','123-456-789','EMPLOYEE', true);
+
+INSERT INTO public.tuser
+(address_id, id, name, surname, login, password, email, phone_number, role, active)
+VALUES
+    (4, nextval('tuser_id_seq'),'Agnieszka','Kowalska', 'anowak','d0e45878043844ffc41aac437e86b602','twodzinski@op.pl','123-456-789','PARENT', true);
 
 INSERT INTO
 tgroupchildren
@@ -42,19 +52,30 @@ VALUES
 ('Misie');
 
 INSERT INTO
-tchild (name, surname, day_of_birth, group_children_id, parent_id)
+    tgroupchildren
+(name)
 VALUES
-('Alicja', 'Kowalska', '2021-02-02', 1, 2);
+    ('Żuczki');
 
 INSERT INTO
 tchild (name, surname, day_of_birth, group_children_id, parent_id)
 VALUES
-('Tymoteusz', 'Nowak', '2021-02-02', 1, 2);
+('Alicja', 'Nowak', '2021-03-02', 2, 2);
 
 INSERT INTO
 tchild (name, surname, day_of_birth, group_children_id, parent_id)
 VALUES
-('Tymoteusz', 'Nowak', '2021-02-02', 1, 2);
+('Tymoteusz', 'Kowalski', '2021-01-02', 2, 4);
+
+INSERT INTO
+tchild (name, surname, day_of_birth, group_children_id, parent_id)
+VALUES
+('Weronika', 'Kowalska', '2021-12-03', 2, 4);
+
+INSERT INTO
+    tchild (name, surname, day_of_birth, group_children_id, parent_id)
+VALUES
+    ('Justyna', 'Kowalska', '2022-12-03', 3, 4);
 
 INSERT INTO
 tinformation (id, title, content, date_creation, author_id)

@@ -16,8 +16,10 @@ public interface PresenceDAO {
 
     List<Presence> findAllByChild_IdAndDayBetween(Long id, LocalDate dateFrom, LocalDate dateTo);
 
-    List<Presence> findAllByChildId(Long id);
+    List<Presence> findAllByChild_Id(Long id);
 
+    List<Presence> findAllByChild_GroupChildren_Id(Long id);
+    Optional<Presence> findFirstByChild_Id(Long id);
     Optional<Presence> findById(Long id);
     Presence save(Presence presence);
 

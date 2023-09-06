@@ -13,8 +13,12 @@
 .section-search-presence {
     background-color: #ffafc1;
     border: 3px solid #f0768b;
-    border-radius: 25px;
-    padding: 5px 5px;
     text-align: center;
+    color: #f0768b;
+    padding: 25px 25px;
+    box-shadow: 3px 3px 8px #f0768b;
+}
+
+.section-search-presence h3 {
     color: #f0768b;
 }

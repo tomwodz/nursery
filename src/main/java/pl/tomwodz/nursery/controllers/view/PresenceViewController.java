@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import pl.tomwodz.nursery.model.Presence;
 import pl.tomwodz.nursery.model.PresenceByChildBetweenDates;
 import pl.tomwodz.nursery.model.PresenceByGroupChildrenBetweenDates;
+import pl.tomwodz.nursery.repository.dao.springdata.PresenceRepository;
 import pl.tomwodz.nursery.services.ChildService;
 import pl.tomwodz.nursery.services.GroupChildrenService;
 import pl.tomwodz.nursery.services.PresenceService;
+import pl.tomwodz.nursery.services.UserService;
 import pl.tomwodz.nursery.session.SessionData;
 
 import java.time.LocalDate;
@@ -29,42 +31,16 @@ public class PresenceViewController {
     private final PresenceService presenceService;
     private final ChildService childService;
     private final GroupChildrenService groupChildrenService;
+    private final UserService userService;
 
-    @GetMapping
-    public String getEmpty(Model model) {
-        ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if (this.sessionData.isAdminOrEmployee()) {
-            model.addAttribute("presences", Collections.emptyList());
-            return "presence";
-        }
-        return "redirect:/view/login";
-    }
 
-    @GetMapping("/groupchildren/{id}")
-    public String getAllByGroupChildrenId(Model model, @PathVariable Long id) {
-        ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if (this.sessionData.isAdminOrEmployee()) {
-            //model.addAttribute("presences", this.presenceRepository.findByChild_GroupChildren(id));
-       model.addAttribute("presences",
-                    this.presenceService.findAll().stream()
-                            .filter(child -> child.getChild().getGroupChildren().getId()==id)
-                            .toList()); //TODO wyciagać pofiltorwane z bazy danych*/
-            model.addAttribute("groupChildren", this.groupChildrenService.findAll());
-            return "presence";
-        }
-        return "redirect:/view/login";
-    }
 
     @GetMapping(path = "/")
     public String getPresenceByCreate(Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee()) {
-            model.addAttribute("presenceModel",
-                    new Presence(LocalDate.now(),
-                            LocalTime.of(07,00),
-                            LocalTime.of(15,00)
-            ));
+            model.addAttribute("presenceModel", todayPresence());
             model.addAttribute("children", this.childService.findAll());
             return "add-presence";
         }
@@ -77,8 +53,11 @@ public class PresenceViewController {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee()) {
+            if(presence.getDay() == null){
+                presence.setDay(LocalDate.now());
+            }
             this.presenceService.save(presence);
-            return "redirect:/view/presence";
+            return "redirect:/view/presence/child/";
         }
         return "redirect:/view/login";
     }
@@ -126,20 +105,25 @@ public class PresenceViewController {
         return "redirect:/view/presence";
     }
 
-    @GetMapping("/childbetween/")
+    @GetMapping("/child/")
     public String getModelByAllPresencesByChildIdBetweenDates(Model model,
                                                               @ModelAttribute PresenceByChildBetweenDates request) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
+        model.addAttribute("presences", Collections.emptyList());
         if (this.sessionData.isAdminOrEmployee()) {
-            model.addAttribute("presences", Collections.emptyList());
             model.addAttribute("children", this.childService.findAll());
             model.addAttribute("PresenceByChildBetweenDatesModel", new PresenceByChildBetweenDates());
-            return "presence_child";
+            return "presence";
+        }
+        if (this.sessionData.isParent()) {
+            model.addAttribute("children", this.sessionData.getUser().getChild());
+            model.addAttribute("PresenceByChildBetweenDatesModel", new PresenceByChildBetweenDates());
+            return "presence";
         }
         return "redirect:/view/login";
     }
-    @PostMapping("/childbetween/")
+    @PostMapping("/child/")
     public String getAllPresencesByChildIdBetweenDates(Model model,
                                                        @ModelAttribute PresenceByChildBetweenDates request) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
@@ -149,39 +133,14 @@ public class PresenceViewController {
             model.addAttribute("PresenceByChildBetweenDatesModel", new PresenceByChildBetweenDates());
             model.addAttribute("presences", this.presenceService
                     .findAllByChildIdAndDayBetween(request.getChild().getId(), request.getDataFrom(), request.getDataTo()));
-            return "presence_child";
+            return "presence";
         }
-        return "redirect:/view/login";
-    }
-
-    @GetMapping("/groupchildrenbetween/")
-    public String getModelByAllPresencesByGroupChildrenIdBetweenDates(Model model,
-                                                                      @ModelAttribute PresenceByGroupChildrenBetweenDates request) {
-        ModelUtils.addCommonDataToModel(model, this.sessionData);
-        model.addAttribute("info", this.sessionData.getInfo());
-        if (this.sessionData.isAdminOrEmployee()) {
-            model.addAttribute("presences", Collections.emptyList());
-            model.addAttribute("groupsChildren", this.groupChildrenService.findAll());
-            model.addAttribute("PresenceByGroupChildrenBetweenDates", new PresenceByGroupChildrenBetweenDates());
-            return "presence_groupchildren";
-        }
-        return "redirect:/view/login";
-    }
-
-    @PostMapping("/groupchildrenbetween/")
-    public String getAllPresencesByGroupChildrenIdBetweenDates(Model model,
-                                                               @ModelAttribute PresenceByGroupChildrenBetweenDates request) {
-        ModelUtils.addCommonDataToModel(model, this.sessionData);
-        model.addAttribute("info", this.sessionData.getInfo());
-        if (this.sessionData.isAdminOrEmployee()) {
-            List<Presence> presences = this.presenceService.findAllByGroupChildrenIdAndDayBetween(
-                    request.getGroupChildren().getId(),
-                    request.getDataFrom(),
-                    request.getDataTo());
-            model.addAttribute("presences", presences);
-            model.addAttribute("groupsChildren", this.groupChildrenService.findAll());
-            model.addAttribute("PresenceByGroupChildrenBetweenDates", new PresenceByGroupChildrenBetweenDates());
-            return "presence_groupchildren";
+        if (this.sessionData.isParent() &&
+                userService.checkExistenceOfParentChildRelationship(request.getChild().getId(), this.sessionData.getUser())) {
+            model.addAttribute("presences", this.presenceService.findAllByChildId(request.getChild().getId()));
+            model.addAttribute("children", this.sessionData.getUser().getChild());
+            model.addAttribute("PresenceByChildBetweenDatesModel", new PresenceByChildBetweenDates());
+            return "presence";
         }
         return "redirect:/view/login";
     }
@@ -195,9 +154,66 @@ public class PresenceViewController {
             model.addAttribute("presences", this.presenceService.findAllByChildId(id));
             model.addAttribute("children", this.childService.findAll());
             model.addAttribute("PresenceByChildBetweenDatesModel", new PresenceByChildBetweenDates());
-            return "presence_child";
+            return "presence";
+        }
+        if (this.sessionData.isParent() &&
+                userService.checkExistenceOfParentChildRelationship(id, this.sessionData.getUser())) {
+            model.addAttribute("presences", this.presenceService.findAllByChildId(id));
+            model.addAttribute("children", this.sessionData.getUser().getChild());
+            model.addAttribute("PresenceByChildBetweenDatesModel", new PresenceByChildBetweenDates());
+            return "presence";
         }
         return "redirect:/view/login";
+    }
+
+    @GetMapping("/groupchildren/")
+    public String getModelByAllPresencesByGroupChildrenIdBetweenDates(Model model,
+                                                                      @ModelAttribute PresenceByGroupChildrenBetweenDates request) {
+        ModelUtils.addCommonDataToModel(model, this.sessionData);
+        model.addAttribute("info", this.sessionData.getInfo());
+        if (this.sessionData.isAdminOrEmployee()) {
+            model.addAttribute("presences", Collections.emptyList());
+            model.addAttribute("groupsChildren", this.groupChildrenService.findAll());
+            model.addAttribute("PresenceByGroupChildrenBetweenDates", new PresenceByGroupChildrenBetweenDates());
+            return "presence-groupchildren";
+        }
+        return "redirect:/view/login";
+    }
+
+    @GetMapping("/groupchildren/{id}")
+    public String getAllByGroupChildrenId(Model model, @PathVariable Long id) {
+        ModelUtils.addCommonDataToModel(model, this.sessionData);
+        if (this.sessionData.isAdminOrEmployee()) {
+            model.addAttribute("PresenceByGroupChildrenBetweenDates", new PresenceByGroupChildrenBetweenDates());
+            model.addAttribute("presences", this.presenceService.findAllByGroupChildrenId(id));
+            model.addAttribute("groupsChildren", this.groupChildrenService.findAll());
+            return "presence-groupchildren";
+        }
+        return "redirect:/view/login";
+    }
+
+    @PostMapping("/groupchildren/")
+    public String getAllPresencesByGroupChildrenIdBetweenDates(Model model,
+                                                               @ModelAttribute PresenceByGroupChildrenBetweenDates request) {
+        ModelUtils.addCommonDataToModel(model, this.sessionData);
+        model.addAttribute("info", this.sessionData.getInfo());
+        if (this.sessionData.isAdminOrEmployee()) {
+            List<Presence> presences = this.presenceService.findAllByGroupChildrenIdAndDayBetween(
+                    request.getGroupChildren().getId(),
+                    request.getDataFrom(),
+                    request.getDataTo());
+            model.addAttribute("presences", presences);
+            model.addAttribute("groupsChildren", this.groupChildrenService.findAll());
+            model.addAttribute("PresenceByGroupChildrenBetweenDates", new PresenceByGroupChildrenBetweenDates());
+            return "presence-groupchildren";
+        }
+        return "redirect:/view/login";
+    }
+
+    private Presence todayPresence(){
+        return new Presence(LocalDate.now(),
+                LocalTime.of(07,00),
+                LocalTime.of(15,00));
     }
 
 }

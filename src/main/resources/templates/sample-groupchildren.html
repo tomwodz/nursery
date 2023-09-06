@@ -6,7 +6,6 @@
     <title>Nursery - Tomasz Wodziński</title>
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/button.css">
-    <link rel="stylesheet" href="/css/table.css">
 </head>
 <body>
 
@@ -15,30 +14,17 @@
 <main>
 
     <section class="section-content-center">
-        <h2>Grupa</h2>
-        <h3 th:text="${group.name}"></h3>
-        <table>
-            <tr>
-                <th>Imię:</th>
-                <th>Nazwisko:</th>
-                <th>Data urodzin:</th>
-                <th>Szczegóły:</th>
-            </tr>
-            <tr th:each="child : ${group.child}">
-                <td th:text="${child.name}"></td>
-                <td th:text="${child.surname}"></td>
-                <td th:text="${child.dayOfBirth}"></td>
-                <td th:href="@{/view/child/{id}(id=${child.id})}">
-                    <a th:href="@{/view/child/{id}(id=${child.id})}" class="btn">Szczegóły</a>
-                </td>
-            </tr>
-        </table>
-
+        <h2 th:text="'Grupa: ' + ${group.name}"></h2>
+        <div th:each="child : ${group.child}" class="div-inline-block">
+            <div><a th:text="${child.name} + ' ' + ${child.surname}" th:href="@{/view/child/{id}(id=${child.id})}" class="btn-child">Szczegóły</a></div>
+            <div><a th:href="@{/view/presence/child/{id}(id=${child.id})}" class="btn-presence">Obecności</a></div>
+        </div>
     </section>
 
     <section class="undernav">
-
-        <a th:href="@{/view/groupchildren/delete/{id}(id=${group.id})}" class="btn-update">Usuń</a>
+        <a th:href="@{/view/presence/groupchildren/{id}(id=${group.id})}" class="btn-presence">Obecności</a>
+        <a th:href="@{/view/groupchildren/update/{id}(id=${group.id})}" class="btn-update">Edytuj</a>
+        <a th:href="@{/view/groupchildren/delete/{id}(id=${group.id})}" class="btn-delete">Usuń</a>
     </section>
 
 </main>

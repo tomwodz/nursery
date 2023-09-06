@@ -19,6 +19,7 @@ body {
     border-top: 6px solid #bdcd5a;
     background-color: #6A5ACD;
     bottom: 0;
+    box-shadow: 0px 0px 8px #6A5ACD;
 }
 
 .header {
@@ -85,7 +86,7 @@ section {
     background-color: #6ec5d3;
     border: 3px solid #39a9bc;
     padding: 5px 5px;
-    border-radius: 25px;
+    box-shadow: -4px -4px 5px #6ec5d3;
 }
 
 .input{
@@ -131,6 +132,34 @@ section {
 
 .info {
     min-height: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #6A5ACD;
+}
+
+h2 {
+    color: #6A5ACD;
+}
+
+h3 {
+    color: #6A5ACD;
+}
+
+.div-inline-block {
+    display: inline-block;
+    border: 1px solid #bdcd5a;
+    margin: 5px 5px;
+    border-radius: 8px;
+    background-color: #fcfcc6;
+    text-align: center;
+    box-shadow: 0 0 3px #bdcd5a;
+}
+
+div ~ div {
+    display: block;
+    margin: 3px;
 }
 
 

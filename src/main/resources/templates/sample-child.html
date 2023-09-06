@@ -6,7 +6,6 @@
     <title>Nursery - Tomasz Wodziński</title>
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/button.css">
-    <link rel="stylesheet" href="/css/table.css">
 </head>
 <body>
 
@@ -14,39 +13,33 @@
 <nav th:replace="~{fragments.html :: nav}"></nav>
 <main>
 
-    <section class="section-content-center">
+    <section class="section-content-center" th:if="${parent}">
         <h2>Dane dziecka</h2>
-        <table class="table_sample">
-            <tr>
-                <td>Imię:</td>
-                <td th:text="${child.name}"></td>
-            </tr>
-            <tr>
-                <td>Nazwisko:</td>
-                <td th:text="${child.surname}"></td>
-            </tr>
-            <tr>
-                <td>Grupa:</td>
-                <td th:text="${child.groupChildren.name}"></td>
-            </tr>
-            <tr>
-                <td>Data urodzenia:</td>
-                <td th:text="${child.dayOfBirth}"></td>
-            </tr>
-            <tr>
-                <td>Rodzic:</td>
-                <td th:text="${child.parent.name} + ' ' + ${child.parent.surname}"></td>
-            </tr>
-            <tr>
-                <td>Adres e-mail:</td>
-                <td th:text="${child.parent.email}"></td>
-            </tr>
-            <tr>
-                <td>Numer telefonu:</td>
-                <td th:text="${child.parent.phoneNumber}"></td>
-            </tr>
-        </table>
+        <div class="div-inline-block">
+            <div><a th:text="${child.name} + ' ' + ${child.surname}" th:href="@{/view/child/{id}(id=${child.id})}" class="btn-user"></a></div>
+            <div th:text="${child.groupChildren.name}" class="btn-group"></div>
+            <div th:text="${child.dayOfBirth}"></div>
+        </div>
+    </section>
 
+    <section class="section-content-center" th:if="${adminoremployee}">
+        <h2>Dane dziecka</h2>
+        <div class="div-inline-block">
+            <div><a th:text="${child.name} + ' ' + ${child.surname}" th:href="@{/view/child/{id}(id=${child.id})}" class="btn-user"></a></div>
+            <div><a th:text="${child.groupChildren.name}"
+                    th:href="@{/view/groupchildren/{id}(id=${child.groupChildren.id})}"
+                    class="btn-group"></a></div>
+            <div th:text="${child.dayOfBirth}"></div>
+        </div>
+    </section>
+
+    <section class="section-content-center">
+        <h2>Dane rodzica</h2>
+        <div class="div-inline-block">
+            <div><a th:text="${child.parent.name} + ' ' + ${child.parent.surname}" th:href="@{/view/user/{id}(id=${child.parent.id})}" class="btn-user"></a></div>
+            <div th:text="${child.parent.phoneNumber}"></div>
+            <div th:text="${child.parent.email}"></div>
+        </div>
     </section>
 
     <section class="undernav">

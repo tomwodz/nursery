@@ -20,4 +20,6 @@ public interface UserService {
     boolean existsByLogin(String login);
     void deleteById(Long id);
 
+    boolean checkExistenceOfParentChildRelationship(Long id, User user);
+
 }

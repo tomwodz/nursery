@@ -6,8 +6,6 @@
     <title>Nursery - Tomasz Wodziński</title>
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/button.css">
-    <link rel="stylesheet" href="/css/table.css">
-    <script src="/js/register-validator.js"></script>
 </head>
 <body>
 
@@ -19,42 +17,11 @@
         <a href="/view/user/register" class="btn-undernav">Dodaj rodzica</a>
     </section>
 
-    <section class="section-content">
+    <section class="section-content-center">
         <h2>Użytkownicy</h2>
-        <table>
-            <tr>
-                <th>Imię:</th>
-                <th>Nazwisko:</th>
-                <th>E-mail:</th>
-                <th>Numer telefonu:</th>
-                <th class="center">Rola:</th>
-                <th class="center">Szczegóły:</th>
-                <th class="center">Zablokuj:</th>
-                <th class="center">Edytuj:</th>
-                <th class="center">Usuń:</th>
-            </tr>
-            <tr th:each="user : ${users}">
-                <td th:text="${user.name}"></td>
-                <td th:text="${user.surname}"></td>
-                <td th:text="${user.email}"></td>
-                <td th:text="${user.phoneNumber}"></td>
-                <td class="center" th:text="${user.role}"></td>
-                <td class="center">
-                    <a th:href="@{/view/user/{id}(id=${user.id})}" class="btn">Szczegóły</a>
-                </td>
-                <td class="center"><a th:if="${user.isActive()}" th:href="@{/view/user/active/{id}(id=${user.id})}"
-                       class="btn-inactive">Zablokuj</a>
-                    <a th:if="${!user.isActive()}" th:href="@{/view/user/active/{id}(id=${user.id})}"
-                       class="btn-active">Odblokuj</a>
-                </td>
-                <td class="center">
-                    <a th:href="@{/view/user/update/{id}(id=${user.id})}" class="btn-update">Edytuj</a>
-                </td>
-                <td class="center">
-                    <a th:href="@{/view/user/delete/{id}(id=${user.id})}" class="btn-delete">Usuń</a>
-                </td>
-            </tr>
-        </table>
+        <div th:each="user : ${users}" class="div-inline-block">
+            <div><a th:text="${user.name} + ' ' + ${user.surname}" th:href="@{/view/user/{id}(id=${user.id})}" class="btn-user"></a></div>
+        </div>
     </section>
 
 </main>

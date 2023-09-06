@@ -15,6 +15,7 @@
         <a href="/" class="btn">Strona Główna</a>
         <a th:if="${logged}" th:href="@{/view/user/{id}(id=${getid})}" class="btn">Moje dane</a>
         <a th:if="${parent}" href="/view/child/" class="btn">Zarejestruj dziecko</a>
+        <a th:if="${logged}" href="/view/presence/child/" class="btn">Obecności</a>
         <a th:if="${logged}" href="/view/information" class="btn">Informacje</a>
 
         <a th:if="${!logged}" href="/view/login" class="btn">Zaloguj</a>
@@ -26,7 +27,6 @@
         <a th:if="${adminoremployee}" href="/view/child" class="btn">Dzieci</a>
         <a th:if="${adminoremployee}" href="/view/groupchildren" class="btn">Grupy</a>
         <a th:if="${adminoremployee}" href="/view/parent" class="btn">Rodzice</a>
-        <a th:if="${adminoremployee}" href="/view/presence" class="btn">Obecności</a>
     </div>
     <div>
         <a th:if="${admin}" href="/view/employee" class="btn">Pracownicy</a>

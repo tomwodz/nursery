@@ -35,4 +35,5 @@ public class Presence {
         this.timeEntry = timeEntry;
         this.timeDeparture = timeDeparture;
     }
+
 }

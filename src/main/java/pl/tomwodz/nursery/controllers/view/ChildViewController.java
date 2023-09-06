@@ -8,17 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.tomwodz.nursery.exception.validation.ChildValidationException;
 import pl.tomwodz.nursery.model.Child;
-import pl.tomwodz.nursery.model.GroupChildren;
 import pl.tomwodz.nursery.model.User;
 import pl.tomwodz.nursery.services.ChildService;
 import pl.tomwodz.nursery.services.GroupChildrenService;
+import pl.tomwodz.nursery.services.PresenceService;
 import pl.tomwodz.nursery.services.UserService;
 import pl.tomwodz.nursery.session.SessionData;
 import pl.tomwodz.nursery.validatros.ChildValidator;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 @Controller
 @RequestMapping(path = "/view/child")
@@ -32,6 +28,7 @@ public class ChildViewController {
     private final ChildService childService;
     private final GroupChildrenService groupChildrenService;
     private final UserService userService;
+    private final PresenceService presenceService;
 
     @GetMapping
     public String getAll(Model model) {
@@ -53,7 +50,7 @@ public class ChildViewController {
             return "sample-child";
         }
         if (this.sessionData.isParent() &&
-                checkExistenceOfParentChildRelationship(id).isPresent()) {
+                userService.checkExistenceOfParentChildRelationship(id, this.sessionData.getUser())) {
             return "sample-child";
         }
         return "redirect:/view/login";
@@ -116,7 +113,7 @@ public class ChildViewController {
             return "add-child";
         }
         if (this.sessionData.isParent() &&
-                checkExistenceOfParentChildRelationship(id).isPresent()) {
+                userService.checkExistenceOfParentChildRelationship(id, this.sessionData.getUser())) {
             model.addAttribute("childModel", this.childService.findById(id));
             return "add-child";
         }
@@ -131,7 +128,7 @@ public class ChildViewController {
         model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee() ||
                 (this.sessionData.isParent() &&
-                        checkExistenceOfParentChildRelationship(id).isPresent())) {
+                        userService.checkExistenceOfParentChildRelationship(id, this.sessionData.getUser()))) {
             try {
                 ChildValidator.validateChild(child);
                 Child childToUpdate = this.childService.findById(id);
@@ -153,28 +150,27 @@ public class ChildViewController {
         return "redirect:/view/login";
     }
 
+
     @GetMapping(path = "/delete/{id}")
     public String deleteChildById(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
+        if(this.sessionData.isAdminOrEmployee() ||
+                this.sessionData.isParent() ||
+                this.presenceService.findFirstByChildId(id)){
+            model.addAttribute("message", "Nie można usunąć dziecka, które ma obecności.");
+            return "message";
+        }
         if (this.sessionData.isAdminOrEmployee()) {
                 this.childService.deleteById(id);
                 model.addAttribute("message", "Usunięto dziecko o id: " + id);
                 return "message";}
         if (this.sessionData.isParent() &&
-                    checkExistenceOfParentChildRelationship(id).isPresent()) {
+                    userService.checkExistenceOfParentChildRelationship(id, this.sessionData.getUser())) {
             this.childService.deleteById(id);
             model.addAttribute("message", "Usunięto dziecko o id: " + id);
             return "message";
         }
         return "redirect:/view/login";
-    }
-
-    private Optional<Child> checkExistenceOfParentChildRelationship(Long id){
-        return this.sessionData.getUser()
-                .getChild()
-                .stream()
-                .filter(child -> child.getId() == id)
-                .findFirst();
     }
 
 }

@@ -6,7 +6,6 @@
     <title>Nursery - Tomasz Wodziński</title>
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/button.css">
-    <link rel="stylesheet" href="/css/table.css">
 </head>
 <body>
 
@@ -18,30 +17,13 @@
         <a href="/view/groupchildren/" class="btn-undernav">Dodaj grupę</a>
     </section>
 
-    <section class="section-content">
+    <section class="section-content-center">
         <h2>Grupy</h2>
-        <table>
-            <tr>
-                <th>Nazwa grupy:</th>
-                <th class="center">Ilość dzieci:</th>
-                <th class="center">Szczegóły:</th>
-                <th class="center">Edytuj:</th>
-                <th class="center" >Usuń:</th>
-            </tr>
-            <tr th:each="group : ${groupChildren}">
-                <td th:text="${group.name}"></td>
-                <td class="center" th:text="${group.child.size()}"></td>
-                <td class="center">
-                    <a th:href="@{/view/groupchildren/{id}(id=${group.id})}" class="btn">Szczegóły</a>
-                </td>
-                <td class="center">
-                    <a th:href="@{/view/groupchildren/update/{id}(id=${group.id})}" class="btn-update">Edytuj</a>
-                </td>
-                <td class="center">
-                    <a th:href="@{/view/groupchildren/delete/{id}(id=${group.id})}" class="btn-delete">Usuń</a>
-                </td>
-            </tr>
-        </table>
+            <div th:each="group : ${groupChildren}" class="div-inline-block">
+                <div><a th:text="${group.name}" th:href="@{/view/groupchildren/{id}(id=${group.id})}" class="btn-group"></a></div>
+                <div th:text="'Dzieci: ' + ${group.child.size()}" class="btn-size"></div>
+                <div><a th:href="@{/view/presence/groupchildren/{id}(id=${group.id})}" class="btn-presence">Obecności</a></div>
+            </div>
     </section>
 
 </main>

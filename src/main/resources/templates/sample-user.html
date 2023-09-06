@@ -6,7 +6,6 @@
     <title>Nursery - Tomasz Wodziński</title>
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/button.css">
-    <link rel="stylesheet" href="/css/table.css">
 </head>
 <body>
 
@@ -16,68 +15,46 @@
 
     <section class="section-content-center">
         <h2>Dane</h2>
-        <table class="table_sample">
-            <tr>
-                <td>Imię:</td>
-                <td th:text="${user.name}"></td>
-            </tr>
-            <tr>
-                <td>Nazwisko:</td>
-                <td th:text="${user.surname}"></td>
-            </tr>
-            <tr>
-                <td>Login:</td>
-                <td th:text="${user.login}"></td>
-            </tr>
-            <tr>
-                <td>Numer telefonu:</td>
-                <td th:text="${user.phoneNumber}"></td>
-            </tr>
-            <tr>
-                <td>E-mial:</td>
-                <td th:text="${user.email}"></td>
-            </tr>
-            <tr>
-                <td>Ulica:</td>
-                <td th:text="${user.address.street}"></td>
-            </tr>
-            <tr>
-                <td>Kod pocztowy:</td>
-                <td th:text="${user.address.zipCode}"></td>
-            </tr>
-            <tr>
-                <td>Miasto:</td>
-                <td th:text="${user.address.city}"></td>
-            </tr>
-        </table>
+        <div class="div-inline-block">
+            <div><a th:text="${user.name} + ' ' + ${user.surname}" th:href="@{/view/user/{id}(id=${user.id})}" class="btn-user"></a></div>
+            <div th:text="'Login: ' + ${user.login}"></div>
+            <div th:text="${user.phoneNumber}"></div>
+            <div th:text="${user.email}"></div>
+            <h3>Adres</h3>
+            <div th:text="${user.address.street}"></div>
+            <div th:text="${user.address.zipCode}"></div>
+            <div th:text="${user.address.city}"></div>
+            <div th:if="${parent}"><a th:href="@{/view/user/update/{id}(id=${user.id})}" class="btn-update">Edytuj</a></div>
+        </div>
     </section>
 
-    <section class="section-content">
+    <section class="section-content-center" th:if="${adminoremployee}">
         <h2>Dzieci</h2>
-        <table>
-            <tr>
-                <th>Imię:</th>
-                <th>Nazwisko:</th>
-                <th class="center">Grupa:</th>
-                <th class="center">Data urodzin:</th>
-                <th class="center">Szczegóły:</th>
-                <th class="center">Edytuj:</th>
-                <th class="center">Usuń:</th>
-            </tr>
-            <tr th:each="child : ${user.child}">
-                <td th:text="${child.name}"></td>
-                <td th:text="${child.surname}"></td>
-                <td class="center" th:text="${child.groupChildren.name}"></td>
-                <td class="center" th:text="${child.dayOfBirth}"></td>
-                <td class="center"><a th:href="@{/view/child/{id}(id=${child.id})}" class="btn">Szczegóły</a></td>
-                <td class="center"><a th:href="@{/view/child/update/{id}(id=${child.id})}" class="btn-update">Edytuj</a></td>
-                <td class="center"><a th:href="@{/view/child/delete/{id}(id=${child.id})}" class="btn-delete">Usuń</a></td>
-            </tr>
-        </table>
+        <div th:each="child : ${user.child}" class="div-inline-block">
+            <div><a th:text="${child.name} + ' ' + ${child.surname}" th:href="@{/view/child/{id}(id=${child.id})}" class="btn-child"></a></div>
+            <div><a th:text="${child.groupChildren.name}"
+                    th:href="@{/view/groupchildren/{id}(id=${child.groupChildren.id})}"
+                    class="btn-group"></a></div>
+            <div><a th:href="@{/view/presence/child/{id}(id=${child.id})}" class="btn-presence">Obecności</a></div>
+        </div>
+    </section>
+
+    <section class="section-content-center" th:if="${parent}">
+        <h2>Dzieci</h2>
+        <div th:each="child : ${user.child}" class="div-inline-block">
+            <div><a th:text="${child.name} + ' ' + ${child.surname}" th:href="@{/view/child/{id}(id=${child.id})}" class="btn-child"></a></div>
+            <div th:text="${child.groupChildren.name}" class="btn-group"></div>
+            <div><a th:href="@{/view/presence/child/{id}(id=${child.id})}" class="btn-presence">Obecności</a></div>
+        </div>
     </section>
 
     <section class="undernav">
-        <a th:href="@{/view/user/update/{id}(id=${user.id})}" class="btn-undernav">Edytuj dane</a>
+        <a th:if="${user.isActive()}" th:href="@{/view/user/active/{id}(id=${user.id})}"
+           class="btn-inactive">Zablokuj</a>
+        <a th:if="${!user.isActive()}" th:href="@{/view/user/active/{id}(id=${user.id})}"
+           class="btn-active">Odblokuj</a>
+        <a th:href="@{/view/user/update/{id}(id=${user.id})}" class="btn-update">Edytuj</a>
+        <a th:href="@{/view/user/delete/{id}(id=${user.id})}" class="btn-delete">Usuń</a>
     </section>
 
 </main>

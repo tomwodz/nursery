@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
 import pl.tomwodz.nursery.exception.UserNotFoundException;
+import pl.tomwodz.nursery.model.Child;
 import pl.tomwodz.nursery.model.User;
 import pl.tomwodz.nursery.repository.UserDAO;
 
@@ -79,5 +80,14 @@ public class UserServiceImpl implements pl.tomwodz.nursery.services.UserService 
     @Override
     public boolean existsByLogin(String login) {
         return this.userDAO.existsByLogin(login);
+    }
+
+    @Override
+    public boolean checkExistenceOfParentChildRelationship(Long id, User user) {
+        Optional<Child> childBox = user.getChild().stream().filter(child -> child.getId() == id).findFirst();
+        if(childBox.isPresent()){
+            return true;
+        }
+        return false;
     }
 }

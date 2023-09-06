@@ -6,7 +6,7 @@
     <title>Nursery - Tomasz Wodziński</title>
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/button.css">
-    <link rel="stylesheet" href="/css/table.css">
+    <link rel="stylesheet" href="/css/presence.css">
 </head>
 <body>
 
@@ -16,38 +16,42 @@
 
     <section class="undernav" th:if="${adminoremployee}">
         <a href="/view/presence/" class="btn-undernav">Dodaj obecność</a>
-        <a href="/view/presence/groupchildrenbetween/" class="btn-undernav">Wyszukaj wg Grupy</a>
-        <a href="/view/presence/childbetween/" class="btn-undernav">Wyszukaj wg Dziecka</a>
+        <a href="/view/presence/groupchildren/" class="btn-undernav">Wyszukaj wg Grupy</a>
+        <a href="/view/presence/child/" class="btn-undernav">Wyszukaj wg Dziecka</a>
     </section>
 
-    <section class="section-content">
-        <h2>Obecności</h2>
-        <table>
-            <tr>
-                <th>Imię:</th>
-                <th>Nazwisko:</th>
-                <th class="center">Data:</th>
-                <th class="center">Godzina wejścia:</th>
-                <th class="center">Godzina wyjścia:</th>
-                <th class="center" th:if="${adminoremployee}">Edytuj:</th>
-                <th class="center" th:if="${adminoremployee}">Usuń</th>
-            </tr>
-            <tr th:each="presence : ${presences}">
-            <td th:text="${presence.child.name}"></td>
-                <td th:text=" ${presence.child.surname}"></td>
-                <td class="center" th:text="${presence.day}" ></td>
-                <td class="center" th:text="${presence.timeEntry}"></td>
-                <td class="center" th:text="${presence.timeDeparture}" ></td>
-                <td class="center">
-                    <a th:href="@{/view/presence/update/{id}(id=${presence.id})}" class="btn-update"
-                       th:if="${adminoremployee}">Edytuj</a>
-                </td>
-                <td class="center"><a th:href="@{/view/presence/delete/{id}(id=${presence.id})}" class="btn-delete"
-                       th:if="${adminoremployee}">Usuń</a>
-                </td>
-            </tr>
-        </table>
+    <section class="section-search-presence" th:if="${logged}">
+        <h3>Wyszukaj według Dziecka</h3>
+        <form method="post">
+        <select class="input-search-presence" th:field="*{PresenceByChildBetweenDatesModel.child.id}">
+            <option th:each="child : ${children}"
+                    th:value="${child.id}"
+                    th:text="${child.name} + ' ' + ${child.surname}">
+            </option>
+        </select>
+        <input type="date" name="dateFrom" id="dateFrom" class="input-search-presence"
+               th:field="*{PresenceByChildBetweenDatesModel.dataFrom}">
+        <input type="date" name="dateTo" id="dateTo" class="input-search-presence"
+               th:field="*{PresenceByChildBetweenDatesModel.dataTo}">
+            <input type="submit" value="Wyszukaj" class="btn-presence">
+        </form>
     </section>
+
+        <section class="section-content-center" th:if="${presences.size()>0 && logged}">
+            <h2>Obecności</h2>
+            <div th:each="presence : ${presences}" class="div-inline-block">
+                <div><a th:text="${presence.child.name} + ' ' + ${presence.child.surname}"
+                        th:href="@{/view/child/{id}(id=${presence.child.id})}" class="btn-child"></a></div>
+                <div th:text="${presence.day}"></div>
+                <div th:text="${presence.timeEntry}"></div>
+                <div th:text="${presence.timeDeparture}"></div>
+                <div th:if="${adminoremployee}">
+                    <a th:href="@{/view/presence/update/{id}(id=${presence.id})}" class="btn-update">Edytuj</a>
+                </div>
+                <div th:if="${adminoremployee}"><a th:href="@{/view/presence/delete/{id}(id=${presence.id})}" class="btn-delete">Usuń</a>
+                </div>
+            </div>
+        </section>
 
 </main>
 

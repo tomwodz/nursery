@@ -1,5 +1,6 @@
 package pl.tomwodz.nursery.services.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
+@Transactional
 public class PresenceServiceImpl implements PresenceService {
 
     private final PresenceDAO presenceDAO;
@@ -34,13 +36,26 @@ public class PresenceServiceImpl implements PresenceService {
 
     @Override
     public List<Presence> findAllByChildId(Long id) {
-        return this.presenceDAO.findAllByChildId(id);
+        return this.presenceDAO.findAllByChild_Id(id);
+    }
+
+    @Override
+    public List<Presence> findAllByGroupChildrenId(Long id) {
+        return this.presenceDAO.findAllByChild_GroupChildren_Id(id);
     }
 
     @Override
     public Presence findById(Long id) {
         return this.presenceDAO.findById(id).
                 orElseThrow(()-> new PresenceNotFoundException("Nie znaleziono obecności o id: " + id));
+    }
+
+    @Override
+    public boolean findFirstByChildId(Long id) {
+        if(this.presenceDAO.findFirstByChild_Id(id).isPresent()){
+            return true;
+        }
+        return false;
     }
 
     @Override

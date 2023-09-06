@@ -131,7 +131,7 @@
     box-shadow: 0 0 8px #ff8056;
 }
 
-.btn-active, .button_group{
+.btn-active, .btn-group {
     font-weight: 600;
     font-size: 16px;
     margin: 5px 10px;
@@ -148,7 +148,7 @@
     box-shadow: 0 0 5px #0a5c0a;
 }
 
-.btn-active:hover, .button_group:hover {
+.btn-active:hover, .btn-group:hover {
     font-weight: 600;
     font-size: 16px;
     margin: 5px 10px;
@@ -228,4 +228,53 @@
     cursor: pointer;
     display: inline-block;
     box-shadow: 0 0 8px #f0768b;
+}
+
+.btn-child, .btn-user {
+    border: 2px solid #6A5ACD;
+    color: #FFFFFF;
+    background-color: #6a5acd;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    padding: 5px 20px;
+    cursor: pointer;
+    display: inline-block;
+    transition: 0.3s;
+    box-shadow: 0 0 5px #6A5ACD;
+}
+
+.btn-child:hover, .btn-user:hover {
+    border: 2px solid #6a5acd;
+    color: #FFFFFF;
+    background-color: #5849af;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    padding: 5px 20px;
+    cursor: pointer;
+    display: inline-block;
+    box-shadow: 0 0 8px #6a5acd;
+}
+
+.btn-size {
+    border: 2px solid #ffb124;
+    color: #FFFFFF;
+    background-color: #ffc04d;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    padding: 5px 20px;
+    display: inline-block;
+    transition: 0.3s;
+    box-shadow: 0 0 5px #ffc04d;
 }
