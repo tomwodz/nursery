@@ -22,7 +22,7 @@
 
     <section class="section-search-presence" th:if="${logged}">
         <h3>Wyszukaj według Dziecka</h3>
-        <form method="post">
+        <form method="post" action="/view/presence/child/">
         <select class="input-search-presence" th:field="*{PresenceByChildBetweenDatesModel.child.id}">
             <option th:each="child : ${children}"
                     th:value="${child.id}"

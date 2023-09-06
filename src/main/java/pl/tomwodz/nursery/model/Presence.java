@@ -36,4 +36,11 @@ public class Presence {
         this.timeDeparture = timeDeparture;
     }
 
+    public Presence(LocalDate day, LocalTime timeEntry, LocalTime timeDeparture, Child child) {
+        this.day = day;
+        this.timeEntry = timeEntry;
+        this.timeDeparture = timeDeparture;
+        this.child = child;
+    }
+
 }

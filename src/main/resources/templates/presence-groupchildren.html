@@ -22,7 +22,7 @@
 
     <section class="section-search-presence">
         <h3>Wyszukaj według Grupy</h3>
-        <form method="post">
+        <form method="post" action="/view/presence/groupchildren/">
             <select class="input-search-presence" th:field="*{PresenceByGroupChildrenBetweenDates.groupChildren.id}">
                 <option th:each="group : ${groupsChildren}"
                         th:value="${group.id}"

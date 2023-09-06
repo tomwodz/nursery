@@ -52,10 +52,16 @@ VALUES
 ('Misie');
 
 INSERT INTO
-    tgroupchildren
+tgroupchildren
 (name)
 VALUES
-    ('Żuczki');
+('Żuczki');
+
+INSERT INTO
+tgroupchildren
+(name)
+VALUES
+ ('Biedronki');
 
 INSERT INTO
 tchild (name, surname, day_of_birth, group_children_id, parent_id)
@@ -73,9 +79,9 @@ VALUES
 ('Weronika', 'Kowalska', '2021-12-03', 2, 4);
 
 INSERT INTO
-    tchild (name, surname, day_of_birth, group_children_id, parent_id)
+tchild (name, surname, day_of_birth, group_children_id, parent_id)
 VALUES
-    ('Justyna', 'Kowalska', '2022-12-03', 3, 4);
+('Justyna', 'Kowalska', '2022-12-03', 3, 4);
 
 INSERT INTO
 tinformation (id, title, content, date_creation, author_id)
@@ -86,4 +92,29 @@ VALUES
 INSERT INTO
     tpresence (id, day, time_entry, time_departure, child_id, presence)
 VALUES
-    (nextval('tpresence_id_seq'),'2021-09-01', '08:07', '14:07', 1, true);
+    (nextval('tpresence_id_seq'),'2021-09-01', '07:00', '15:00', 1, true);
+
+INSERT INTO
+    tpresence (id, day, time_entry, time_departure, child_id, presence)
+VALUES
+    (nextval('tpresence_id_seq'),'2021-08-07', '07:00', '15:00', 1, true);
+
+INSERT INTO
+    tpresence (id, day, time_entry, time_departure, child_id, presence)
+VALUES
+    (nextval('tpresence_id_seq'),'2021-08-08', '07:00', '15:00', 1, true);
+
+INSERT INTO
+    tpresence (id, day, time_entry, time_departure, child_id, presence)
+VALUES
+    (nextval('tpresence_id_seq'),'2021-08-09', '07:00', '15:00', 1, true);
+
+INSERT INTO
+    tpresence (id, day, time_entry, time_departure, child_id, presence)
+VALUES
+    (nextval('tpresence_id_seq'),'2021-08-10', '07:00', '15:00', 1, true);
+
+INSERT INTO
+    tpresence (id, day, time_entry, time_departure, child_id, presence)
+VALUES
+    (nextval('tpresence_id_seq'),'2021-08-11', '07:00', '15:00', 1, true);

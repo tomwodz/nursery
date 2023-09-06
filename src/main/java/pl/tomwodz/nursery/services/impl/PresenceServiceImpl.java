@@ -26,22 +26,22 @@ public class PresenceServiceImpl implements PresenceService {
 
     @Override
     public List<Presence> findAllByChildIdAndDayBetween(Long id, LocalDate dateFrom, LocalDate dateTo) {
-        return this.presenceDAO.findAllByChild_IdAndDayBetween(id, dateFrom, dateTo);
+        return this.presenceDAO.findAllByChild_IdAndDayBetweenOrderByDayDesc(id, dateFrom, dateTo);
     }
 
     @Override
     public List<Presence> findAllByGroupChildrenIdAndDayBetween(Long id, LocalDate dateFrom, LocalDate dateTo) {
-        return this.presenceDAO.findAllByChild_GroupChildren_IdAndDayBetween(id, dateFrom, dateTo);
+        return this.presenceDAO.findAllByChild_GroupChildren_IdAndDayBetweenOrderByDayDesc(id, dateFrom, dateTo);
     }
 
     @Override
     public List<Presence> findAllByChildId(Long id) {
-        return this.presenceDAO.findAllByChild_Id(id);
+        return this.presenceDAO.findAllByChild_IdOrderByDayDesc(id);
     }
 
     @Override
     public List<Presence> findAllByGroupChildrenId(Long id) {
-        return this.presenceDAO.findAllByChild_GroupChildren_Id(id);
+        return this.presenceDAO.findAllByChild_GroupChildren_IdOrderByDayDesc(id);
     }
 
     @Override

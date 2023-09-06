@@ -30,6 +30,7 @@
                     th:href="@{/view/groupchildren/{id}(id=${child.groupChildren.id})}"
                     class="btn-group"></a></div>
             <div th:text="${child.dayOfBirth}"></div>
+            <div><a th:if="${pareny}" th:href="@{/view/child/update/{id}(id=${child.id})}" class="btn-update">Edytuj</a></div>
         </div>
     </section>
 
@@ -44,7 +45,7 @@
 
     <section class="undernav">
         <a th:if="${!parent}" th:href="@{/view/user/{id}(id=${child.parent.id})}" class="btn-undernav">Więcej danych Rodzica</a>
-        <a th:href="@{/view/child/update/{id}(id=${child.id})}" class="btn-update">Edytuj dziecko</a>
+        <a th:if="${adminoremployee}" th:href="@{/view/child/update/{id}(id=${child.id})}" class="btn-update">Edytuj dziecko</a>
         <a th:href="@{/view/child/delete/{id}(id=${child.id})}" class="btn-delete">Usuń</a>
     </section>
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nursery - Tomasz Wodziński</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/table.css">
+    <link rel="stylesheet" href="/css/button.css">
+    <script src="/js/login-validator.js"></script>
+</head>
+<body>
+
+<header th:replace="~{fragments.html :: header}"></header>
+<nav th:replace="~{fragments.html :: nav}"></nav>
+<main>
+
+    <section>
+        <h2>Automatyczne obecności</h2>
+    </section>
+
+    <section class="section-content-center">
+        <h3>Sterowanie</h3>
+        <div th:if="${corn==false}" th:text="'Status: Wyłączony'"></div>
+        <div th:if="${corn==true}" th:text="'Status: Włączony'"></div>
+        <p>Przy włączonym automacie obecności dododawne są raz dzienie dla wszystkich dzieci w losowych godzinach wejścia i wyjścia.</p>
+        <a th:if="${corn==false}" href="/view/corn/run" class="btn-active">Włącz</a>
+        <a th:if="${corn==true}" href="/view/corn/run" class="btn-inactive">Wyłącz</a>
+    </section>
+
+</main>
+
+<footer th:replace="~{fragments.html :: footer}"></footer>
+
+</body>
+</html>
