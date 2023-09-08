@@ -6,15 +6,21 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenFacade;
+import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenRepository;
 import pl.tomwodz.nursery.exception.validation.ChildValidationException;
 import pl.tomwodz.nursery.model.Child;
+import pl.tomwodz.nursery.model.GroupChildren;
 import pl.tomwodz.nursery.model.User;
 import pl.tomwodz.nursery.services.ChildService;
-import pl.tomwodz.nursery.services.GroupChildrenService;
 import pl.tomwodz.nursery.services.PresenceService;
 import pl.tomwodz.nursery.services.UserService;
 import pl.tomwodz.nursery.session.SessionData;
 import pl.tomwodz.nursery.validatros.ChildValidator;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(path = "/view/child")
@@ -26,9 +32,10 @@ public class ChildViewController {
     SessionData sessionData;
 
     private final ChildService childService;
-    private final GroupChildrenService groupChildrenService;
     private final UserService userService;
     private final PresenceService presenceService;
+    private final GroupChildrenFacade groupChildrenFacade;
+    private final GroupChildrenRepository groupChildrenRepository;
 
     @GetMapping
     public String getAll(Model model) {
@@ -66,7 +73,7 @@ public class ChildViewController {
         }
         if (this.sessionData.isAdminOrEmployee()) {
             model.addAttribute("childModel", new Child());
-            model.addAttribute("groupChildren", this.groupChildrenService.findAll());
+            model.addAttribute("groupChildren", this.groupChildrenFacade.findAllGroupsChildren());
             model.addAttribute("parents", this.userService.findByRole(User.Role.PARENT));
             return "add-child";
         }
@@ -83,7 +90,7 @@ public class ChildViewController {
                 child.setId(0L);
                 if (this.sessionData.isParent()) {
                     child.setParent(this.sessionData.getUser());
-                    child.setGroupChildren(this.groupChildrenService.getGroupChildrenByNewChild());
+                    child.setGroupChildren(getGroupChildrenByNewChild());
                     Child childSaved = this.childService.save(child);
                     this.sessionData.getUser().getChild().add(childSaved);
                     model.addAttribute("message", "Dodano dziecko.");
@@ -108,7 +115,7 @@ public class ChildViewController {
         model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee()) {
             model.addAttribute("childModel", this.childService.findById(id));
-            model.addAttribute("groupChildren", this.groupChildrenService.findAll());
+            model.addAttribute("groupChildren", this.groupChildrenFacade.findAllGroupsChildren());
             model.addAttribute("parents", this.userService.findByRole(User.Role.PARENT));
             return "add-child";
         }
@@ -161,16 +168,30 @@ public class ChildViewController {
             return "message";
         }
         if (this.sessionData.isAdminOrEmployee()) {
-                this.childService.deleteById(id);
-                model.addAttribute("message", "Usunięto dziecko o id: " + id);
-                return "message";}
+            this.childService.deleteById(id);
+            model.addAttribute("message", "Usunięto dziecko o id: " + id);
+            return "message";}
         if (this.sessionData.isParent() &&
-                    userService.checkExistenceOfParentChildRelationship(id, this.sessionData.getUser())) {
+                userService.checkExistenceOfParentChildRelationship(id, this.sessionData.getUser())) {
             this.childService.deleteById(id);
             model.addAttribute("message", "Usunięto dziecko o id: " + id);
             return "message";
         }
         return "redirect:/view/login";
     }
+
+    public GroupChildren getGroupChildrenByNewChild(){
+        Optional<GroupChildren> groupChildrenBox = this.groupChildrenRepository.findByName("Rekrutacja " +
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
+        if(groupChildrenBox.isPresent()){
+            return groupChildrenBox.get();
+        } else {
+            GroupChildren groupChildren = new GroupChildren("Rekrutacja " +
+                    LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
+            GroupChildren groupChildrenSaved = this.groupChildrenRepository.save(groupChildren);
+            return groupChildrenSaved;
+        }
+    }
+
 
 }

@@ -1,15 +1,17 @@
-package pl.tomwodz.nursery.controllers.view;
+package pl.tomwodz.nursery.infrastructure.groupchildren.controller;
 
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.tomwodz.nursery.controllers.view.ModelUtils;
+import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenFacade;
+import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenRequestDto;
 import pl.tomwodz.nursery.exception.validation.GroupChildrenValidationException;
 import pl.tomwodz.nursery.model.GroupChildren;
-import pl.tomwodz.nursery.services.GroupChildrenService;
+import pl.tomwodz.nursery.services.ChildService;
 import pl.tomwodz.nursery.session.SessionData;
-import pl.tomwodz.nursery.validatros.GroupChildrenValidator;
 
 @Controller
 @RequestMapping(path = "/view/groupchildren")
@@ -19,13 +21,15 @@ public class GroupChildrenViewController {
     @Resource
     SessionData sessionData;
 
-    private final GroupChildrenService groupChildrenService;
+    private final GroupChildrenFacade groupChildrenFacade;
+    private final ChildService childService;
 
     @GetMapping
     public String getAll(Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         if (this.sessionData.isAdminOrEmployee()) {
-            model.addAttribute("groupChildren", this.groupChildrenService.findAll());
+            model.addAttribute("groupChildren", this.groupChildrenFacade.findAllGroupsChildren());
+            //TODO new method to facade child
             return "groupchildren";
         }
         return "redirect:/view/login";
@@ -35,7 +39,11 @@ public class GroupChildrenViewController {
     public String getGroupChildrenById(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         if (this.sessionData.isAdminOrEmployee()) {
-            model.addAttribute("group", this.groupChildrenService.findById(id));
+            model.addAttribute("group", this.groupChildrenFacade.findGroupChildrenById(id));
+            model.addAttribute("children", this.childService.findAll()
+                    .stream()
+                    .filter(child -> child.getGroupChildren().getId()==id) //TODO new method to facade child
+                    .toList());
             return "sample-groupchildren";
         }
         return "redirect:/view/login";
@@ -53,14 +61,12 @@ public class GroupChildrenViewController {
     }
 
     @PostMapping(path = "/")
-    public String postGroupChildren(@ModelAttribute GroupChildren groupChildren, Model model) {
+    public String postGroupChildren(@ModelAttribute GroupChildrenRequestDto groupChildrenRequestDto, Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee()) {
             try{
-                GroupChildrenValidator.validatorGroupChildren(groupChildren);
-                groupChildren.setId(0L);
-                this.groupChildrenService.save(groupChildren);
+                this.groupChildrenFacade.saveGroupChildren(groupChildrenRequestDto);
                 model.addAttribute("message", "Dodano grupę.");
                 return "message";
             } catch (GroupChildrenValidationException e){
@@ -76,7 +82,7 @@ public class GroupChildrenViewController {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee()) {
-            model.addAttribute("groupChildrenModel", this.groupChildrenService.findById(id));
+            model.addAttribute("groupChildrenModel", this.groupChildrenFacade.findGroupChildrenById(id));
             return "add-groupchildren";
         }
         return "redirect:/view/login";
@@ -84,17 +90,14 @@ public class GroupChildrenViewController {
 
     @PostMapping(path = "/update/{id}")
     public String updateGroupChildrenById(Model model,
-                                          @ModelAttribute GroupChildren groupChildren,
+                                          @ModelAttribute GroupChildrenRequestDto groupChildrenRequestDto,
                                           @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee()) {
             try{
-                GroupChildrenValidator.validatorGroupChildren(groupChildren);
-                GroupChildren newGroupChildren = new GroupChildren();
-                newGroupChildren.setName(groupChildren.getName());
-                this.groupChildrenService.updateById(id, newGroupChildren);
-                model.addAttribute("message", "Zmieniono nazwę grupy na: " + groupChildren.getName());
+                this.groupChildrenFacade.updateGroupChildren(id, groupChildrenRequestDto);
+                model.addAttribute("message", "Zmieniono nazwę grupy na: " + groupChildrenRequestDto.name());
                 return "message";
             } catch (GroupChildrenValidationException e){
                 this.sessionData.setInfo("Zła nazwa.");
@@ -108,8 +111,10 @@ public class GroupChildrenViewController {
     public String deleteGroupChildrenById(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         if (this.sessionData.isAdminOrEmployee()) {
-            if (this.groupChildrenService.findById(id).getChild().size() == 0) {
-                this.groupChildrenService.deleteById(id);
+            if (this.childService.findAll().stream()
+                    .filter(child -> child.getGroupChildren().getId()==id)
+                    .count() == 0) {
+                this.groupChildrenFacade.deleteGroupChildren(id);
                 model.addAttribute("message", "Usunięto grupę o id: " + id);
                 return "message";
             } else {

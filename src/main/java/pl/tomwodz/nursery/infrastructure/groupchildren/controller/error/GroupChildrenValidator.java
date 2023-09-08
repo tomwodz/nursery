@@ -1,4 +1,4 @@
-package pl.tomwodz.nursery.validatros;
+package pl.tomwodz.nursery.infrastructure.groupchildren.controller.error;
 
 import pl.tomwodz.nursery.exception.validation.GroupChildrenValidationException;
 import pl.tomwodz.nursery.model.GroupChildren;

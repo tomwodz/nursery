@@ -113,8 +113,8 @@ class InformationFacadeTest {
     void shouldBeAbleToUpdateInformationById() {
 
         //given
-        InformationResponseDto informationResponseDto = informationFacade.saveInformation(informationRequestDto);
-        InformationResponseDto informationSaved = informationFacade.findInformationById(informationResponseDto.id());
+        InformationResponseDto informationSaved = informationFacade.saveInformation(informationRequestDto);
+        informationFacade.findInformationById(informationSaved.id());
         InformationRequestDto informationToUpdate = InformationRequestDto.builder()
                 .author_id(1L)
                 .title("Update")

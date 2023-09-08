@@ -15,7 +15,7 @@
 
     <section class="section-content-center">
         <h2 th:text="'Grupa: ' + ${group.name}"></h2>
-        <div th:each="child : ${group.child}" class="div-inline-block">
+        <div th:each="child : ${children}" class="div-inline-block">
             <div><a th:text="${child.name} + ' ' + ${child.surname}" th:href="@{/view/child/{id}(id=${child.id})}" class="btn-child">Szczegóły</a></div>
             <div><a th:href="@{/view/presence/child/{id}(id=${child.id})}" class="btn-presence">Obecności</a></div>
         </div>

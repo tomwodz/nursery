@@ -5,12 +5,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenFacade;
 import pl.tomwodz.nursery.model.Presence;
 import pl.tomwodz.nursery.model.PresenceByChildBetweenDates;
 import pl.tomwodz.nursery.model.PresenceByGroupChildrenBetweenDates;
-import pl.tomwodz.nursery.repository.dao.springdata.PresenceRepository;
 import pl.tomwodz.nursery.services.ChildService;
-import pl.tomwodz.nursery.services.GroupChildrenService;
 import pl.tomwodz.nursery.services.PresenceService;
 import pl.tomwodz.nursery.services.UserService;
 import pl.tomwodz.nursery.session.SessionData;
@@ -30,7 +29,7 @@ public class PresenceViewController {
 
     private final PresenceService presenceService;
     private final ChildService childService;
-    private final GroupChildrenService groupChildrenService;
+    private final GroupChildrenFacade groupChildrenFacade;
     private final UserService userService;
 
 
@@ -173,7 +172,7 @@ public class PresenceViewController {
         model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee()) {
             model.addAttribute("presences", Collections.emptyList());
-            model.addAttribute("groupsChildren", this.groupChildrenService.findAll());
+            model.addAttribute("groupsChildren", this.groupChildrenFacade.findAllGroupsChildren());
             model.addAttribute("PresenceByGroupChildrenBetweenDates", new PresenceByGroupChildrenBetweenDates());
             return "presence-groupchildren";
         }
@@ -186,7 +185,7 @@ public class PresenceViewController {
         if (this.sessionData.isAdminOrEmployee()) {
             model.addAttribute("PresenceByGroupChildrenBetweenDates", new PresenceByGroupChildrenBetweenDates());
             model.addAttribute("presences", this.presenceService.findAllByGroupChildrenId(id));
-            model.addAttribute("groupsChildren", this.groupChildrenService.findAll());
+            model.addAttribute("groupsChildren", this.groupChildrenFacade.findAllGroupsChildren());
             return "presence-groupchildren";
         }
         return "redirect:/view/login";
@@ -203,7 +202,7 @@ public class PresenceViewController {
                     request.getDataFrom(),
                     request.getDataTo());
             model.addAttribute("presences", presences);
-            model.addAttribute("groupsChildren", this.groupChildrenService.findAll());
+            model.addAttribute("groupsChildren", this.groupChildrenFacade.findAllGroupsChildren());
             model.addAttribute("PresenceByGroupChildrenBetweenDates", new PresenceByGroupChildrenBetweenDates());
             return "presence-groupchildren";
         }

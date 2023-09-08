@@ -1,6 +1,8 @@
-package pl.tomwodz.nursery.controllers.rest.groupchildren.response;
+package pl.tomwodz.nursery.domain.groupchildren.dto;
 
+import lombok.Builder;
 import org.springframework.http.HttpStatus;
 
+@Builder
 public record DeleteGroupChildrenResponseDto(String message, HttpStatus status) {
 }

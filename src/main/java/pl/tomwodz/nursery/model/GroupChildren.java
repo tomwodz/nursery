@@ -6,6 +6,7 @@ import lombok.*;
 import java.util.List;
 
 
+@Builder
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -27,5 +28,9 @@ public class GroupChildren {
 
     public GroupChildren(String name) {
         this.name = name;
+    }
+
+    public GroupChildren(Long id) {
+        this.id = id;
     }
 }

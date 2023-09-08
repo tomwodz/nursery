@@ -1,4 +1,4 @@
-package pl.tomwodz.nursery.exception.handler;
+package pl.tomwodz.nursery.infrastructure.groupchildren.controller.error;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -7,10 +7,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import pl.tomwodz.nursery.controllers.rest.ChildRestController;
-import pl.tomwodz.nursery.controllers.rest.GroupChildrenRestController;
-import pl.tomwodz.nursery.controllers.view.GroupChildrenViewController;
+import pl.tomwodz.nursery.infrastructure.groupchildren.controller.GroupChildrenRestController;
+import pl.tomwodz.nursery.infrastructure.groupchildren.controller.GroupChildrenViewController;
 import pl.tomwodz.nursery.exception.handler.response.ErrorGroupChildrenResponseDto;
-import pl.tomwodz.nursery.exception.GroupChildrenNotFoundException;
 
 import java.time.LocalDateTime;
 

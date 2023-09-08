@@ -8,15 +8,19 @@ import pl.tomwodz.nursery.controllers.rest.child.ChildMapper;
 import pl.tomwodz.nursery.controllers.rest.child.request.CreateChildRequestDto;
 import pl.tomwodz.nursery.controllers.rest.child.request.UpdateChildRequestDto;
 import pl.tomwodz.nursery.controllers.rest.child.response.*;
+import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenFacade;
+import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenRepository;
 import pl.tomwodz.nursery.model.Child;
 import pl.tomwodz.nursery.model.GroupChildren;
 import pl.tomwodz.nursery.model.User;
 import pl.tomwodz.nursery.services.ChildService;
-import pl.tomwodz.nursery.services.GroupChildrenService;
 import pl.tomwodz.nursery.services.UserService;
 import pl.tomwodz.nursery.validatros.ChildValidator;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 import static pl.tomwodz.nursery.controllers.rest.child.ChildMapper.*;
 
@@ -27,7 +31,9 @@ public class ChildRestController {
 
     private final ChildService childService;
     private final UserService userService;
-    private final GroupChildrenService groupChildrenService;
+    private final GroupChildrenFacade groupChildrenFacade;
+    private final GroupChildrenRepository groupChildrenRepository;
+
     @GetMapping
     public ResponseEntity<GetAllChildrenResponseDto> getAllChildren() {
         List<Child> allChildren = this.childService.findAll();
@@ -49,7 +55,7 @@ public class ChildRestController {
         Child child = mapFromCreateChildRequestDtoToChild(request);
         ChildValidator.validateChild(child);
         child.setParent(userFromDb);
-        child.setGroupChildren(this.groupChildrenService.getGroupChildrenByNewChild());
+        child.setGroupChildren(this.getGroupChildrenByNewChild());
         Child savedChild = this.childService.save(child);
         CreateChildResponseDto response = mapFromChildToCreateChildResponseDto(savedChild);
         return ResponseEntity.ok(response);
@@ -63,7 +69,7 @@ public class ChildRestController {
         ChildValidator.validateDayBirth(request.dayBirth());
         Child childFromDb = this.childService.findById(id);
         User userFromDb = this.userService.findById(user_id);
-        GroupChildren groupChildren = this.groupChildrenService.findById(groupChildren_id);
+        GroupChildren groupChildren = new GroupChildren(this.groupChildrenFacade.findGroupChildrenById(id).id());
         Child newChild = ChildMapper.mapFromUpdateChildRequestDtoToChild(request);
         newChild.setParent(userFromDb);
         newChild.setGroupChildren(groupChildren);
@@ -78,6 +84,20 @@ public class ChildRestController {
         this.childService.deleteById(id);
         DeleteChildResponseDto response = mapFromChildToDeleteChildResponseDto(id);
         return ResponseEntity.ok(response);
+    }
+
+
+    private GroupChildren getGroupChildrenByNewChild(){
+        Optional<GroupChildren> groupChildrenBox = this.groupChildrenRepository.findByName("Rekrutacja " +
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
+        if(groupChildrenBox.isPresent()){
+            return groupChildrenBox.get();
+        } else {
+            GroupChildren groupChildren = new GroupChildren("Rekrutacja " +
+                    LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
+            GroupChildren groupChildrenSaved = this.groupChildrenRepository.save(groupChildren);
+            return groupChildrenSaved;
+        }
     }
 
 }
