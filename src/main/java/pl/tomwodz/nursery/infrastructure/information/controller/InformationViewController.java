@@ -1,17 +1,18 @@
-package pl.tomwodz.nursery.controllers.view;
+package pl.tomwodz.nursery.infrastructure.information.controller;
 
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.tomwodz.nursery.controllers.view.ModelUtils;
+import pl.tomwodz.nursery.domain.information.InformationFacade;
+import pl.tomwodz.nursery.domain.information.dto.InformationRequestDto;
 import pl.tomwodz.nursery.exception.validation.InformationValidationException;
 import pl.tomwodz.nursery.model.Information;
-import pl.tomwodz.nursery.services.InformationService;
+import pl.tomwodz.nursery.services.UserService;
 import pl.tomwodz.nursery.session.SessionData;
 import pl.tomwodz.nursery.validatros.InformationValidator;
-
-import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping(path = "/view/information")
@@ -21,13 +22,15 @@ public class InformationViewController {
     @Resource
     SessionData sessionData;
 
-    private final InformationService informationService;
+    private final InformationFacade informationFacade;
+    private final UserService userService;
 
     @GetMapping
     public String getAllInformations(Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         if(this.sessionData.isLogged()){
-            model.addAttribute("informations", this.informationService.findAll());
+            model.addAttribute("informations", this.informationFacade.findAllInformations());
+            model.addAttribute("authors", this.userService.findAll());
             return "information";
         }
         return "redirect:/view/login";
@@ -51,9 +54,12 @@ public class InformationViewController {
         if (this.sessionData.isAdminOrEmployee()) {
             try{
                 InformationValidator.validateInformation(information);
-                information.setId(0L);
-                information.setAuthor(this.sessionData.getUser());
-                this.informationService.save(information);
+                InformationRequestDto informationRequestDto = InformationRequestDto.builder()
+                        .author_id(this.sessionData.getUser().getId())
+                        .content(information.getContent())
+                        .title(information.getTitle())
+                        .build();
+                this.informationFacade.saveInformation(informationRequestDto);
                 model.addAttribute("message", "Dodano informację.");
                 return "message";
             } catch (InformationValidationException e){
@@ -69,7 +75,7 @@ public class InformationViewController {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee()) {
-            model.addAttribute("informationModel", this.informationService.findById(id));
+            model.addAttribute("informationModel", this.informationFacade.findInformationById(id));
             return "add-information";
         }
         return "redirect:/view/login";
@@ -84,12 +90,12 @@ public class InformationViewController {
         if (this.sessionData.isAdminOrEmployee()) {
             try{
                 InformationValidator.validateInformation(information);
-                Information newInformation = new Information();
-                newInformation.setAuthor(this.sessionData.getUser());
-                newInformation.setDateCreation(LocalDateTime.now());
-                newInformation.setContent(information.getContent());
-                newInformation.setTitle(information.getTitle());
-                this.informationService.updateById(id, newInformation);
+                InformationRequestDto informationRequestDto = InformationRequestDto.builder()
+                        .author_id(this.sessionData.getUser().getId())
+                        .title(information.getTitle())
+                        .content(information.getContent())
+                        .build();
+                this.informationFacade.updateInformation(id, informationRequestDto);
                 model.addAttribute("message", "Zmieniono informację.");
                 return "message";
             } catch (InformationValidationException e){
@@ -104,7 +110,7 @@ public class InformationViewController {
     public String deleteInformationById(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         if (this.sessionData.isAdminOrEmployee()) {
-                this.informationService.deleteById(id);
+                this.informationFacade.deleteInformation(id);
                 model.addAttribute("message", "Usunięto informację o id: " + id);
                 return "message";
         }

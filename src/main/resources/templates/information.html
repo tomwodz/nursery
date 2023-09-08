@@ -20,8 +20,8 @@
     <section th:each="information : ${informations}" class="section-content">
         <h2 th:text="${information.title}"></h2>
         <p th:text="${information.content}"></p>
-        <p th:text="${#temporals.format(information.dateCreation,'dd-MM-yyyy HH:mm')}" class="right"></p>
-        <p th:text="${information.author.name}" class="right"></p>
+        <p th:text="${information.dateCreation}" class="right"></p>
+        <p th:text="${authors.get(information.author_id()).name}" class="right"></p>
         <a th:href="@{/view/information/update/{id}(id=${information.id})}"
            th:if="${adminoremployee}" class="btn-update">Edytuj</a>
         <a th:href="@{/view/information/delete/{id}(id=${information.id})}"

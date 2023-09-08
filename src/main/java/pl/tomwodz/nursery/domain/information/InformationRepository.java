@@ -1,19 +1,23 @@
-package pl.tomwodz.nursery.repository;
+package pl.tomwodz.nursery.domain.information;
 
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.Repository;
 import pl.tomwodz.nursery.model.Information;
 
 import java.util.List;
 import java.util.Optional;
-@Repository
-public interface InformationDAO {
+
+public interface InformationRepository extends Repository <Information, Long> {
+
     List<Information> findAll(Sort sort);
+
     Optional<Information> findById(Long id);
     Information save(Information information);
-    boolean existsById(Long id);
-    void deleteById(Long id);
 
-    void updateById(Long id, Information newInformation);
+    boolean existsById(Long id);
+    @Modifying
+    void deleteById(Long id);
 
 }

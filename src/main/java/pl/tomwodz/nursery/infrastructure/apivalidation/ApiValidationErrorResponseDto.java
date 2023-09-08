@@ -1,4 +1,4 @@
-package pl.tomwodz.nursery.apivalidation;
+package pl.tomwodz.nursery.infrastructure.apivalidation;
 
 import org.springframework.http.HttpStatus;
 

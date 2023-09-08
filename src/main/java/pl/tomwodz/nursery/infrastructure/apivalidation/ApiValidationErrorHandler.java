@@ -1,4 +1,4 @@
-package pl.tomwodz.nursery.apivalidation;
+package pl.tomwodz.nursery.infrastructure.apivalidation;
 
 
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import pl.tomwodz.nursery.controllers.rest.ChildRestController;
 import pl.tomwodz.nursery.controllers.rest.GroupChildrenRestController;
-import pl.tomwodz.nursery.controllers.rest.InformationRestController;
+import pl.tomwodz.nursery.infrastructure.information.controller.InformationRestController;
 import pl.tomwodz.nursery.controllers.rest.UserRestController;
 
 import java.util.List;

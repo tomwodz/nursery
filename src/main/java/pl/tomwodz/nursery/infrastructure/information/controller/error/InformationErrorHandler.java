@@ -1,4 +1,4 @@
-package pl.tomwodz.nursery.exception.handler;
+package pl.tomwodz.nursery.infrastructure.information.controller.error;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import pl.tomwodz.nursery.controllers.rest.InformationRestController;
-import pl.tomwodz.nursery.controllers.view.InformationViewController;
-import pl.tomwodz.nursery.exception.InformationNotFoundException;
+import pl.tomwodz.nursery.infrastructure.information.controller.InformationRestController;
+import pl.tomwodz.nursery.infrastructure.information.controller.InformationViewController;
 import pl.tomwodz.nursery.exception.handler.response.ErrorInformationResponseDto;
 
 import java.time.LocalDateTime;
