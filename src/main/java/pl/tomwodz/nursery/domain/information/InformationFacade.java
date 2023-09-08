@@ -35,6 +35,7 @@ public class InformationFacade {
     }
 
     public InformationResponseDto saveInformation(InformationRequestDto informationRequestDto){
+        InformationValidator.validateInformation(informationRequestDto);
         final Information information = mapFromInformationRequestDtoToInformation(informationRequestDto);
         final Information savedInformation = this.informationRepository.save(information);
         return mapFromInformationToInformationResponseDto(savedInformation);

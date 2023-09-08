@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import pl.tomwodz.nursery.controllers.view.ModelUtils;
 import pl.tomwodz.nursery.domain.information.InformationFacade;
 import pl.tomwodz.nursery.domain.information.dto.InformationRequestDto;
-import pl.tomwodz.nursery.exception.validation.InformationValidationException;
+import pl.tomwodz.nursery.infrastructure.information.controller.error.InformationValidationException;
 import pl.tomwodz.nursery.model.Information;
 import pl.tomwodz.nursery.services.UserService;
 import pl.tomwodz.nursery.session.SessionData;
-import pl.tomwodz.nursery.validatros.InformationValidator;
 
 @Controller
 @RequestMapping(path = "/view/information")
@@ -53,7 +52,6 @@ public class InformationViewController {
         model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee()) {
             try{
-                InformationValidator.validateInformation(information);
                 InformationRequestDto informationRequestDto = InformationRequestDto.builder()
                         .author_id(this.sessionData.getUser().getId())
                         .content(information.getContent())
@@ -89,7 +87,6 @@ public class InformationViewController {
         model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee()) {
             try{
-                InformationValidator.validateInformation(information);
                 InformationRequestDto informationRequestDto = InformationRequestDto.builder()
                         .author_id(this.sessionData.getUser().getId())
                         .title(information.getTitle())
