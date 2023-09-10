@@ -2,10 +2,11 @@ package pl.tomwodz.nursery.services.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import pl.tomwodz.nursery.exception.ChildNotFoundException;
+import pl.tomwodz.nursery.domain.child.ChildRepository;
+import pl.tomwodz.nursery.infrastructure.child.controller.error.ChildNotFoundException;
 import pl.tomwodz.nursery.model.Child;
-import pl.tomwodz.nursery.repository.ChildDAO;
 
 import java.util.List;
 
@@ -15,10 +16,10 @@ import java.util.List;
 @Transactional
 public class ChildServiceImpl implements pl.tomwodz.nursery.services.ChildService {
 
-    private final ChildDAO childDAO;
+    private final ChildRepository childDAO;
     @Override
     public List<Child> findAll() {
-        return this.childDAO.findAll();
+        return this.childDAO.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
     @Override
@@ -44,9 +45,5 @@ public class ChildServiceImpl implements pl.tomwodz.nursery.services.ChildServic
         this.existsById(id);
         this.childDAO.deleteById(id);
     }
-    @Override
-    public void updateById(Long id, Child newChild) {
-        this.existsById(id);
-        this.childDAO.updateById(id, newChild);
-    }
+
 }

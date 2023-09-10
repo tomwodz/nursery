@@ -1,14 +1,15 @@
-package pl.tomwodz.nursery.exception.handler;
+package pl.tomwodz.nursery.infrastructure.child.controller.error;
 
+import jakarta.validation.ValidationException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import pl.tomwodz.nursery.controllers.rest.ChildRestController;
-import pl.tomwodz.nursery.controllers.view.ChildViewController;
-import pl.tomwodz.nursery.exception.ChildNotFoundException;
+import pl.tomwodz.nursery.exception.handler.response.ErrorInformationResponseDto;
+import pl.tomwodz.nursery.infrastructure.child.controller.ChildRestController;
+import pl.tomwodz.nursery.infrastructure.child.controller.ChildViewController;
 import pl.tomwodz.nursery.exception.handler.response.ErrorChildResponseDto;
 import pl.tomwodz.nursery.exception.validation.ChildValidationException;
 
@@ -35,4 +36,5 @@ public class ChildErrorHandler {
         log.warn("ChildValidationException");
         return new ErrorChildResponseDto(exception.getMessage(), HttpStatus.METHOD_NOT_ALLOWED, LocalDateTime.now());
     }
+
 }

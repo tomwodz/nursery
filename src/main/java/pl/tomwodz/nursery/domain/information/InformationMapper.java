@@ -30,8 +30,8 @@ public class InformationMapper {
                 .build();
     }
 
-    public static Information mapFromUpdateInformationRequestDtoToInformation(Long id, InformationRequestDto requestDto)
-    {return Information.builder()
+    public static Information mapFromUpdateInformationRequestDtoToInformation(Long id, InformationRequestDto requestDto) {
+        return Information.builder()
             .author(new User(requestDto.author_id()))
             .title(requestDto.title())
             .content(requestDto.content())

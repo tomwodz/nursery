@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import pl.tomwodz.nursery.domain.information.dto.DeleteInformationResponseDto;
 import pl.tomwodz.nursery.domain.information.dto.InformationRequestDto;
 import pl.tomwodz.nursery.domain.information.dto.InformationResponseDto;
+import pl.tomwodz.nursery.domain.validator.ValidatorFacade;
 import pl.tomwodz.nursery.infrastructure.information.controller.error.InformationNotFoundException;
 import pl.tomwodz.nursery.model.Information;
 
@@ -20,6 +21,7 @@ import static pl.tomwodz.nursery.domain.information.InformationMapper.mapFromInf
 public class InformationFacade {
 
     private final InformationRepository informationRepository;
+    private final ValidatorFacade validatorFacade;
 
     public List<InformationResponseDto> findAllInformations(){
         return this.informationRepository.findAll(Sort.by(Sort.Direction.DESC, "id"))
@@ -35,7 +37,7 @@ public class InformationFacade {
     }
 
     public InformationResponseDto saveInformation(InformationRequestDto informationRequestDto){
-        InformationValidator.validateInformation(informationRequestDto);
+        validatorFacade.validationInformation(informationRequestDto);
         final Information information = mapFromInformationRequestDtoToInformation(informationRequestDto);
         final Information savedInformation = this.informationRepository.save(information);
         return mapFromInformationToInformationResponseDto(savedInformation);
@@ -43,6 +45,7 @@ public class InformationFacade {
 
     public InformationResponseDto updateInformation(Long id, InformationRequestDto informationRequestDto){
         this.existsById(id);
+        validatorFacade.validationInformation(informationRequestDto);
         final Information information = InformationMapper.mapFromUpdateInformationRequestDtoToInformation(id, informationRequestDto);
         final Information savedInformation = this.informationRepository.save(information);
         return mapFromInformationToInformationResponseDto(savedInformation);

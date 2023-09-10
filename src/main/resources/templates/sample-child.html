@@ -16,37 +16,38 @@
     <section class="section-content-center" th:if="${parent}">
         <h2>Dane dziecka</h2>
         <div class="div-inline-block">
-            <div><a th:text="${child.name} + ' ' + ${child.surname}" th:href="@{/view/child/{id}(id=${child.id})}" class="btn-user"></a></div>
-            <div th:text="${child.groupChildren.name}" class="btn-group"></div>
-            <div th:text="${child.dayOfBirth}"></div>
+            <div><a th:text="${child.name} + ' ' + ${child.surname}" th:href="@{/view/child/{id}(id=${child.id()})}" class="btn-user"></a></div>
+            <div th:text="${groupChildren.name()}" class="btn-group"></div>
+            <div th:text="${child.dayBirth()}"></div>
+            <div><a th:href="@{/view/child/update/{id}(id=${child.id()})}" class="btn-update">Edytuj</a></div>
         </div>
     </section>
 
     <section class="section-content-center" th:if="${adminoremployee}">
         <h2>Dane dziecka</h2>
         <div class="div-inline-block">
-            <div><a th:text="${child.name} + ' ' + ${child.surname}" th:href="@{/view/child/{id}(id=${child.id})}" class="btn-user"></a></div>
-            <div><a th:text="${child.groupChildren.name}"
-                    th:href="@{/view/groupchildren/{id}(id=${child.groupChildren.id})}"
+            <div><a th:text="${child.name} + ' ' + ${child.surname}" th:href="@{/view/child/{id}(id=${child.id()})}" class="btn-user"></a></div>
+            <div><a th:text="${groupChildren.name()}"
+                    th:href="@{/view/groupchildren/{id}(id=${child.groupChildren_id()})}"
                     class="btn-group"></a></div>
-            <div th:text="${child.dayOfBirth}"></div>
-            <div><a th:if="${pareny}" th:href="@{/view/child/update/{id}(id=${child.id})}" class="btn-update">Edytuj</a></div>
+            <div th:text="${child.dayBirth()}"></div>
+            <div><a th:href="@{/view/child/update/{id}(id=${child.id()})}" class="btn-update">Edytuj</a></div>
         </div>
     </section>
 
     <section class="section-content-center">
         <h2>Dane rodzica</h2>
         <div class="div-inline-block">
-            <div><a th:text="${child.parent.name} + ' ' + ${child.parent.surname}" th:href="@{/view/user/{id}(id=${child.parent.id})}" class="btn-user"></a></div>
-            <div th:text="${child.parent.phoneNumber}"></div>
-            <div th:text="${child.parent.email}"></div>
+            <div><a th:text="${child.user_id()} + ' ' + ${child.user_id()}" th:href="@{/view/user/{id}(id=${child.user_id()})}" class="btn-user"></a></div>
+            <div th:text="${child.user_id()}"></div>
+            <div th:text="${child.user_id()}"></div>
         </div>
     </section>
 
     <section class="undernav">
-        <a th:if="${!parent}" th:href="@{/view/user/{id}(id=${child.parent.id})}" class="btn-undernav">Więcej danych Rodzica</a>
-        <a th:if="${adminoremployee}" th:href="@{/view/child/update/{id}(id=${child.id})}" class="btn-update">Edytuj dziecko</a>
-        <a th:href="@{/view/child/delete/{id}(id=${child.id})}" class="btn-delete">Usuń</a>
+        <a th:if="${!parent}" th:href="@{/view/user/{id}(id=${child.user_id()})}" class="btn-undernav">Więcej danych Rodzica</a>
+        <a th:if="${adminoremployee}" th:href="@{/view/child/update/{id}(id=${child.id()})}" class="btn-update">Edytuj dziecko</a>
+        <a th:href="@{/view/child/delete/{id}(id=${child.id()})}" class="btn-delete">Usuń</a>
     </section>
 
 </main>

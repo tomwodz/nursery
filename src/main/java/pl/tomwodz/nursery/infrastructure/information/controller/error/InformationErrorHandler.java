@@ -1,5 +1,6 @@
 package pl.tomwodz.nursery.infrastructure.information.controller.error;
 
+import jakarta.validation.ValidationException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -23,5 +24,13 @@ public class InformationErrorHandler {
     public ErrorInformationResponseDto handleException(InformationNotFoundException exception){
         log.warn("InformationNotFoundException error while accessing user");
         return new ErrorInformationResponseDto(exception.getMessage(), HttpStatus.NOT_FOUND, LocalDateTime.now());
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorInformationResponseDto handleException(ValidationException exception){
+        log.warn("ValidationException error while accessing user");
+        return new ErrorInformationResponseDto(exception.getMessage(), HttpStatus.BAD_REQUEST, LocalDateTime.now());
     }
 }

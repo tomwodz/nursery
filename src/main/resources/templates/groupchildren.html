@@ -19,11 +19,19 @@
 
     <section class="section-content-center">
         <h2>Grupy</h2>
-            <div th:each="group : ${groupChildren}" class="div-inline-block">
-                <div><a th:text="${group.name}" th:href="@{/view/groupchildren/{id}(id=${group.id})}" class="btn-group"></a></div>
-             <!--   <div th:text="'Dzieci: ' + ${group.child.size()}" class="btn-size"></div>-->
-                <div><a th:href="@{/view/presence/groupchildren/{id}(id=${group.id})}" class="btn-presence">Obecności</a></div>
+        <div th:each="group : ${groupChildren}" class="div-inline-block">
+            <div><a th:text="${group.name}" th:href="@{/view/groupchildren/{id}(id=${group.id})}" class="btn-group"></a>
             </div>
+            <div th:if="${groupSize.get(group.id()) > 0}" th:text="'Dzieci: ' + ${groupSize.get(group.id())}"
+                 class="btn-size">
+            </div>
+            <div th:if="${groupSize.get(group.id()) == null}" th:text="'Dzieci: 0'"
+                 class="btn-size">
+            </div>
+            <div>
+                <a th:href="@{/view/presence/groupchildren/{id}(id=${group.id})}" class="btn-presence">Obecności</a>
+            </div>
+        </div>
     </section>
 
 </main>

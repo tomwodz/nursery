@@ -11,7 +11,6 @@ public interface ChildService {
 
     Child save(Child child);
 
-    void updateById(Long id, Child newChild);
 
     void existsById(Long id);
     void deleteById(Long id);

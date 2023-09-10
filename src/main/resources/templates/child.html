@@ -20,11 +20,11 @@
     <section class="section-content-center">
         <h2>Dzieci</h2>
         <div th:each="child : ${children}" class="div-inline-block">
-        <div><a th:text="${child.name} + ' ' + ${child.surname}" th:href="@{/view/child/{id}(id=${child.id})}" class="btn-child"></a></div>
-        <div><a th:text="${child.groupChildren.name}"
-                th:href="@{/view/groupchildren/{id}(id=${child.groupChildren.id})}"
+        <div><a th:text="${child.name()} + ' ' + ${child.surname()}" th:href="@{/view/child/{id}(id=${child.id()})}" class="btn-child"></a></div>
+        <div><a th:text="${groupChildren.get(child.groupChildren_id())}"
+                th:href="@{/view/groupchildren/{id}(id=${child.groupChildren_id()})}"
                 class="btn-group"></a></div>
-        <div><a th:href="@{/view/presence/child/{id}(id=${child.id})}" class="btn-presence">Obecności</a></div>
+        <div><a th:href="@{/view/presence/child/{id}(id=${child.id()})}" class="btn-presence">Obecności</a></div>
         </div>
     </section>
 

@@ -4,11 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.Duration;
 import java.time.LocalDate;
-import java.util.List;
 
-
+@Builder
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -32,7 +30,7 @@ public class Child {
 
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dayOfBirth;
+    private LocalDate dayBirth;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User parent;
@@ -40,6 +38,6 @@ public class Child {
     public Child(String name, String surname, LocalDate dayOfBirth) {
         this.name = name;
         this.surname = surname;
-        this.dayOfBirth = dayOfBirth;
+        this.dayBirth = dayOfBirth;
     }
 }

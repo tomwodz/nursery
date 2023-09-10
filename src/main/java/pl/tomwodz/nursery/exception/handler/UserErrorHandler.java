@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import pl.tomwodz.nursery.controllers.rest.ChildRestController;
+import pl.tomwodz.nursery.infrastructure.child.controller.ChildRestController;
 import pl.tomwodz.nursery.infrastructure.information.controller.InformationRestController;
 import pl.tomwodz.nursery.controllers.rest.UserRestController;
 import pl.tomwodz.nursery.controllers.view.UserViewController;

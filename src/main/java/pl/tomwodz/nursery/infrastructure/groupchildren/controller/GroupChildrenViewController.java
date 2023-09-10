@@ -1,17 +1,21 @@
 package pl.tomwodz.nursery.infrastructure.groupchildren.controller;
 
 import jakarta.annotation.Resource;
+import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.tomwodz.nursery.controllers.view.ModelUtils;
+import pl.tomwodz.nursery.domain.child.ChildFacade;
 import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenFacade;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenRequestDto;
-import pl.tomwodz.nursery.exception.validation.GroupChildrenValidationException;
+import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenResponseDto;
 import pl.tomwodz.nursery.model.GroupChildren;
 import pl.tomwodz.nursery.services.ChildService;
 import pl.tomwodz.nursery.session.SessionData;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(path = "/view/groupchildren")
@@ -23,12 +27,14 @@ public class GroupChildrenViewController {
 
     private final GroupChildrenFacade groupChildrenFacade;
     private final ChildService childService;
+    private final ChildFacade childFacade;
 
     @GetMapping
     public String getAll(Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         if (this.sessionData.isAdminOrEmployee()) {
             model.addAttribute("groupChildren", this.groupChildrenFacade.findAllGroupsChildren());
+            model.addAttribute("groupSize", this.childFacade.getQuantityChildrenByGroups());
             //TODO new method to facade child
             return "groupchildren";
         }
@@ -69,7 +75,7 @@ public class GroupChildrenViewController {
                 this.groupChildrenFacade.saveGroupChildren(groupChildrenRequestDto);
                 model.addAttribute("message", "Dodano grupę.");
                 return "message";
-            } catch (GroupChildrenValidationException e){
+            } catch (ValidationException e){
                 this.sessionData.setInfo("Zła nazwa.");
                 return "redirect:/view/groupchildren/";
             }
@@ -99,7 +105,7 @@ public class GroupChildrenViewController {
                 this.groupChildrenFacade.updateGroupChildren(id, groupChildrenRequestDto);
                 model.addAttribute("message", "Zmieniono nazwę grupy na: " + groupChildrenRequestDto.name());
                 return "message";
-            } catch (GroupChildrenValidationException e){
+            } catch (ValidationException e){
                 this.sessionData.setInfo("Zła nazwa.");
                 return "redirect:/view/groupchildren/";
             }
@@ -111,9 +117,7 @@ public class GroupChildrenViewController {
     public String deleteGroupChildrenById(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         if (this.sessionData.isAdminOrEmployee()) {
-            if (this.childService.findAll().stream()
-                    .filter(child -> child.getGroupChildren().getId()==id)
-                    .count() == 0) {
+            if (childFacade.getQuantityChildrenByGroupId(id) == 0) {
                 this.groupChildrenFacade.deleteGroupChildren(id);
                 model.addAttribute("message", "Usunięto grupę o id: " + id);
                 return "message";

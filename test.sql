@@ -40,6 +40,12 @@ VALUES
     (4, nextval('tuser_id_seq'),'Agnieszka','Kowalska', 'anowak','d0e45878043844ffc41aac437e86b602','twodzinski@op.pl','123-456-789','PARENT', true);
 
 INSERT INTO
+    tgroupchildren
+(name)
+VALUES
+    ('Rekrutacja 2023');
+
+INSERT INTO
 tgroupchildren
 (name)
  VALUES
@@ -64,22 +70,22 @@ VALUES
  ('Biedronki');
 
 INSERT INTO
-tchild (name, surname, day_of_birth, group_children_id, parent_id)
+tchild (name, surname, day_birth, group_children_id, parent_id)
 VALUES
 ('Alicja', 'Nowak', '2021-03-02', 2, 2);
 
 INSERT INTO
-tchild (name, surname, day_of_birth, group_children_id, parent_id)
+tchild (name, surname, day_birth, group_children_id, parent_id)
 VALUES
 ('Tymoteusz', 'Kowalski', '2021-01-02', 2, 4);
 
 INSERT INTO
-tchild (name, surname, day_of_birth, group_children_id, parent_id)
+tchild (name, surname, day_birth, group_children_id, parent_id)
 VALUES
 ('Weronika', 'Kowalska', '2021-12-03', 2, 4);
 
 INSERT INTO
-tchild (name, surname, day_of_birth, group_children_id, parent_id)
+tchild (name, surname, day_birth, group_children_id, parent_id)
 VALUES
 ('Justyna', 'Kowalska', '2022-12-03', 3, 4);
 

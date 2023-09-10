@@ -4,17 +4,20 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenRequestDto;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenResponseDto;
-import pl.tomwodz.nursery.exception.validation.GroupChildrenValidationException;
+import pl.tomwodz.nursery.domain.validator.ValidatorFacade;
 import pl.tomwodz.nursery.infrastructure.groupchildren.controller.error.GroupChildrenNotFoundException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 
 class GroupChildrenFacadeTest {
 
-    GroupChildrenFacade groupChildrenFacade = new GroupChildrenFacade(
-            new GroupChildrenRepositoryTestImpl()
-    );
+    GroupChildrenRepository groupChildrenRepository = new GroupChildrenRepositoryTestImpl();
+
+    ValidatorFacade validatorFacade = mock(ValidatorFacade.class);
+
+    GroupChildrenFacade groupChildrenFacade = new GroupChildrenConfiguration().groupChildrenFacade(groupChildrenRepository, validatorFacade);
 
     GroupChildrenRequestDto groupChildrenRequestDto = new GroupChildrenRequestDto("Test");
 
@@ -140,15 +143,4 @@ class GroupChildrenFacadeTest {
 
     }
 
-    @Test
-    void invalidNameGroupChildrenShouldBeThrowException(){
-
-        //given
-        GroupChildrenRequestDto groupChildrenRequestDto = new GroupChildrenRequestDto("t");
-
-        //then
-        //when
-        assertThrows(GroupChildrenValidationException.class, () -> groupChildrenFacade.saveGroupChildren(groupChildrenRequestDto));
-
-    }
 }

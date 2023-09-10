@@ -4,30 +4,30 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import pl.tomwodz.nursery.domain.information.dto.InformationRequestDto;
 import pl.tomwodz.nursery.domain.information.dto.InformationResponseDto;
+import pl.tomwodz.nursery.domain.validator.ValidatorFacade;
 import pl.tomwodz.nursery.infrastructure.information.controller.error.InformationNotFoundException;
-import pl.tomwodz.nursery.infrastructure.information.controller.error.InformationValidationException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 
 class InformationFacadeTest {
+    InformationRepository informationRepository = new InformationRepositoryTestImpl();
+    ValidatorFacade validatorFacade = mock(ValidatorFacade.class);
 
-    InformationFacade informationFacade = new InformationFacade(
-            new InformationRepositoryTestImpl());
+    InformationFacade informationFacade = new InformationConfiguration().informationFacade(informationRepository, validatorFacade);
 
     InformationRequestDto informationRequestDto = InformationRequestDto.builder()
             .author_id(1L)
             .title("Test")
             .content("test")
             .build();
-
     @AfterEach
     void cleanUp(){
         informationFacade.findAllInformations()
                 .stream()
                 .forEach(i -> informationFacade.deleteInformation(i.id()));
     }
-
     @Test
     void shouldBeAbleToAddInformationToRepository() {
 
@@ -134,40 +134,5 @@ class InformationFacadeTest {
         assertThat(informationUpdated.author_id()).isEqualTo(informationToUpdate.author_id());
 
     }
-
-    @Test
-    void invalidTitleInformationShouldBeThrowException(){
-
-        //given
-        InformationRequestDto informationRequestDto = InformationRequestDto.builder()
-                .author_id(1L)
-                .title("T")
-                .content("test")
-                .build();
-
-        //then
-        //when
-        assertThrows(InformationValidationException.class, () -> informationFacade.saveInformation(informationRequestDto));
-
-    }
-
-    @Test
-    void invalidContentInformationShouldBeThrowException(){
-
-        //given
-        InformationRequestDto informationRequestDto = InformationRequestDto.builder()
-                .author_id(1L)
-                .title("Test")
-                .content("t")
-                .build();
-
-        //then
-        //when
-        assertThrows(InformationValidationException.class, () -> informationFacade.saveInformation(informationRequestDto));
-
-    }
-
-
-
 
 }

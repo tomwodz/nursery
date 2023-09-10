@@ -32,8 +32,4 @@ public class Information {
     @Column(columnDefinition = "varchar(255)", nullable = false)
     private String content;
 
-    public Information(String title, String content) {
-        this.title = title;
-        this.content = content;
-    }
 }

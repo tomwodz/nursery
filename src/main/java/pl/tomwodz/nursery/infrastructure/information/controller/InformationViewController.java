@@ -1,6 +1,7 @@
 package pl.tomwodz.nursery.infrastructure.information.controller;
 
 import jakarta.annotation.Resource;
+import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.tomwodz.nursery.controllers.view.ModelUtils;
 import pl.tomwodz.nursery.domain.information.InformationFacade;
 import pl.tomwodz.nursery.domain.information.dto.InformationRequestDto;
-import pl.tomwodz.nursery.infrastructure.information.controller.error.InformationValidationException;
 import pl.tomwodz.nursery.model.Information;
 import pl.tomwodz.nursery.services.UserService;
 import pl.tomwodz.nursery.session.SessionData;
@@ -60,7 +60,7 @@ public class InformationViewController {
                 this.informationFacade.saveInformation(informationRequestDto);
                 model.addAttribute("message", "Dodano informację.");
                 return "message";
-            } catch (InformationValidationException e){
+            } catch (ValidationException e){
                 this.sessionData.setInfo("Zła treść.");
                 return "redirect:/view/information/";
             }
@@ -95,7 +95,7 @@ public class InformationViewController {
                 this.informationFacade.updateInformation(id, informationRequestDto);
                 model.addAttribute("message", "Zmieniono informację.");
                 return "message";
-            } catch (InformationValidationException e){
+            } catch (ValidationException e){
                 this.sessionData.setInfo("Zła treść.");
                 return "redirect:/view/information/";
             }
