@@ -1,7 +1,7 @@
 package pl.tomwodz.nursery.domain.validator;
 
 import pl.tomwodz.nursery.domain.child.dto.ChildRequestDto;
-import pl.tomwodz.nursery.exception.validation.ChildValidationException;
+import pl.tomwodz.nursery.infrastructure.validator.error.ChildValidationException;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -4,11 +4,11 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.tomwodz.nursery.domain.child.ChildFacade;
 import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenFacade;
 import pl.tomwodz.nursery.domain.groupchildren.dto.DeleteGroupChildrenResponseDto;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenRequestDto;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenResponseDto;
-import pl.tomwodz.nursery.services.ChildService;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
 public class GroupChildrenRestController {
 
     private final GroupChildrenFacade groupChildrenFacade;
-    private final ChildService childService;
+    private final ChildFacade childFacade;
 
     @GetMapping
     public ResponseEntity<List<GroupChildrenResponseDto>> getAllChildren() {
@@ -47,10 +47,7 @@ public class GroupChildrenRestController {
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<DeleteGroupChildrenResponseDto> deleteGroupChildrenById(@PathVariable Long id) {
-        if (this.childService.findAll()
-                .stream()
-                .filter(child -> child.getGroupChildren().getId()==id)
-                .count() == 0) { //TODO Facade child
+        if (this.childFacade.getQuantityChildrenByGroupId(id) == 0) {
             return ResponseEntity.ok(this.groupChildrenFacade.deleteGroupChildren(id));
         }
         return ResponseEntity.status(NOT_ACCEPTABLE).build();

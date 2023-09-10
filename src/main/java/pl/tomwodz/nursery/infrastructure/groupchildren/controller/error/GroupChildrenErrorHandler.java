@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import pl.tomwodz.nursery.infrastructure.child.controller.ChildRestController;
-import pl.tomwodz.nursery.exception.handler.response.ErrorInformationResponseDto;
+import pl.tomwodz.nursery.infrastructure.information.controller.error.ErrorInformationResponseDto;
 import pl.tomwodz.nursery.infrastructure.groupchildren.controller.GroupChildrenRestController;
 import pl.tomwodz.nursery.infrastructure.groupchildren.controller.GroupChildrenViewController;
-import pl.tomwodz.nursery.exception.handler.response.ErrorGroupChildrenResponseDto;
 
 import java.time.LocalDateTime;
 

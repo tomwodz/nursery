@@ -38,9 +38,9 @@
     <section class="section-content-center">
         <h2>Dane rodzica</h2>
         <div class="div-inline-block">
-            <div><a th:text="${child.user_id()} + ' ' + ${child.user_id()}" th:href="@{/view/user/{id}(id=${child.user_id()})}" class="btn-user"></a></div>
-            <div th:text="${child.user_id()}"></div>
-            <div th:text="${child.user_id()}"></div>
+            <div><a th:text="${user.name} + ' ' + ${user.surname}" th:href="@{/view/user/{id}(id=${user.id})}" class="btn-user"></a></div>
+            <div th:text="${user.phoneNumber}"></div>
+            <div th:text="${user.email}"></div>
         </div>
     </section>
 

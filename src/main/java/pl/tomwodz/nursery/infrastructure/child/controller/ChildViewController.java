@@ -7,22 +7,24 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.tomwodz.nursery.controllers.view.ModelUtils;
+import pl.tomwodz.nursery.domain.child.Child;
 import pl.tomwodz.nursery.domain.child.ChildFacade;
 import pl.tomwodz.nursery.domain.child.ChildMapper;
 import pl.tomwodz.nursery.domain.child.dto.ChildRequestDto;
 import pl.tomwodz.nursery.domain.child.dto.ChildResponseDto;
+import pl.tomwodz.nursery.domain.groupchildren.GroupChildren;
 import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenFacade;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenResponseDto;
-import pl.tomwodz.nursery.model.Child;
-import pl.tomwodz.nursery.model.GroupChildren;
-import pl.tomwodz.nursery.model.User;
+import pl.tomwodz.nursery.domain.user.User;
+import pl.tomwodz.nursery.domain.user.UserFacade;
+import pl.tomwodz.nursery.domain.user.dto.UserResponseDto;
+import pl.tomwodz.nursery.infrastructure.ModelUtils;
+import pl.tomwodz.nursery.infrastructure.session.SessionData;
 import pl.tomwodz.nursery.services.PresenceService;
-import pl.tomwodz.nursery.services.UserService;
-import pl.tomwodz.nursery.session.SessionData;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(path = "/view/child")
@@ -33,10 +35,10 @@ public class ChildViewController {
     @Resource
     SessionData sessionData;
 
-    private final UserService userService;
     private final PresenceService presenceService;
     private final GroupChildrenFacade groupChildrenFacade;
     private final ChildFacade childFacade;
+    private final UserFacade userFacade;
 
     @GetMapping
     public String getAll(Model model) {
@@ -61,12 +63,13 @@ public class ChildViewController {
                     .findGroupChildrenById(childResponseDto.groupChildren_id());
             model.addAttribute("child", childResponseDto);
             model.addAttribute("groupChildren", groupChildrenResponseDto);
+            model.addAttribute("user", this.userFacade.findUserByChildId(id));
         }
         if (this.sessionData.isAdminOrEmployee()) {
             return "sample-child";
         }
         if (this.sessionData.isParent() &&
-                userService.checkExistenceOfParentChildRelationship(id, this.sessionData.getUser())) {
+                checkExistenceOfParentChildRelationship(id, this.sessionData.getUser())) {
             return "sample-child";
         }
         return "redirect:/view/login";
@@ -83,7 +86,7 @@ public class ChildViewController {
         if (this.sessionData.isAdminOrEmployee()) {
             model.addAttribute("childModel", new Child());
             model.addAttribute("groupChildren", this.groupChildrenFacade.findAllGroupsChildren());
-            model.addAttribute("parents", this.userService.findByRole(User.Role.PARENT));
+            model.addAttribute("parents", this.userFacade.findAllUsersByRoleParent());
             return "add-child";
         }
         return "redirect:/view/login";
@@ -129,11 +132,11 @@ public class ChildViewController {
         if (this.sessionData.isAdminOrEmployee()) {
             model.addAttribute("childModel", this.childFacade.findChildById(id));
             model.addAttribute("groupChildren", this.groupChildrenFacade.findAllGroupsChildren());
-            model.addAttribute("parents", this.userService.findByRole(User.Role.PARENT));
+            model.addAttribute("parents", this.userFacade.findAllUsersByRoleParent());
             return "edit-child";
         }
         if (this.sessionData.isParent() &&
-                userService.checkExistenceOfParentChildRelationship(id, this.sessionData.getUser())) {
+                checkExistenceOfParentChildRelationship(id, this.sessionData.getUser())) {
             model.addAttribute("childModel", this.childFacade.findChildById(id));
             return "edit-child";
         }
@@ -148,26 +151,26 @@ public class ChildViewController {
         model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee() ||
                 (this.sessionData.isParent() &&
-                        userService.checkExistenceOfParentChildRelationship(id, this.sessionData.getUser()))) {
+                        checkExistenceOfParentChildRelationship(id, this.sessionData.getUser()))) {
             try {
                 ChildResponseDto childResponseDto = this.childFacade.findChildById(id);
-                ChildRequestDto test = ChildRequestDto.builder()
+                ChildRequestDto childRequestDto1 = ChildRequestDto.builder()
                         .name(childRequestDto.name())
                         .surname(childRequestDto.surname())
                         .dayBirth(childRequestDto.dayBirth())
                         .groupChildren_id(childResponseDto.groupChildren_id())
                         .user_id(childResponseDto.user_id())
                         .build();
-                this.childFacade.updateChild(id, test);
+                this.childFacade.updateChild(id, childRequestDto1);
                 if(this.sessionData.isAdminOrEmployee()){
-                    ChildRequestDto test2 = ChildRequestDto.builder()
+                    ChildRequestDto childRequestDto2 = ChildRequestDto.builder()
                             .name(childRequestDto.name())
                             .surname(childRequestDto.surname())
                             .dayBirth(childRequestDto.dayBirth())
                             .groupChildren_id(childRequestDto.groupChildren_id())
                             .user_id(childRequestDto.user_id())
                             .build();
-                    this.childFacade.updateChild(id, test2);
+                    this.childFacade.updateChild(id, childRequestDto2);
                 }
                 model.addAttribute("message", "Uaktualniono dziecko.");
                 return "message";
@@ -195,12 +198,20 @@ public class ChildViewController {
             model.addAttribute("message", "Usunięto dziecko o id: " + id);
             return "message";}
         if (this.sessionData.isParent() &&
-                userService.checkExistenceOfParentChildRelationship(id, this.sessionData.getUser())) {
+                checkExistenceOfParentChildRelationship(id, this.sessionData.getUser())) {
             this.childFacade.deleteChildById(id);
             model.addAttribute("message", "Usunięto dziecko o id: " + id);
             return "message";
         }
         return "redirect:/view/login";
+    }
+
+    private boolean checkExistenceOfParentChildRelationship(Long id, User user) {
+        Optional<Child> childBox = user.getChild().stream().filter(child -> child.getId() == id).findFirst();
+        if(childBox.isPresent()){
+            return true;
+        }
+        return false;
     }
 
 }

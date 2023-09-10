@@ -2,9 +2,8 @@ package pl.tomwodz.nursery.domain.child;
 
 import pl.tomwodz.nursery.domain.child.dto.ChildRequestDto;
 import pl.tomwodz.nursery.domain.child.dto.ChildResponseDto;
-import pl.tomwodz.nursery.model.Child;
-import pl.tomwodz.nursery.model.GroupChildren;
-import pl.tomwodz.nursery.model.User;
+import pl.tomwodz.nursery.domain.groupchildren.GroupChildren;
+import pl.tomwodz.nursery.domain.user.User;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

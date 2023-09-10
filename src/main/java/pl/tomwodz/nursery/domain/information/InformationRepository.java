@@ -3,7 +3,6 @@ package pl.tomwodz.nursery.domain.information;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.Repository;
-import pl.tomwodz.nursery.model.Information;
 
 import java.util.List;
 import java.util.Optional;

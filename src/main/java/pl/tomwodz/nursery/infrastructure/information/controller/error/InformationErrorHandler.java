@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import pl.tomwodz.nursery.infrastructure.information.controller.InformationRestController;
 import pl.tomwodz.nursery.infrastructure.information.controller.InformationViewController;
-import pl.tomwodz.nursery.exception.handler.response.ErrorInformationResponseDto;
 
 import java.time.LocalDateTime;
 

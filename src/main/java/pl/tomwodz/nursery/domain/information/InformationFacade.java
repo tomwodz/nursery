@@ -9,7 +9,6 @@ import pl.tomwodz.nursery.domain.information.dto.InformationRequestDto;
 import pl.tomwodz.nursery.domain.information.dto.InformationResponseDto;
 import pl.tomwodz.nursery.domain.validator.ValidatorFacade;
 import pl.tomwodz.nursery.infrastructure.information.controller.error.InformationNotFoundException;
-import pl.tomwodz.nursery.model.Information;
 
 import java.util.List;
 

@@ -1,0 +1,37 @@
+package pl.tomwodz.nursery.domain.groupchildren;
+
+import jakarta.persistence.*;
+import lombok.*;
+import pl.tomwodz.nursery.domain.child.Child;
+
+import java.util.List;
+
+
+@Builder
+@Getter
+@Setter
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name ="tgroupchildren")
+public class GroupChildren {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(columnDefinition = "varchar(20)", nullable = false)
+    private String name;
+
+    @OneToMany(mappedBy = "groupChildren")
+    private List<Child> child;
+
+    public GroupChildren(String name) {
+        this.name = name;
+    }
+
+    public GroupChildren(Long id) {
+        this.id = id;
+    }
+}

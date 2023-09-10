@@ -8,10 +8,8 @@ import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenRequestDto;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenResponseDto;
 import pl.tomwodz.nursery.domain.validator.ValidatorFacade;
 import pl.tomwodz.nursery.infrastructure.groupchildren.controller.error.GroupChildrenNotFoundException;
-import pl.tomwodz.nursery.model.GroupChildren;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static pl.tomwodz.nursery.domain.groupchildren.GroupChildrenMapper.*;
 

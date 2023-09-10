@@ -1,6 +1,6 @@
 package pl.tomwodz.nursery.services;
 
-import pl.tomwodz.nursery.model.User;
+import pl.tomwodz.nursery.domain.user.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,9 +17,7 @@ public interface UserService {
     void changeActiveById(Long id, User userToExchangeActive);
 
     void existsById(Long id);
-    boolean existsByLogin(String login);
     void deleteById(Long id);
 
-    boolean checkExistenceOfParentChildRelationship(Long id, User user);
 
 }

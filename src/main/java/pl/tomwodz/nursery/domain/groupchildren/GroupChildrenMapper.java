@@ -2,7 +2,6 @@ package pl.tomwodz.nursery.domain.groupchildren;
 
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenRequestDto;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenResponseDto;
-import pl.tomwodz.nursery.model.GroupChildren;
 
 public class GroupChildrenMapper {
 

@@ -1,17 +1,14 @@
 package pl.tomwodz.nursery.infrastructure.child.controller.error;
 
-import jakarta.validation.ValidationException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import pl.tomwodz.nursery.exception.handler.response.ErrorInformationResponseDto;
 import pl.tomwodz.nursery.infrastructure.child.controller.ChildRestController;
 import pl.tomwodz.nursery.infrastructure.child.controller.ChildViewController;
-import pl.tomwodz.nursery.exception.handler.response.ErrorChildResponseDto;
-import pl.tomwodz.nursery.exception.validation.ChildValidationException;
+import pl.tomwodz.nursery.infrastructure.validator.error.ChildValidationException;
 
 import java.time.LocalDateTime;
 

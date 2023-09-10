@@ -6,16 +6,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.tomwodz.nursery.controllers.view.ModelUtils;
+import pl.tomwodz.nursery.infrastructure.ModelUtils;
 import pl.tomwodz.nursery.domain.child.ChildFacade;
 import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenFacade;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenRequestDto;
-import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenResponseDto;
-import pl.tomwodz.nursery.model.GroupChildren;
-import pl.tomwodz.nursery.services.ChildService;
-import pl.tomwodz.nursery.session.SessionData;
-
-import java.util.List;
+import pl.tomwodz.nursery.domain.groupchildren.GroupChildren;
+import pl.tomwodz.nursery.infrastructure.session.SessionData;
 
 @Controller
 @RequestMapping(path = "/view/groupchildren")
@@ -26,7 +22,6 @@ public class GroupChildrenViewController {
     SessionData sessionData;
 
     private final GroupChildrenFacade groupChildrenFacade;
-    private final ChildService childService;
     private final ChildFacade childFacade;
 
     @GetMapping
@@ -35,7 +30,6 @@ public class GroupChildrenViewController {
         if (this.sessionData.isAdminOrEmployee()) {
             model.addAttribute("groupChildren", this.groupChildrenFacade.findAllGroupsChildren());
             model.addAttribute("groupSize", this.childFacade.getQuantityChildrenByGroups());
-            //TODO new method to facade child
             return "groupchildren";
         }
         return "redirect:/view/login";
@@ -46,10 +40,7 @@ public class GroupChildrenViewController {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         if (this.sessionData.isAdminOrEmployee()) {
             model.addAttribute("group", this.groupChildrenFacade.findGroupChildrenById(id));
-            model.addAttribute("children", this.childService.findAll()
-                    .stream()
-                    .filter(child -> child.getGroupChildren().getId()==id) //TODO new method to facade child
-                    .toList());
+            model.addAttribute("children", this.childFacade.findAllChildrenByGroupChildrenId(id));
             return "sample-groupchildren";
         }
         return "redirect:/view/login";

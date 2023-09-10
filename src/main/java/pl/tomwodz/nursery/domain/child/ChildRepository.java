@@ -3,7 +3,6 @@ package pl.tomwodz.nursery.domain.child;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.Repository;
-import pl.tomwodz.nursery.model.Child;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,5 +21,7 @@ public interface ChildRepository extends Repository<Child, Long> {
     void deleteById(Long id);
 
     List<Child> findAllByGroupChildren_Id(Long id);
+
+    List<Child> findAllByParent_Id(Long id);
 
 }

@@ -2,7 +2,6 @@ package pl.tomwodz.nursery.domain.groupchildren;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.Repository;
-import pl.tomwodz.nursery.model.GroupChildren;
 
 import java.util.List;
 import java.util.Optional;

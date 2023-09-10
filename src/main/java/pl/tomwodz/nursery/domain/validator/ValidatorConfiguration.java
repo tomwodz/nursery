@@ -11,7 +11,13 @@ public class ValidatorConfiguration {
         ValidatorInformation validatorInformation = new ValidatorInformation();
         ValidatorGroupChildren validatorGroupChildren = new ValidatorGroupChildren();
         ValidatorChild validatorChild = new ValidatorChild();
-        return new ValidatorFacade(validatorInformation, validatorGroupChildren, validatorChild);
+        ValidatorUser validatorUser = new ValidatorUser();
+        ValidatorAddress validatorAddress = new ValidatorAddress();
+        return new ValidatorFacade(validatorInformation,
+                validatorGroupChildren,
+                validatorChild,
+                validatorUser,
+                validatorAddress);
     }
 
 

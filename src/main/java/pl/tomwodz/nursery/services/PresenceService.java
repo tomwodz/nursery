@@ -1,10 +1,9 @@
 package pl.tomwodz.nursery.services;
 
-import pl.tomwodz.nursery.model.Presence;
+import pl.tomwodz.nursery.domain.presence.Presence;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 public interface PresenceService {
 

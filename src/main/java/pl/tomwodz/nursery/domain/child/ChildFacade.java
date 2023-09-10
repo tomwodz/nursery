@@ -9,7 +9,6 @@ import pl.tomwodz.nursery.domain.child.dto.ChildResponseDto;
 import pl.tomwodz.nursery.domain.child.dto.DeleteChildResponseDto;
 import pl.tomwodz.nursery.domain.validator.ValidatorFacade;
 import pl.tomwodz.nursery.infrastructure.child.controller.error.ChildNotFoundException;
-import pl.tomwodz.nursery.model.Child;
 
 import java.util.List;
 import java.util.Map;
@@ -28,6 +27,13 @@ public class ChildFacade {
         return this.childRepository.findAllByGroupChildren_Id(id)
                 .stream()
                 .count();
+    }
+
+    public List<ChildResponseDto> findAllChildrenByGroupChildrenId(Long id){
+        return this.childRepository.findAllByGroupChildren_Id(id)
+                .stream()
+                .map(ChildMapper::mapFromChildToChildResponseDto)
+                .toList();
     }
 
     public List<ChildResponseDto> findAllChildren(){
@@ -79,4 +85,9 @@ public class ChildFacade {
         }
     }
 
+    public Long getQuantityChildrenByUserId(Long id) {
+        return this.childRepository.findAllByParent_Id(id)
+                .stream()
+                .count();
+    }
 }

@@ -4,10 +4,11 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
-import pl.tomwodz.nursery.exception.UserNotFoundException;
-import pl.tomwodz.nursery.model.Child;
-import pl.tomwodz.nursery.model.User;
-import pl.tomwodz.nursery.repository.UserDAO;
+import pl.tomwodz.nursery.domain.user.UserRepository;
+import pl.tomwodz.nursery.infrastructure.user.controller.error.UserNotFoundException;
+import pl.tomwodz.nursery.domain.child.Child;
+import pl.tomwodz.nursery.domain.user.User;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +18,7 @@ import java.util.Optional;
 @Transactional
 public class UserServiceImpl implements pl.tomwodz.nursery.services.UserService {
 
-    private final UserDAO userDAO;
+    private final UserRepository userDAO;
     @Override
     public List<User> findAll() {
         return this.userDAO.findAll();
@@ -77,17 +78,5 @@ public class UserServiceImpl implements pl.tomwodz.nursery.services.UserService 
         this.userDAO.deleteById(id);
     }
 
-    @Override
-    public boolean existsByLogin(String login) {
-        return this.userDAO.existsByLogin(login);
-    }
 
-    @Override
-    public boolean checkExistenceOfParentChildRelationship(Long id, User user) {
-        Optional<Child> childBox = user.getChild().stream().filter(child -> child.getId() == id).findFirst();
-        if(childBox.isPresent()){
-            return true;
-        }
-        return false;
-    }
 }

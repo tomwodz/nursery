@@ -1,7 +1,6 @@
 package pl.tomwodz.nursery.domain.information;
 
 import org.springframework.data.domain.Sort;
-import pl.tomwodz.nursery.model.Information;
 
 import java.util.List;
 import java.util.Map;

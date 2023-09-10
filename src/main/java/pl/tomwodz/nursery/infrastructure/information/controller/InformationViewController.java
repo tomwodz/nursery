@@ -6,12 +6,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.tomwodz.nursery.controllers.view.ModelUtils;
+import pl.tomwodz.nursery.domain.information.Information;
 import pl.tomwodz.nursery.domain.information.InformationFacade;
 import pl.tomwodz.nursery.domain.information.dto.InformationRequestDto;
-import pl.tomwodz.nursery.model.Information;
-import pl.tomwodz.nursery.services.UserService;
-import pl.tomwodz.nursery.session.SessionData;
+import pl.tomwodz.nursery.domain.user.UserFacade;
+import pl.tomwodz.nursery.infrastructure.ModelUtils;
+import pl.tomwodz.nursery.infrastructure.session.SessionData;
 
 @Controller
 @RequestMapping(path = "/view/information")
@@ -22,14 +22,14 @@ public class InformationViewController {
     SessionData sessionData;
 
     private final InformationFacade informationFacade;
-    private final UserService userService;
+    private final UserFacade userFacade;
 
     @GetMapping
     public String getAllInformations(Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         if(this.sessionData.isLogged()){
             model.addAttribute("informations", this.informationFacade.findAllInformations());
-            model.addAttribute("authors", this.userService.findAll());
+            model.addAttribute("authors", this.userFacade.findAllUsers());
             return "information";
         }
         return "redirect:/view/login";

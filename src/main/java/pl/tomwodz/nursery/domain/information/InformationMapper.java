@@ -2,8 +2,7 @@ package pl.tomwodz.nursery.domain.information;
 
 import pl.tomwodz.nursery.domain.information.dto.InformationRequestDto;
 import pl.tomwodz.nursery.domain.information.dto.InformationResponseDto;
-import pl.tomwodz.nursery.model.Information;
-import pl.tomwodz.nursery.model.User;
+import pl.tomwodz.nursery.domain.user.User;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

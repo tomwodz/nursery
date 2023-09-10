@@ -3,6 +3,7 @@ package pl.tomwodz.nursery.model;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.tomwodz.nursery.domain.user.User;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;

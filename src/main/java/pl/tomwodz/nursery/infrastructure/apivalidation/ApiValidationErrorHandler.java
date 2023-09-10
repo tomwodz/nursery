@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import pl.tomwodz.nursery.infrastructure.child.controller.ChildRestController;
 import pl.tomwodz.nursery.infrastructure.groupchildren.controller.GroupChildrenRestController;
 import pl.tomwodz.nursery.infrastructure.information.controller.InformationRestController;
-import pl.tomwodz.nursery.controllers.rest.UserRestController;
+import pl.tomwodz.nursery.infrastructure.user.controller.UserRestController;
 
 import java.util.List;
 import java.util.stream.Collectors;

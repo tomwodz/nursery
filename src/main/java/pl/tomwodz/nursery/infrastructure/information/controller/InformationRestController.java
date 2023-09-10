@@ -8,7 +8,7 @@ import pl.tomwodz.nursery.domain.information.InformationFacade;
 import pl.tomwodz.nursery.domain.information.dto.DeleteInformationResponseDto;
 import pl.tomwodz.nursery.domain.information.dto.InformationRequestDto;
 import pl.tomwodz.nursery.domain.information.dto.InformationResponseDto;
-import pl.tomwodz.nursery.services.UserService;
+import pl.tomwodz.nursery.domain.user.UserFacade;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/information")
 public class InformationRestController {
 
-    private final UserService userService;
+    private final UserFacade userFacade;
     private final InformationFacade informationFacade;
 
     @GetMapping
@@ -35,7 +35,7 @@ public class InformationRestController {
     @PostMapping(path = "/")
     public ResponseEntity<InformationResponseDto> addInformation(
             @RequestBody @Valid InformationRequestDto informationRequestDto) {
-        this.userService.findById(informationRequestDto.author_id());
+        this.userFacade.findUserById(informationRequestDto.author_id());
         InformationResponseDto informationSaved = this.informationFacade.saveInformation(informationRequestDto);
         return ResponseEntity.ok(informationSaved);
     }
@@ -43,7 +43,7 @@ public class InformationRestController {
     @PutMapping("/{id}")
     public ResponseEntity<InformationResponseDto> update(@PathVariable Long id,
                                                                @RequestBody @Valid InformationRequestDto informationRequestDto){
-        this.userService.findById(informationRequestDto.author_id());
+        this.userFacade.findUserById(informationRequestDto.author_id());
         InformationResponseDto response = this.informationFacade.updateInformation(id, informationRequestDto);
         return ResponseEntity.ok(response);
     }

@@ -4,9 +4,9 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import pl.tomwodz.nursery.exception.PresenceNotFoundException;
-import pl.tomwodz.nursery.model.Presence;
-import pl.tomwodz.nursery.repository.PresenceDAO;
+import pl.tomwodz.nursery.domain.presence.Presence;
+import pl.tomwodz.nursery.domain.presence.PresenceRepository;
+import pl.tomwodz.nursery.infrastructure.presence.controller.error.PresenceNotFoundException;
 import pl.tomwodz.nursery.services.PresenceService;
 
 import java.time.LocalDate;
@@ -17,7 +17,7 @@ import java.util.List;
 @Transactional
 public class PresenceServiceImpl implements PresenceService {
 
-    private final PresenceDAO presenceDAO;
+    private final PresenceRepository presenceDAO;
 
     @Override
     public List<Presence> findAll() {
