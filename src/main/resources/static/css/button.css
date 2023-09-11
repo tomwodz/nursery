@@ -278,3 +278,49 @@
     transition: 0.3s;
     box-shadow: 0 0 5px #ffc04d;
 }
+
+.btn-date {
+    border: 2px solid #ffb124;
+    color: #FFFFFF;
+    background-color: #ffc04d;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    padding: 5px 20px;
+    display: block;
+    box-shadow: 0 0 5px #ffc04d;
+}
+
+.btn-timeentry {
+    border: 2px solid #0a5c0a;
+    color: #FFFFFF;
+    background-color: #109010;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    padding: 5px 20px;
+    display: block;
+    box-shadow: 0 0 3px #109010;
+}
+
+.btn-timedeparture {
+    border: 2px solid #005a91;
+    color: #FFFFFF;
+    background-color: #1276bd;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    padding: 5px 20px;
+    display: block;
+    box-shadow: 0 0 3px #3084bd;
+}
+

@@ -83,9 +83,12 @@ public class PresenceViewController {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
         if (presence.getDataTimeEntry() == null ||
-                presence.getDataTimeDeparture() == null) {
+                presence.getDataTimeDeparture() == null ||
+                presence.getDataTimeEntry().getDayOfYear()!=presence.getDataTimeDeparture().getDayOfYear()
+        ) {
             return "redirect:/view/presence/";
         }
+
         if (this.sessionData.isAdminOrEmployee()) {
             this.presenceFacade.savePresence(
                     PresenceRequestDto.builder()

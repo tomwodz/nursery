@@ -47,9 +47,7 @@ public class GroupChildrenRestController {
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<DeleteGroupChildrenResponseDto> deleteGroupChildrenById(@PathVariable Long id) {
-        if (this.childFacade.getQuantityChildrenByGroupId(id) == 0) {
             return ResponseEntity.ok(this.groupChildrenFacade.deleteGroupChildren(id));
-        }
-        return ResponseEntity.status(NOT_ACCEPTABLE).build();
     }
+
 }

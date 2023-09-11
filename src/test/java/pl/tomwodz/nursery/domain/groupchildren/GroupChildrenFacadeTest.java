@@ -2,22 +2,33 @@ package pl.tomwodz.nursery.domain.groupchildren;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import pl.tomwodz.nursery.domain.child.ChildFacade;
+import pl.tomwodz.nursery.domain.child.dto.ChildRequestDto;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenRequestDto;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenResponseDto;
 import pl.tomwodz.nursery.domain.validator.ValidatorFacade;
+import pl.tomwodz.nursery.infrastructure.groupchildren.controller.error.GroupChildrenNotDeleteException;
 import pl.tomwodz.nursery.infrastructure.groupchildren.controller.error.GroupChildrenNotFoundException;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class GroupChildrenFacadeTest {
 
     GroupChildrenRepository groupChildrenRepository = new GroupChildrenRepositoryTestImpl();
 
-    ValidatorFacade validatorFacade = mock(ValidatorFacade.class);
 
-    GroupChildrenFacade groupChildrenFacade = new GroupChildrenConfiguration().groupChildrenFacade(groupChildrenRepository, validatorFacade);
+    ValidatorFacade validatorFacade = mock(ValidatorFacade.class);
+   ChildFacade childFacade = mock(ChildFacade.class);
+
+    GroupChildrenFacade groupChildrenFacade = new GroupChildrenConfiguration()
+            .groupChildrenFacade(groupChildrenRepository, validatorFacade, childFacade);
 
     GroupChildrenRequestDto groupChildrenRequestDto = new GroupChildrenRequestDto("Test");
 

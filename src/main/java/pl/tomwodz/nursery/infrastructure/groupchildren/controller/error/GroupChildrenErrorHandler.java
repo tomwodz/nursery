@@ -31,9 +31,17 @@ public class GroupChildrenErrorHandler {
 
     @ExceptionHandler(ValidationException.class)
     @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorInformationResponseDto handleException(ValidationException exception){
         log.warn("ValidationException error while accessing user");
         return new ErrorInformationResponseDto(exception.getMessage(), HttpStatus.BAD_REQUEST, LocalDateTime.now());
+    }
+
+    @ExceptionHandler(GroupChildrenNotDeleteException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public ErrorInformationResponseDto handleException(GroupChildrenNotDeleteException exception){
+        log.warn("ValidationException error while accessing user");
+        return new ErrorInformationResponseDto(exception.getMessage(), HttpStatus.METHOD_NOT_ALLOWED, LocalDateTime.now());
     }
 }

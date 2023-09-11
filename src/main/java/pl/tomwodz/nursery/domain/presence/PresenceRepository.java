@@ -19,7 +19,6 @@ public interface PresenceRepository extends Repository<Presence, Long> {
   List<Presence> findAllByChild_GroupChildren_IdAndDataTimeEntryAfterAndDataTimeDepartureBefore(Long id, LocalDateTime dataTimeEntry, LocalDateTime dataTimeDeparture);
 
   List<Presence> findAllByChild_IdAndDataTimeEntryAfterAndDataTimeDepartureBefore(Long id, LocalDateTime dataTimeEntry, LocalDateTime dataTimeDeparture);
-    List<Presence> findAllByChild_IdOrderByDataTimeEntryDesc(Long id);
 
     List<Presence> findAllByChild_Id(Long id);
 
@@ -29,6 +28,5 @@ public interface PresenceRepository extends Repository<Presence, Long> {
     boolean existsById(Long id);
     @Modifying
     void deleteById(Long id);
-
 
 }

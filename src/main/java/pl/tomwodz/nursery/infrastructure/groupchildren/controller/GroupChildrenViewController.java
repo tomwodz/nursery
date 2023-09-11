@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.tomwodz.nursery.infrastructure.groupchildren.controller.error.GroupChildrenNotDeleteException;
 import pl.tomwodz.nursery.infrastructure.session.ModelUtils;
 import pl.tomwodz.nursery.domain.child.ChildFacade;
 import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenFacade;
@@ -67,7 +68,7 @@ public class GroupChildrenViewController {
                 model.addAttribute("message", "Dodano grupę.");
                 return "message";
             } catch (ValidationException e){
-                this.sessionData.setInfo("Zła nazwa.");
+                this.sessionData.setInfo(e.getMessage());
                 return "redirect:/view/groupchildren/";
             }
         }
@@ -97,7 +98,7 @@ public class GroupChildrenViewController {
                 model.addAttribute("message", "Zmieniono nazwę grupy na: " + groupChildrenRequestDto.name());
                 return "message";
             } catch (ValidationException e){
-                this.sessionData.setInfo("Zła nazwa.");
+                this.sessionData.setInfo(e.getMessage());
                 return "redirect:/view/groupchildren/";
             }
         }
@@ -108,12 +109,12 @@ public class GroupChildrenViewController {
     public String deleteGroupChildrenById(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         if (this.sessionData.isAdminOrEmployee()) {
-            if (childFacade.getQuantityChildrenByGroupId(id) == 0) {
+            try {
                 this.groupChildrenFacade.deleteGroupChildren(id);
                 model.addAttribute("message", "Usunięto grupę o id: " + id);
                 return "message";
-            } else {
-                model.addAttribute("message", "Nie można usunąć grupy, do której przypisane są dzieci.");
+            } catch (GroupChildrenNotDeleteException e) {
+                model.addAttribute("message", e.getMessage());
                 return "message";
             }
         }

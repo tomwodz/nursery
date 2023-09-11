@@ -27,21 +27,4 @@ public class Presence {
     @ManyToOne
     Child child;
 
-    public Presence(LocalDateTime dataTimeEntry, LocalDateTime dataTimeDeparture) {
-        this.dataTimeEntry = dataTimeEntry;
-        this.dataTimeDeparture = dataTimeDeparture;
-    }
-
-    /*    public Presence(LocalDate day, LocalTime timeEntry, LocalTime timeDeparture) {
-        this.timeEntry = timeEntry;
-        this.timeDeparture = timeDeparture;
-    }
-
-    public Presence(LocalDate day, LocalTime timeEntry, LocalTime timeDeparture, Child child) {
-        this.day = day;
-        this.timeEntry = timeEntry;
-        this.timeDeparture = timeDeparture;
-        this.child = child;
-    }*/
-
 }

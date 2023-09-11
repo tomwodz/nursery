@@ -42,8 +42,9 @@
         <div th:each="presence : ${presences}" class="div-inline-block">
             <div><a th:text="${children.get(presence.child_id)}"
                     th:href="@{/view/child/{id}(id=${presence.child_id})}" class="btn-child"></a></div>
-            <div th:text="${presence.dataTimeEntry}"></div>
-            <div th:text="${presence.dataTimeDeparture}"></div>
+            <div th:text="${#temporals.format(presence.dataTimeEntry, 'dd-MM-yyyy')}" class="btn-date"></div>
+            <div th:text="${#temporals.format(presence.dataTimeEntry, 'HH:mm')}" class="btn-timeentry"></div>
+            <div th:text="${#temporals.format(presence.dataTimeDeparture, 'HH:mm')}" class="btn-timedeparture"></div>
             <div>
                 <a th:href="@{/view/presence/update/{id}(id=${presence.id})}" class="btn-update">Edytuj</a>
             </div>

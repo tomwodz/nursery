@@ -19,6 +19,7 @@ public class GroupChildrenFacade {
 
     private final GroupChildrenRepository groupChildrenRepository;
     private final ValidatorFacade validatorFacade;
+    private final GroupChildrenService groupChildrenService;
 
     public List<GroupChildrenResponseDto> findAllGroupsChildren(){
         return this.groupChildrenRepository.findAll()
@@ -28,9 +29,8 @@ public class GroupChildrenFacade {
     }
 
     public GroupChildrenResponseDto findGroupChildrenById(Long id) {
-        return this.groupChildrenRepository.findById(id)
-                .map(GroupChildrenMapper::mapFromGroupChildrenToGroupChildrenResponseDto)
-                .orElseThrow(()-> new GroupChildrenNotFoundException("not found group children id: " + id));
+        GroupChildren groupChildrenFounded = this.groupChildrenService.findGroupChildrenById(id);
+        return GroupChildrenMapper.mapFromGroupChildrenToGroupChildrenResponseDto(groupChildrenFounded);
     }
 
     public GroupChildrenResponseDto findGroupChildrenByName(String name) {
@@ -39,36 +39,24 @@ public class GroupChildrenFacade {
                 .orElseThrow(()-> new GroupChildrenNotFoundException("not found group children name: " + name));
     }
 
-
     public GroupChildrenResponseDto saveGroupChildren(GroupChildrenRequestDto groupChildrenRequestDto){
         validatorFacade.validationGroupChildren(groupChildrenRequestDto);
-        final GroupChildren groupChildren = mapFromGroupChildrenRequestDtoToGroupChildren(groupChildrenRequestDto);
-        final GroupChildren groupChildrenSaved = this.groupChildrenRepository.save(groupChildren);
+        final GroupChildren groupChildrenSaved = this.groupChildrenService.saveGroupChildren(groupChildrenRequestDto);
         return mapFromGroupChildrenToGroupChildrenResponseDto(groupChildrenSaved);
     }
 
     public GroupChildrenResponseDto updateGroupChildren(Long id, GroupChildrenRequestDto groupChildrenRequestDto){
-        this.existsById(id);
         validatorFacade.validationGroupChildren(groupChildrenRequestDto);
-        final GroupChildren groupChildren = mapFromUpdateGroupChildrenRequestDtoToGroupChildren(id, groupChildrenRequestDto);
-        final GroupChildren groupChildrenSaved = this.groupChildrenRepository.save(groupChildren);
+        final GroupChildren groupChildrenSaved = this.groupChildrenService.updateGroupChildren(id, groupChildrenRequestDto);
         return mapFromGroupChildrenToGroupChildrenResponseDto(groupChildrenSaved);
     }
 
     public DeleteGroupChildrenResponseDto deleteGroupChildren(Long id) {
-        this.existsById(id);
-        this.groupChildrenRepository.deleteById(id);
+        this.groupChildrenService.deleteGroupChildren(id);
         return DeleteGroupChildrenResponseDto.builder()
                 .message("You deleted group children with id: " + id)
                 .status(HttpStatus.OK)
                 .build();
     }
-
-    private void existsById(Long id){
-        if(!this.groupChildrenRepository.existsById(id)){
-            throw new GroupChildrenNotFoundException("not found group children id: " + id);
-        }
-    }
-
 
 }
