@@ -21,37 +21,37 @@
             <div th:text="${user.phoneNumber}"></div>
             <div th:text="${user.email}"></div>
             <h3>Adres</h3>
-            <div th:text="${user.address.street}"></div>
-            <div th:text="${user.address.zipCode}"></div>
-            <div th:text="${user.address.city}"></div>
+            <div th:text="${user.street}"></div>
+            <div th:text="${user.zipCode}"></div>
+            <div th:text="${user.city}"></div>
             <div th:if="${parent}"><a th:href="@{/view/user/update/{id}(id=${user.id})}" class="btn-update">Edytuj</a></div>
         </div>
     </section>
 
     <section class="section-content-center" th:if="${adminoremployee}">
         <h2>Dzieci</h2>
-        <div th:each="child : ${user.child}" class="div-inline-block">
+        <div th:each="child : ${children}" class="div-inline-block">
             <div><a th:text="${child.name} + ' ' + ${child.surname}" th:href="@{/view/child/{id}(id=${child.id})}" class="btn-child"></a></div>
-            <div><a th:text="${child.groupChildren.name}"
-                    th:href="@{/view/groupchildren/{id}(id=${child.groupChildren.id})}"
+            <div><a th:text="${groupChildren.get(child.groupChildren_id)}"
+                    th:href="@{/view/groupchildren/{id}(id=${child.groupChildren_id})}"
                     class="btn-group"></a></div>
             <div><a th:href="@{/view/presence/child/{id}(id=${child.id})}" class="btn-presence">Obecności</a></div>
         </div>
     </section>
 
-    <section class="section-content-center" th:if="${parent}">
+  <section class="section-content-center" th:if="${parent}">
         <h2>Dzieci</h2>
-        <div th:each="child : ${user.child}" class="div-inline-block">
+        <div th:each="child : ${children}" class="div-inline-block">
             <div><a th:text="${child.name} + ' ' + ${child.surname}" th:href="@{/view/child/{id}(id=${child.id})}" class="btn-child"></a></div>
-            <div th:text="${child.groupChildren.name}" class="btn-group"></div>
+            <div th:text="${groupChildren.get(child.groupChildren_id)}" class="btn-group"></div>
             <div><a th:href="@{/view/presence/child/{id}(id=${child.id})}" class="btn-presence">Obecności</a></div>
         </div>
     </section>
 
     <section class="undernav">
-        <a th:if="${user.isActive() && adminoremployee}" th:href="@{/view/user/active/{id}(id=${user.id})}"
+        <a th:if="${user.active() && adminoremployee}" th:href="@{/view/user/active/{id}(id=${user.id})}"
            class="btn-inactive">Zablokuj</a>
-        <a th:if="${!user.isActive() && adminoremployee}" th:href="@{/view/user/active/{id}(id=${user.id})}"
+        <a th:if="${!user.active() && adminoremployee}" th:href="@{/view/user/active/{id}(id=${user.id})}"
            class="btn-active">Odblokuj</a>
         <a th:if="${adminoremployee}" th:href="@{/view/user/update/{id}(id=${user.id})}" class="btn-update">Edytuj</a>
         <a th:href="@{/view/user/delete/{id}(id=${user.id})}" class="btn-delete">Usuń</a>

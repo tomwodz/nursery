@@ -6,18 +6,23 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.tomwodz.nursery.domain.user.UserFacade;
-import pl.tomwodz.nursery.infrastructure.ModelUtils;
 import pl.tomwodz.nursery.domain.child.ChildFacade;
-import pl.tomwodz.nursery.infrastructure.validator.error.AddressValidationException;
-import pl.tomwodz.nursery.domain.child.Child;
+import pl.tomwodz.nursery.domain.child.dto.ChildResponseDto;
+import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenFacade;
 import pl.tomwodz.nursery.domain.user.User;
-import pl.tomwodz.nursery.services.AddressService;
-import pl.tomwodz.nursery.services.UserService;
+import pl.tomwodz.nursery.domain.user.UserFacade;
+import pl.tomwodz.nursery.domain.user.UserMapper;
+import pl.tomwodz.nursery.domain.user.dto.UpdateUserRequestDto;
+import pl.tomwodz.nursery.domain.user.dto.UserResponseDto;
+import pl.tomwodz.nursery.infrastructure.ModelUtils;
 import pl.tomwodz.nursery.infrastructure.session.SessionData;
+import pl.tomwodz.nursery.infrastructure.user.controller.error.UserNotFoundException;
 
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static pl.tomwodz.nursery.domain.user.User.Role.EMPLOYEE;
 
 @Controller
 @RequestMapping(path = "/view/user")
@@ -27,10 +32,9 @@ public class UserViewController {
     @Resource
     SessionData sessionData;
 
-    private final UserService userService;
-    private final AddressService addressService;
     private final ChildFacade childFacade;
     private final UserFacade userFacade;
+    private final GroupChildrenFacade groupChildrenFacade;
 
     @GetMapping
     public String getAll(Model model) {
@@ -45,25 +49,18 @@ public class UserViewController {
     @GetMapping(path = "/{id}")
     public String getUserById(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
-        if(this.sessionData.isAdmin()){
-            model.addAttribute("user", this.userFacade.findUserById(id));
+        UserResponseDto userBox = this.userFacade.findUserById(id);
+        List<ChildResponseDto> childrenBox = this.childFacade.findChildrenByUserId(id);
+        Map<Long, String> mapGroupChildren = new HashMap<>();
+        this.groupChildrenFacade.findAllGroupsChildren().stream()
+                .forEach(gch -> mapGroupChildren.put(gch.id(), gch.name()));
+        model.addAttribute("user", userBox);
+        model.addAttribute("children", childrenBox);
+        model.addAttribute("groupChildren", mapGroupChildren);
+        if (this.sessionData.isAdmin() ||
+                (this.sessionData.isEmployee() && !userBox.role().equals(EMPLOYEE)) ||
+                (this.sessionData.isId() == userBox.id())) {
             return "sample-user";
-        }
-        if(this.sessionData.isEmployee()){
-            User userBox = this.userService.findById(id);
-            if(userBox.getRole().equals(User.Role.PARENT) ||
-            this.sessionData.getUser().getId().equals(id)
-            ) {
-                model.addAttribute("user", userBox);
-                return "sample-user";
-            }
-        }
-        if(this.sessionData.isParent()){
-            User userBox = this.userService.findById(id);
-            if(userBox.getId()==this.sessionData.isId()) {
-                model.addAttribute("user", userBox);
-                return "sample-user";
-            }
         }
         return "redirect:/view/login";
     }
@@ -81,15 +78,16 @@ public class UserViewController {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
         try {
-            if (!this.userFacade.findUserByLogin(user.getLogin())) {
-                this.userService.save(user);
+            if (!this.userFacade.existsUserByLogin(user.getLogin())) {
+                this.userFacade.saveUser(
+                        UserMapper.mapFromUserToRequestUserDto(user));
                 return "redirect:/view/login";
             } else {
                 this.sessionData.setInfo("Login zajęty.");
                 return "redirect:/view/user/register";
             }
-        } catch (ValidationException | AddressValidationException e) {
-            this.sessionData.setInfo("Dane niepoprawne.");
+        } catch (ValidationException e) {
+            this.sessionData.setInfo(e.getMessage());
             return "redirect:/view/user/register";
         }
     }
@@ -97,22 +95,12 @@ public class UserViewController {
     @GetMapping(path = "/update/{id}")
     public String getUserByUpdate(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
+        UserResponseDto userBox = this.userFacade.findUserById(id);
         model.addAttribute("info", this.sessionData.getInfo());
-        if(this.sessionData.isAdmin()){
-            model.addAttribute("userModel", this.userService.findById(id));
-            return "edit-user";
-        }
-        if(this.sessionData.isEmployee()){
-            User userBox = this.userService.findById(id);
-            if(userBox.getRole().equals(User.Role.PARENT) ||
-                    this.sessionData.getUser().getId().equals(id)
-            ) {
-                model.addAttribute("userModel", this.userService.findById(id));
-                return "edit-user";
-            }
-        }
-        if(this.sessionData.isParent() && this.sessionData.isId() == id){
-            model.addAttribute("userModel", this.userService.findById(id));
+        model.addAttribute("userModel", this.userFacade.findUserById(id));
+        if (this.sessionData.isAdmin() ||
+                (this.sessionData.isEmployee() && !userBox.role().equals(EMPLOYEE)) ||
+                (this.sessionData.isId() == userBox.id())) {
             return "edit-user";
         }
         return "redirect:/view/login";
@@ -120,59 +108,36 @@ public class UserViewController {
 
     @PostMapping(path = "/update/{id}")
     public String updateUserById(Model model,
-                                 @ModelAttribute User user,
+                                 @ModelAttribute UpdateUserRequestDto updateUserRequestDto,
                                  @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
-
-        if (this.sessionData.isAdminOrEmployee() ||
-                (this.sessionData.isParent() && this.sessionData.isId() == id)) {
-            try {
-                //ValidatorUser.validateUserToUpdate(user);
-            } catch (ValidationException  | AddressValidationException e) {
-                this.sessionData.setInfo("Dane niepoprawne.");
-                model.addAttribute("userModel", this.userService.findById(id));
-                return "edit-user";
-            }
-            if (this.sessionData.isEmployee()) {
-                User userBox = this.userService.findById(id);
-                if (userBox.getRole().equals(User.Role.PARENT) ||
-                        this.sessionData.getUser().getId().equals(id)
-                ) {
-                    this.updateUser(model, user, id);
-                    return "message";
-                }
-            } else {
-                this.updateUser(model, user, id);
-                return "message";
-            }
+        UserResponseDto userBox = this.userFacade.findUserById(id);
+        try {
+        if (this.sessionData.isAdmin() ||
+                (this.sessionData.isEmployee() && !userBox.role().equals(EMPLOYEE)) ||
+                (this.sessionData.isId() == userBox.id())) {
+            this.userFacade.updateUser(id, updateUserRequestDto);
+            model.addAttribute("userModel", this.userFacade.findUserById(id));
+            this.sessionData.setInfo("Zaktualizowano użytkownika");
+            return "edit-user";
+        } }
+        catch (ValidationException | UserNotFoundException e){
+            this.sessionData.setInfo(e.getMessage());
+            model.addAttribute("userModel", this.userFacade.findUserById(id));
+            return "edit-user";
         }
         return "redirect:/view/login";
     }
 
-
-    private String updateUser(Model model,User user, Long id){
-        try {
-            this.userService.updateById(id, user);
-            this.addressService.updateById(id, user.getAddress());
-            model.addAttribute("message", "Uaktualniono użytkownika.");
-        }
-        catch (Exception e){
-            model.addAttribute("message", "Błąd.");
-
-        }
-        return "message";
-    }
 
     @GetMapping(path = "/active/{id}")
     public String changeActiveUserById(Model model,
                                  @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         if (this.sessionData.isAdminOrEmployee()) {
-            User userToChangeActive = this.userService.findById(id);
-            this.userService.changeActiveById(id, userToChangeActive);
-            model.addAttribute("users", this.userService.findByRole(userToChangeActive.getRole()));
-            return "user";
+            this.userFacade.changeActiveUserById(id);
+            return "redirect:/view/user/{id}";
         }
         return "redirect:/view/login";
     }
@@ -182,14 +147,12 @@ public class UserViewController {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         if (this.sessionData.isAdminOrEmployee()) {
             try {
-                List<Child> childFromUserIdToDelete = this.userService.findById(id)
-                        .getChild()
-                        .stream()
-                        .toList();
-                childFromUserIdToDelete.stream()
-                        .forEach(child -> this.childFacade.deleteChildById(child.getId()));
-                this.userService.deleteById(id);
-                model.addAttribute("message", "Usunięto użytkownika (i jego dzieci) o id: " + id);
+                if(this.childFacade.getQuantityChildrenByUserId(id)>0){
+                    model.addAttribute("message", "Nie można usunąć użytkownika, który ma dzieci.");
+                    return "message";
+                }
+                this.userFacade.deleteUser(id);
+                model.addAttribute("message", "Usunięto użytkownika o id: " + id);
                 return "message";
             } catch (Exception e){
                 model.addAttribute("message", "Błąd.");

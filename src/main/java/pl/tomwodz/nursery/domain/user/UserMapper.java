@@ -29,8 +29,8 @@ public class UserMapper {
                 .password(DigestUtils.md5Hex(requestDto.password()))
                 .name(requestDto.name())
                 .surname(requestDto.surname())
-                .email(requestDto.emial())
-                .phoneNumber(requestDto.phonenumber())
+                .email(requestDto.email())
+                .phoneNumber(requestDto.phoneNumber())
                 .address(Address.builder()
                         .street(requestDto.street())
                         .zipCode(requestDto.zipCode())
@@ -44,8 +44,8 @@ public class UserMapper {
                 .id(id)
                 .name(requestDto.name())
                 .surname(requestDto.surname())
-                .email(requestDto.emial())
-                .phoneNumber(requestDto.phonenumber())
+                .email(requestDto.email())
+                .phoneNumber(requestDto.phoneNumber())
                 .address(Address
                         .builder()
                         .id(id)
@@ -53,6 +53,32 @@ public class UserMapper {
                         .zipCode(requestDto.zipCode())
                         .city(requestDto.city())
                         .build())
+                .build();
+    }
+
+    public static UserRequestDto mapFromUserToRequestUserDto(User user) {
+        return UserRequestDto.builder()
+                .login(user.getLogin())
+                .password(user.getPassword())
+                .name(user.getName())
+                .surname(user.getSurname())
+                .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
+                .street(user.getAddress().getStreet())
+                .zipCode(user.getAddress().getZipCode())
+                .city(user.getAddress().getCity())
+                .build();
+    }
+
+    public static UpdateUserRequestDto mapFromUserUpdateUserRequestDto(User user) {
+        return UpdateUserRequestDto.builder()
+                .name(user.getName())
+                .surname(user.getSurname())
+                .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
+                .street(user.getAddress().getStreet())
+                .zipCode(user.getAddress().getZipCode())
+                .city(user.getAddress().getCity())
                 .build();
     }
 }

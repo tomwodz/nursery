@@ -29,12 +29,8 @@ public class UserFacade {
                 .orElseThrow(()-> new UserNotFoundException("nor found user id: " + id));
     }
 
-    public boolean findUserByLogin(String login){
-        if(this.userRepository.findByLogin(login).isPresent()){
-            return true;
-        } else {
-            return false;
-        }
+    public boolean existsUserByLogin(String login){
+        return this.userRepository.existsByLogin(login);
     }
 
     public List<UserResponseDto> findAllUsers(){
@@ -77,7 +73,7 @@ public class UserFacade {
         validatorFacade.validationUserToUpdate(updateUserRequestDto);
         Optional<User> userFromDb = this.userRepository.findById(id);
         if(userFromDb.isEmpty()){
-            new UserNotFoundException("nor found user id: " + id);
+            new UserNotFoundException("not found user id: " + id);
         }
         User user = UserMapper.mapFromUpdateUserRequestDtoToUser(id, updateUserRequestDto);
         user.setLogin(userFromDb.get().getLogin());
@@ -95,6 +91,18 @@ public class UserFacade {
                 .message("You deleted user with id: " + id)
                 .status(HttpStatus.OK)
                 .build();
+    }
+
+    public void changeActiveUserById(Long id){
+        Optional<User> userBox = this.userRepository.findById(id);
+        if(userBox.isPresent()){
+            if(userBox.get().isActive() == true){
+                userBox.get().setActive(false);
+            } else {
+                userBox.get().setActive(true);
+            }
+        }
+        this.userRepository.save(userBox.get());
     }
 
     private void existsById(Long id){

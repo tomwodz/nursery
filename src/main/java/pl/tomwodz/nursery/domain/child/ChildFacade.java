@@ -90,4 +90,11 @@ public class ChildFacade {
                 .stream()
                 .count();
     }
+
+    public List<ChildResponseDto> findChildrenByUserId(Long id) {
+        return this.childRepository.findAllByParent_Id(id)
+                .stream()
+                .map(ChildMapper::mapFromChildToChildResponseDto)
+                .toList();
+    }
 }

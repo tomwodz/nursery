@@ -1,4 +1,4 @@
-package pl.tomwodz.nursery.infrastructure;
+package pl.tomwodz.nursery.infrastructure.schedule.controller;
 
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.tomwodz.nursery.infrastructure.ModelUtils;
 import pl.tomwodz.nursery.infrastructure.schedule.CronGenerator;
 import pl.tomwodz.nursery.infrastructure.session.SessionData;
 

@@ -207,7 +207,7 @@ public class ChildViewController {
     }
 
     private boolean checkExistenceOfParentChildRelationship(Long id, User user) {
-        Optional<Child> childBox = user.getChild().stream().filter(child -> child.getId() == id).findFirst();
+        Optional<Child> childBox = user.getChild().stream().filter(child -> child.getId() == id ).findFirst();
         if(childBox.isPresent()){
             return true;
         }

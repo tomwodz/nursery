@@ -16,8 +16,8 @@ class ValidatorUser {
         validatePassword(userRequestDto.password());
         validateName(userRequestDto.name());
         validateSurname(userRequestDto.surname());
-        validateEmail(userRequestDto.emial());
-        validatePhoneNumber(userRequestDto.phonenumber());
+        validateEmail(userRequestDto.email());
+        validatePhoneNumber(userRequestDto.phoneNumber());
         return errors;
     }
 
@@ -33,8 +33,8 @@ class ValidatorUser {
         errors = new LinkedList<>();
         validateName(updateUserRequestDto.name());
         validateSurname(updateUserRequestDto.surname());
-        validateEmail(updateUserRequestDto.emial());
-        validatePhoneNumber(updateUserRequestDto.phonenumber());
+        validateEmail(updateUserRequestDto.email());
+        validatePhoneNumber(updateUserRequestDto.phoneNumber());
         return errors;
     }
    private void validateName(String name) {
