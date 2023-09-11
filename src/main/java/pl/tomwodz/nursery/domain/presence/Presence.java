@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import pl.tomwodz.nursery.domain.child.Child;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
+@Builder
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -20,19 +20,19 @@ public class Presence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate day;
+    private LocalDateTime dataTimeEntry;
 
-    private boolean presence;
-
-    private LocalTime timeEntry;
-
-    private LocalTime timeDeparture;
+    private LocalDateTime dataTimeDeparture;
 
     @ManyToOne
     Child child;
 
-    public Presence(LocalDate day, LocalTime timeEntry, LocalTime timeDeparture) {
-        this.day = day;
+    public Presence(LocalDateTime dataTimeEntry, LocalDateTime dataTimeDeparture) {
+        this.dataTimeEntry = dataTimeEntry;
+        this.dataTimeDeparture = dataTimeDeparture;
+    }
+
+    /*    public Presence(LocalDate day, LocalTime timeEntry, LocalTime timeDeparture) {
         this.timeEntry = timeEntry;
         this.timeDeparture = timeDeparture;
     }
@@ -42,6 +42,6 @@ public class Presence {
         this.timeEntry = timeEntry;
         this.timeDeparture = timeDeparture;
         this.child = child;
-    }
+    }*/
 
 }

@@ -1,9 +1,12 @@
 package pl.tomwodz.nursery.domain.presence;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pl.tomwodz.nursery.domain.child.Child;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -12,7 +15,7 @@ import java.time.LocalDate;
 public class PresenceByChildBetweenDates {
 
     private Child child;
-    private LocalDate dataFrom;
-    private LocalDate dataTo;
+    private LocalDateTime dataFrom;
+    private LocalDateTime dataTo;
 
 }

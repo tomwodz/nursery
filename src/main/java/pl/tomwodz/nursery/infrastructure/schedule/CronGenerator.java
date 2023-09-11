@@ -4,13 +4,15 @@ package pl.tomwodz.nursery.infrastructure.schedule;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import pl.tomwodz.nursery.domain.child.Child;
 import pl.tomwodz.nursery.domain.child.ChildFacade;
 import pl.tomwodz.nursery.domain.child.dto.ChildResponseDto;
-import pl.tomwodz.nursery.domain.child.Child;
 import pl.tomwodz.nursery.domain.presence.Presence;
-import pl.tomwodz.nursery.services.PresenceService;
+import pl.tomwodz.nursery.domain.presence.PresenceFacade;
+import pl.tomwodz.nursery.domain.presence.dto.PresenceRequestDto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Random;
@@ -19,31 +21,34 @@ import java.util.Random;
 @Log4j2
 public class CronGenerator {
 
-    private final PresenceService presenceService;
+    private final PresenceFacade presenceFacade;
     private final ChildFacade childFacade;
 
-    public CronGenerator(PresenceService presenceService, ChildFacade childFacade) {
-        this.presenceService = presenceService;
+    public CronGenerator(PresenceFacade presenceFacade, ChildFacade childFacade) {
+        this.presenceFacade = presenceFacade;
         this.childFacade = childFacade;
     }
 
     private boolean run;
-    @Scheduled(cron = "0    0    0    *    *    MON-FRI")
+    @Scheduled(cron = "*    *    18    *    *  *")
     public void generateAutoPresence() {
         if(run) {
             Random random = new Random();
             List<ChildResponseDto> childrenToAutoPresence = this.childFacade.findAllChildren();
             childrenToAutoPresence.stream()
-                    .forEach(child -> presenceService.save(
-                            new Presence(
-                                    LocalDate.now(),
-                                    LocalTime.of(
+                    .forEach(ch -> presenceFacade.savePresence(
+                            PresenceRequestDto.builder()
+                                    .child_id(ch.id())
+                                    .dataTimeEntry(LocalDateTime.of(LocalDate.now(),
+                                            LocalTime.of(
                                             random.nextInt(6, 8),
-                                            random.nextInt(00, 60)),
-                                    LocalTime.of(
+                                            random.nextInt(00, 60))))
+                                    .dataTimeDeparture(LocalDateTime.of(LocalDate.now(),
+                                            LocalTime.of(
                                             random.nextInt(14, 16),
-                                            random.nextInt(00, 60)),
-                                   Child.builder().id(child.id()).build())));
+                                            random.nextInt(00, 60))))
+                                    .build())
+                    );
             log.info("cron on - generate auto day's presences for all children");
         } else {
             log.info("cron off");

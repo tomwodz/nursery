@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.tomwodz.nursery.domain.authentication.AuthenticationFacade;
-import pl.tomwodz.nursery.infrastructure.ModelUtils;
+import pl.tomwodz.nursery.infrastructure.session.ModelUtils;
 import pl.tomwodz.nursery.infrastructure.session.SessionData;
 
 

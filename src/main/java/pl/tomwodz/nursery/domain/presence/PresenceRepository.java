@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,16 +14,14 @@ public interface PresenceRepository extends Repository<Presence, Long> {
 
     List<Presence> findAll(Sort sort);
 
+    List<Presence> findAllByChild_GroupChildren_IdOrderByDataTimeEntryDesc(Long id);
 
-    List<Presence> findAllByChild_GroupChildren_IdAndDayBetweenOrderByDayDesc(Long id, LocalDate dateFrom, LocalDate dateTo);
+  List<Presence> findAllByChild_GroupChildren_IdAndDataTimeEntryAfterAndDataTimeDepartureBefore(Long id, LocalDateTime dataTimeEntry, LocalDateTime dataTimeDeparture);
 
-    List<Presence> findAllByChild_IdAndDayBetweenOrderByDayDesc(Long id, LocalDate dateFrom, LocalDate dateTo);
+  List<Presence> findAllByChild_IdAndDataTimeEntryAfterAndDataTimeDepartureBefore(Long id, LocalDateTime dataTimeEntry, LocalDateTime dataTimeDeparture);
+    List<Presence> findAllByChild_IdOrderByDataTimeEntryDesc(Long id);
 
-    List<Presence> findAllByChild_GroupChildren_IdOrderByDayDesc(Long id);
-
-    List<Presence> findAllByChild_IdOrderByDayDesc(Long id);
-
-    Optional<Presence> findFirstByChild_Id(Long id);
+    List<Presence> findAllByChild_Id(Long id);
 
     Optional<Presence> findById(Long id);
     Presence save(Presence presence);
@@ -31,8 +30,5 @@ public interface PresenceRepository extends Repository<Presence, Long> {
     @Modifying
     void deleteById(Long id);
 
-    @Modifying
-    @Query("UPDATE Presence p SET p.child = :#{#newPresence.child}, p.day = :#{#newPresence.day}, " +
-            "p.timeEntry = :#{#newPresence.timeEntry}, p.timeDeparture = :#{#newPresence.timeDeparture} WHERE p.id = :id")
-    void updateById(Long id, Presence newPresence);
+
 }

@@ -10,7 +10,7 @@ import pl.tomwodz.nursery.domain.information.Information;
 import pl.tomwodz.nursery.domain.information.InformationFacade;
 import pl.tomwodz.nursery.domain.information.dto.InformationRequestDto;
 import pl.tomwodz.nursery.domain.user.UserFacade;
-import pl.tomwodz.nursery.infrastructure.ModelUtils;
+import pl.tomwodz.nursery.infrastructure.session.ModelUtils;
 import pl.tomwodz.nursery.infrastructure.session.SessionData;
 
 @Controller

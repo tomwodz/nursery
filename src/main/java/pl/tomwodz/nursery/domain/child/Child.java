@@ -42,4 +42,8 @@ public class Child {
         this.surname = surname;
         this.dayBirth = dayOfBirth;
     }
+
+    public Child(Long id) {
+        this.id = id;
+    }
 }

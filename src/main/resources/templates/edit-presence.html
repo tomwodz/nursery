@@ -20,11 +20,11 @@
     </section>
 
     <section class="section-content-center">
-        <h2>Dodaj obecność</h2>
+        <h2>Edytuj obecność</h2>
     <form method="post">
         <div id="info" th:text="${info}" class="info"></div>
         <div>Dziecko: </div>
-        <select class="select" th:field="*{presenceModel.child.id}">
+        <select class="select" th:field="*{presenceModel.child_id}">
             <option th:each="child : ${children}"
                     th:value="${child.id}"
                     th:text="${child.name} + ' ' + ${child.surname} ">
@@ -34,7 +34,7 @@
         <input type="datetime-local" name="dataTimeEntry" id="dataTimeEntry" class="input" th:field="*{presenceModel.dataTimeDeparture}">
         <div>Dzień i godzina wyjścia: </div>
         <input type="datetime-local" name="dataTimeDeparture" id="dataTimeDeparture" class="input" th:field="*{presenceModel.dataTimeEntry}">
-        <input type="submit" value="Dodaj" class="btn">
+        <input type="submit" value="Edytuj" class="btn">
     </form>
     </section>
 

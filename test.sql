@@ -96,31 +96,6 @@ VALUES
 
 
 INSERT INTO
-    tpresence (id, day, time_entry, time_departure, child_id, presence)
+    tpresence (id, data_time_entry, data_time_departure, child_id)
 VALUES
-    (nextval('tpresence_id_seq'),'2021-09-01', '07:00', '15:00', 1, true);
-
-INSERT INTO
-    tpresence (id, day, time_entry, time_departure, child_id, presence)
-VALUES
-    (nextval('tpresence_id_seq'),'2021-08-07', '07:00', '15:00', 1, true);
-
-INSERT INTO
-    tpresence (id, day, time_entry, time_departure, child_id, presence)
-VALUES
-    (nextval('tpresence_id_seq'),'2021-08-08', '07:00', '15:00', 1, true);
-
-INSERT INTO
-    tpresence (id, day, time_entry, time_departure, child_id, presence)
-VALUES
-    (nextval('tpresence_id_seq'),'2021-08-09', '07:00', '15:00', 1, true);
-
-INSERT INTO
-    tpresence (id, day, time_entry, time_departure, child_id, presence)
-VALUES
-    (nextval('tpresence_id_seq'),'2021-08-10', '07:00', '15:00', 1, true);
-
-INSERT INTO
-    tpresence (id, day, time_entry, time_departure, child_id, presence)
-VALUES
-    (nextval('tpresence_id_seq'),'2021-08-11', '07:00', '15:00', 1, true);
+    (nextval('tpresence_id_seq'),'2023-09-11 07:00', '2023-09-11 15:00', 1);

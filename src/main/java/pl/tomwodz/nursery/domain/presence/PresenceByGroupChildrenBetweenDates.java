@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.tomwodz.nursery.domain.groupchildren.GroupChildren;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class PresenceByGroupChildrenBetweenDates {
 
     private GroupChildren groupChildren;
-    private LocalDate dataFrom;
-    private LocalDate dataTo;
+    private LocalDateTime dataFrom;
+    private LocalDateTime dataTo;
 
 }

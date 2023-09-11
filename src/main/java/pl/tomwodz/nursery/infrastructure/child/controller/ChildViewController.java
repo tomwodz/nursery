@@ -17,10 +17,8 @@ import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenFacade;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenResponseDto;
 import pl.tomwodz.nursery.domain.user.User;
 import pl.tomwodz.nursery.domain.user.UserFacade;
-import pl.tomwodz.nursery.domain.user.dto.UserResponseDto;
-import pl.tomwodz.nursery.infrastructure.ModelUtils;
+import pl.tomwodz.nursery.infrastructure.session.ModelUtils;
 import pl.tomwodz.nursery.infrastructure.session.SessionData;
-import pl.tomwodz.nursery.services.PresenceService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +33,6 @@ public class ChildViewController {
     @Resource
     SessionData sessionData;
 
-    private final PresenceService presenceService;
     private final GroupChildrenFacade groupChildrenFacade;
     private final ChildFacade childFacade;
     private final UserFacade userFacade;
@@ -188,8 +185,7 @@ public class ChildViewController {
     public String deleteChildById(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         if(this.sessionData.isAdminOrEmployee() ||
-                this.sessionData.isParent() ||
-                this.presenceService.findFirstByChildId(id)){
+                this.sessionData.isParent()){ //TODO
             model.addAttribute("message", "Nie można usunąć dziecka, które ma obecności.");
             return "message";
         }

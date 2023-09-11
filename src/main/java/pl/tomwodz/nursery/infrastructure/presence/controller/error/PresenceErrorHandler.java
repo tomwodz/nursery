@@ -6,11 +6,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import pl.tomwodz.nursery.infrastructure.presence.controller.PresenceRestController;
 import pl.tomwodz.nursery.infrastructure.presence.controller.PresenceViewController;
 
 import java.time.LocalDateTime;
 
-@ControllerAdvice(assignableTypes = PresenceViewController.class)
+@ControllerAdvice(assignableTypes = {
+        PresenceViewController.class,
+        PresenceRestController.class
+})
 @Log4j2
 public class PresenceErrorHandler {
 

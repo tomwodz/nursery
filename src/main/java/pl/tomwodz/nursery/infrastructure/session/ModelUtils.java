@@ -1,4 +1,4 @@
-package pl.tomwodz.nursery.infrastructure;
+package pl.tomwodz.nursery.infrastructure.session;
 
 import org.springframework.ui.Model;
 import pl.tomwodz.nursery.infrastructure.session.SessionData;

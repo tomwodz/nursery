@@ -29,9 +29,9 @@
                         th:text="${group.name}">
                 </option>
             </select>
-            <input type="date" name="dateFrom" id="dateFrom" class="input-search-presence"
+            <input type="datetime-local" name="dateFrom" id="dateFrom" class="input-search-presence"
                    th:field="*{PresenceByGroupChildrenBetweenDates.dataFrom}">
-            <input type="date" name="dateTo" id="dateTo" class="input-search-presence"
+            <input type="datetime-local" name="dateTo" id="dateTo" class="input-search-presence"
                    th:field="*{PresenceByGroupChildrenBetweenDates.dataTo}">
             <input type="submit" value="Wyszukaj" class="btn-presence">
         </form>
@@ -40,11 +40,10 @@
     <section class="section-content-center" th:if="${presences.size()>0}">
         <h2>Obecności</h2>
         <div th:each="presence : ${presences}" class="div-inline-block">
-            <div><a th:text="${presence.child.name} + ' ' + ${presence.child.surname}"
-                    th:href="@{/view/child/{id}(id=${presence.child.id})}" class="btn-child"></a></div>
-            <div th:text="${presence.day}"></div>
-            <div th:text="${presence.timeEntry}"></div>
-            <div th:text="${presence.timeDeparture}"></div>
+            <div><a th:text="${children.get(presence.child_id)}"
+                    th:href="@{/view/child/{id}(id=${presence.child_id})}" class="btn-child"></a></div>
+            <div th:text="${presence.dataTimeEntry}"></div>
+            <div th:text="${presence.dataTimeDeparture}"></div>
             <div>
                 <a th:href="@{/view/presence/update/{id}(id=${presence.id})}" class="btn-update">Edytuj</a>
             </div>

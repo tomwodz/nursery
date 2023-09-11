@@ -14,7 +14,7 @@ import pl.tomwodz.nursery.domain.user.UserFacade;
 import pl.tomwodz.nursery.domain.user.UserMapper;
 import pl.tomwodz.nursery.domain.user.dto.UpdateUserRequestDto;
 import pl.tomwodz.nursery.domain.user.dto.UserResponseDto;
-import pl.tomwodz.nursery.infrastructure.ModelUtils;
+import pl.tomwodz.nursery.infrastructure.session.ModelUtils;
 import pl.tomwodz.nursery.infrastructure.session.SessionData;
 import pl.tomwodz.nursery.infrastructure.user.controller.error.UserNotFoundException;
 

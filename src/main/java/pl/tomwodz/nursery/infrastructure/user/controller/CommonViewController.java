@@ -1,10 +1,11 @@
-package pl.tomwodz.nursery.infrastructure;
+package pl.tomwodz.nursery.infrastructure.user.controller;
 
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import pl.tomwodz.nursery.infrastructure.session.ModelUtils;
 import pl.tomwodz.nursery.infrastructure.session.SessionData;
 
 @Controller
