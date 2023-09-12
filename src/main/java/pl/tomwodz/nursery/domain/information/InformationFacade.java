@@ -12,7 +12,6 @@ import pl.tomwodz.nursery.infrastructure.information.controller.error.Informatio
 
 import java.util.List;
 
-import static pl.tomwodz.nursery.domain.information.InformationMapper.mapFromInformationRequestDtoToInformation;
 import static pl.tomwodz.nursery.domain.information.InformationMapper.mapFromInformationToInformationResponseDto;
 
 @AllArgsConstructor
@@ -21,6 +20,7 @@ public class InformationFacade {
 
     private final InformationRepository informationRepository;
     private final ValidatorFacade validatorFacade;
+    private final InformationFactory informationFactory;
 
     public List<InformationResponseDto> findAllInformations(){
         return this.informationRepository.findAll(Sort.by(Sort.Direction.DESC, "id"))
@@ -37,16 +37,16 @@ public class InformationFacade {
 
     public InformationResponseDto saveInformation(InformationRequestDto informationRequestDto){
         validatorFacade.validationInformation(informationRequestDto);
-        final Information information = mapFromInformationRequestDtoToInformation(informationRequestDto);
-        final Information savedInformation = this.informationRepository.save(information);
+        Information information = informationFactory.mapFromInformationRequestDtoToInformation(informationRequestDto);
+        Information savedInformation = this.informationRepository.save(information);
         return mapFromInformationToInformationResponseDto(savedInformation);
     }
 
     public InformationResponseDto updateInformation(Long id, InformationRequestDto informationRequestDto){
         this.existsById(id);
         validatorFacade.validationInformation(informationRequestDto);
-        final Information information = InformationMapper.mapFromUpdateInformationRequestDtoToInformation(id, informationRequestDto);
-        final Information savedInformation = this.informationRepository.save(information);
+        Information information = informationFactory.mapFromUpdateInformationRequestDtoToInformation(id, informationRequestDto);
+        Information savedInformation = this.informationRepository.save(information);
         return mapFromInformationToInformationResponseDto(savedInformation);
     }
 

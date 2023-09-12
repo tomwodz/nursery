@@ -11,7 +11,6 @@ import pl.tomwodz.nursery.infrastructure.session.ModelUtils;
 import pl.tomwodz.nursery.domain.child.ChildFacade;
 import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenFacade;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenRequestDto;
-import pl.tomwodz.nursery.domain.groupchildren.GroupChildren;
 import pl.tomwodz.nursery.infrastructure.session.SessionData;
 
 @Controller
@@ -52,7 +51,7 @@ public class GroupChildrenViewController {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee()) {
-            model.addAttribute("groupChildrenModel", new GroupChildren());
+            model.addAttribute("groupChildrenModel", GroupChildrenRequestDto.builder().build());
             return "add-groupchildren";
         }
         return "redirect:/view/login";

@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import pl.tomwodz.nursery.domain.validator.ValidatorFacade;
 
 @Configuration
-public class ChildConfiguration {
+class ChildConfiguration {
 
     @Bean
     ChildFacade childFacade(ChildRepository childRepository, ValidatorFacade validatorFacade){

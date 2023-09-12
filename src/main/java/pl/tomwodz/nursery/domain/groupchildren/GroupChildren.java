@@ -7,15 +7,13 @@ import pl.tomwodz.nursery.domain.child.Child;
 import java.util.List;
 
 
-@Builder
 @Getter
 @Setter
-@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name ="tgroupchildren")
-public class GroupChildren {
+class GroupChildren {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,11 +25,11 @@ public class GroupChildren {
     @OneToMany(mappedBy = "groupChildren")
     private List<Child> child;
 
-    public GroupChildren(String name) {
+    GroupChildren(String name) {
         this.name = name;
     }
-
-    public GroupChildren(Long id) {
+    GroupChildren(Long id, String name) {
         this.id = id;
+        this.name = name;
     }
 }

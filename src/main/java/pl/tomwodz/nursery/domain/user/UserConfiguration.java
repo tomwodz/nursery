@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import pl.tomwodz.nursery.domain.validator.ValidatorFacade;
 
 @Configuration
-public class UserConfiguration {
+class UserConfiguration {
 
     @Bean
     UserFacade userFacade(UserRepository userRepository, ValidatorFacade validatorFacade){

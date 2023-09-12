@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import pl.tomwodz.nursery.infrastructure.session.SessionData;
 
 @Configuration
-public class AuthenticationConfiguration {
+class AuthenticationConfiguration {
 
     @Bean
     AuthenticationFacade authenticationFacade (SessionData sessionData, AuthenticationRepository authenticationRepository){

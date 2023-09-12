@@ -6,7 +6,7 @@ import org.springframework.data.repository.Repository;
 import java.util.List;
 import java.util.Optional;
 
-public interface GroupChildrenRepository extends Repository<GroupChildren, Long> {
+interface GroupChildrenRepository extends Repository<GroupChildren, Long> {
     List<GroupChildren> findAll();
     Optional<GroupChildren> findById(Long id);
     Optional<GroupChildren> findByName(String name);

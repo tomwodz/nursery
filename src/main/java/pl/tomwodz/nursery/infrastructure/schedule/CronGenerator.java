@@ -30,7 +30,7 @@ public class CronGenerator {
     }
 
     private boolean run;
-    @Scheduled(cron = "*    *    18    *    *  *")
+    @Scheduled(cron = "0    0   18    *    *     *")
     public void generateAutoPresence() {
         if(run) {
             Random random = new Random();

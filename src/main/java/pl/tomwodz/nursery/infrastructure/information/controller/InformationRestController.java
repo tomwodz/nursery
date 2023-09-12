@@ -22,8 +22,7 @@ public class InformationRestController {
 
     @GetMapping
     public ResponseEntity<List<InformationResponseDto>> getAllInformations() {
-        List<InformationResponseDto> allInformations = this.informationFacade.findAllInformations();
-        return ResponseEntity.ok(allInformations);
+        return ResponseEntity.ok(this.informationFacade.findAllInformations());
     }
 
     @GetMapping(path = "/{id}")

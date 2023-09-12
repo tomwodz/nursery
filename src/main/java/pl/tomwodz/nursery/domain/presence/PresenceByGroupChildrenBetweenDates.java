@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.tomwodz.nursery.domain.groupchildren.GroupChildren;
+import pl.tomwodz.nursery.domain.groupchildren.dto.SimpleGroupChildrenQueryDto;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PresenceByGroupChildrenBetweenDates {
 
-    private GroupChildren groupChildren;
+    private SimpleGroupChildrenQueryDto groupChildren;
     private LocalDateTime dataFrom;
     private LocalDateTime dataTo;
 

@@ -3,7 +3,7 @@ package pl.tomwodz.nursery.domain.groupchildren;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenRequestDto;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenResponseDto;
 
-public class GroupChildrenMapper {
+class GroupChildrenMapper {
 
     public static GroupChildrenResponseDto mapFromGroupChildrenToGroupChildrenResponseDto(GroupChildren groupChildren) {
         return GroupChildrenResponseDto.builder()
@@ -12,16 +12,4 @@ public class GroupChildrenMapper {
                 .build();
     }
 
-    public static GroupChildren mapFromGroupChildrenRequestDtoToGroupChildren(GroupChildrenRequestDto requestDto) {
-        return GroupChildren.builder()
-                .name(requestDto.name())
-                .build();
-    }
-
-    public static GroupChildren mapFromUpdateGroupChildrenRequestDtoToGroupChildren(Long id, GroupChildrenRequestDto requestDto) {
-        return GroupChildren.builder()
-                .name(requestDto.name())
-                .id(id)
-                .build();
-    }
 }

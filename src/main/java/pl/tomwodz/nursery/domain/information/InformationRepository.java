@@ -7,7 +7,7 @@ import org.springframework.data.repository.Repository;
 import java.util.List;
 import java.util.Optional;
 
-public interface InformationRepository extends Repository <Information, Long> {
+    interface InformationRepository extends Repository <Information, Long> {
 
     List<Information> findAll(Sort sort);
 

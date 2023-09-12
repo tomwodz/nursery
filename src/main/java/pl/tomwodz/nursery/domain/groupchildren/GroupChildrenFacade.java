@@ -3,10 +3,12 @@ package pl.tomwodz.nursery.domain.groupchildren;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import pl.tomwodz.nursery.domain.child.ChildFacade;
 import pl.tomwodz.nursery.domain.groupchildren.dto.DeleteGroupChildrenResponseDto;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenRequestDto;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenResponseDto;
 import pl.tomwodz.nursery.domain.validator.ValidatorFacade;
+import pl.tomwodz.nursery.infrastructure.groupchildren.controller.error.GroupChildrenNotDeleteException;
 import pl.tomwodz.nursery.infrastructure.groupchildren.controller.error.GroupChildrenNotFoundException;
 
 import java.util.List;
@@ -19,7 +21,8 @@ public class GroupChildrenFacade {
 
     private final GroupChildrenRepository groupChildrenRepository;
     private final ValidatorFacade validatorFacade;
-    private final GroupChildrenService groupChildrenService;
+    private final GroupChildrenFactory groupChildrenFactory;
+    private final ChildFacade childFacade;
 
     public List<GroupChildrenResponseDto> findAllGroupsChildren(){
         return this.groupChildrenRepository.findAll()
@@ -29,7 +32,8 @@ public class GroupChildrenFacade {
     }
 
     public GroupChildrenResponseDto findGroupChildrenById(Long id) {
-        GroupChildren groupChildrenFounded = this.groupChildrenService.findGroupChildrenById(id);
+        GroupChildren groupChildrenFounded = this.groupChildrenRepository.findById(id)
+                .orElseThrow(()-> new GroupChildrenNotFoundException("not found group children id: " + id));;
         return GroupChildrenMapper.mapFromGroupChildrenToGroupChildrenResponseDto(groupChildrenFounded);
     }
 
@@ -41,22 +45,35 @@ public class GroupChildrenFacade {
 
     public GroupChildrenResponseDto saveGroupChildren(GroupChildrenRequestDto groupChildrenRequestDto){
         validatorFacade.validationGroupChildren(groupChildrenRequestDto);
-        final GroupChildren groupChildrenSaved = this.groupChildrenService.saveGroupChildren(groupChildrenRequestDto);
+        GroupChildren groupChildren = groupChildrenFactory.mapFromGroupChildrenRequestDtoToGroupChildren(groupChildrenRequestDto);
+        GroupChildren groupChildrenSaved = this.groupChildrenRepository.save(groupChildren);
         return mapFromGroupChildrenToGroupChildrenResponseDto(groupChildrenSaved);
     }
 
     public GroupChildrenResponseDto updateGroupChildren(Long id, GroupChildrenRequestDto groupChildrenRequestDto){
+        this.existsById(id);
         validatorFacade.validationGroupChildren(groupChildrenRequestDto);
-        final GroupChildren groupChildrenSaved = this.groupChildrenService.updateGroupChildren(id, groupChildrenRequestDto);
+        GroupChildren groupChildren = groupChildrenFactory.mapFromUpdateGroupChildrenRequestDtoToGroupChildren(id, groupChildrenRequestDto);
+        GroupChildren groupChildrenSaved = this.groupChildrenRepository.save(groupChildren);
         return mapFromGroupChildrenToGroupChildrenResponseDto(groupChildrenSaved);
     }
 
     public DeleteGroupChildrenResponseDto deleteGroupChildren(Long id) {
-        this.groupChildrenService.deleteGroupChildren(id);
+        this.existsById(id);
+        if(this.childFacade.getQuantityChildrenByGroupId(id)!=0){
+            throw new GroupChildrenNotDeleteException("not delete, group children must be empty");
+        }
+        this.groupChildrenRepository.deleteById(id);
         return DeleteGroupChildrenResponseDto.builder()
                 .message("You deleted group children with id: " + id)
                 .status(HttpStatus.OK)
                 .build();
+    }
+
+    private void existsById(Long id){
+        if(!this.groupChildrenRepository.existsById(id)){
+            throw new GroupChildrenNotFoundException("not found group children id: " + id);
+        }
     }
 
 }

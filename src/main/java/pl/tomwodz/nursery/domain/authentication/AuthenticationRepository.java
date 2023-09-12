@@ -5,7 +5,7 @@ import pl.tomwodz.nursery.domain.user.User;
 
 import java.util.Optional;
 
-public interface AuthenticationRepository extends Repository<User, Long> {
+interface AuthenticationRepository extends Repository<User, Long> {
     Optional<User> findByLogin(String login);
 
 }

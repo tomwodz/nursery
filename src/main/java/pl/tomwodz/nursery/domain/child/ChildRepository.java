@@ -7,7 +7,7 @@ import org.springframework.data.repository.Repository;
 import java.util.List;
 import java.util.Optional;
 
-public interface ChildRepository extends Repository<Child, Long> {
+interface ChildRepository extends Repository<Child, Long> {
 
     List<Child> findAll(Sort sort);
     List<Child> findAll();

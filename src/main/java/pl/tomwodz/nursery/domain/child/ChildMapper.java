@@ -2,7 +2,7 @@ package pl.tomwodz.nursery.domain.child;
 
 import pl.tomwodz.nursery.domain.child.dto.ChildRequestDto;
 import pl.tomwodz.nursery.domain.child.dto.ChildResponseDto;
-import pl.tomwodz.nursery.domain.groupchildren.GroupChildren;
+import pl.tomwodz.nursery.domain.groupchildren.dto.SimpleGroupChildrenQueryDto;
 import pl.tomwodz.nursery.domain.user.User;
 
 import java.time.LocalDate;
@@ -26,7 +26,7 @@ public class ChildMapper {
         return Child.builder()
                 .name(dto.name())
                 .surname(dto.surname())
-                .groupChildren(new GroupChildren(dto.groupChildren_id()))
+                .groupChildren(new SimpleGroupChildrenQueryDto(dto.groupChildren_id()))
                 .dayBirth(LocalDate.parse(dto.dayBirth(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .parent(new User(dto.user_id()))
                 .build();
@@ -47,7 +47,7 @@ public class ChildMapper {
                 .id(id)
                 .name(dto.name())
                 .surname(dto.surname())
-                .groupChildren(new GroupChildren(dto.groupChildren_id()))
+                .groupChildren(new SimpleGroupChildrenQueryDto(dto.groupChildren_id()))
                 .dayBirth(LocalDate.parse(dto.dayBirth(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .parent(new User(dto.user_id()))
                 .build();

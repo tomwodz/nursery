@@ -12,9 +12,9 @@ import pl.tomwodz.nursery.domain.child.ChildFacade;
 import pl.tomwodz.nursery.domain.child.ChildMapper;
 import pl.tomwodz.nursery.domain.child.dto.ChildRequestDto;
 import pl.tomwodz.nursery.domain.child.dto.ChildResponseDto;
-import pl.tomwodz.nursery.domain.groupchildren.GroupChildren;
 import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenFacade;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenResponseDto;
+import pl.tomwodz.nursery.domain.groupchildren.dto.SimpleGroupChildrenQueryDto;
 import pl.tomwodz.nursery.domain.user.User;
 import pl.tomwodz.nursery.domain.user.UserFacade;
 import pl.tomwodz.nursery.infrastructure.session.ModelUtils;
@@ -97,7 +97,7 @@ public class ChildViewController {
             try {
                 if (this.sessionData.isParent()) {
                     child.setParent(this.sessionData.getUser());
-                    child.setGroupChildren(new GroupChildren(1L));
+                    child.setGroupChildren(new SimpleGroupChildrenQueryDto(1L));
                     if(child.getDayBirth()==null){
                         throw new ValidationException("Data urodzin nie może być pusta.");
                     }

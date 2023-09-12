@@ -3,15 +3,14 @@ package pl.tomwodz.nursery.domain.child;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import pl.tomwodz.nursery.domain.groupchildren.dto.SimpleGroupChildrenQueryDto;
 import pl.tomwodz.nursery.domain.user.User;
-import pl.tomwodz.nursery.domain.groupchildren.GroupChildren;
 
 import java.time.LocalDate;
 
 @Builder
 @Getter
 @Setter
-@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -28,7 +27,7 @@ public class Child {
     @Column(columnDefinition = "varchar(50)", nullable = false)
     private String surname;
     @ManyToOne
-    private GroupChildren groupChildren;
+    private SimpleGroupChildrenQueryDto groupChildren;
 
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")

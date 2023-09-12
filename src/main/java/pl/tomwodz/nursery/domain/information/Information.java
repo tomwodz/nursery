@@ -1,27 +1,25 @@
 package pl.tomwodz.nursery.domain.information;
 
 import jakarta.persistence.*;
-import lombok.*;
-import pl.tomwodz.nursery.domain.user.User;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import pl.tomwodz.nursery.domain.user.dto.SimpleUserQueryDto;
 
 import java.time.LocalDateTime;
 
-@Builder
 @Getter
 @Setter
-@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name ="tinformation")
-public class Information {
+class Information {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    private User author;
 
     @Column(nullable = false)
     private LocalDateTime dateCreation = LocalDateTime.now();
@@ -32,4 +30,13 @@ public class Information {
     @Column(columnDefinition = "varchar(255)", nullable = false)
     private String content;
 
+    @ManyToOne
+    private SimpleUserQueryDto author;
+
+    Information (LocalDateTime dateCreation, String title, String content, SimpleUserQueryDto author) {
+        this.dateCreation = dateCreation;
+        this.title = title;
+        this.content = content;
+        this.author = author;
+    }
 }

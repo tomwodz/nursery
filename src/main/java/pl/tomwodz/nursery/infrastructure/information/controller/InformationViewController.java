@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.tomwodz.nursery.domain.information.Information;
 import pl.tomwodz.nursery.domain.information.InformationFacade;
 import pl.tomwodz.nursery.domain.information.dto.InformationRequestDto;
 import pl.tomwodz.nursery.domain.user.UserFacade;
@@ -40,24 +39,24 @@ public class InformationViewController {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee()) {
-            model.addAttribute("informationModel", new Information());
+            model.addAttribute("informationModel", InformationRequestDto.builder().build());
             return "add-information";
         }
         return "redirect:/view/login";
     }
 
     @PostMapping(path = "/")
-    public String postInformation(@ModelAttribute Information information, Model model) {
+    public String postInformation(@ModelAttribute InformationRequestDto informationRequestDto, Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee()) {
             try{
-                InformationRequestDto informationRequestDto = InformationRequestDto.builder()
+                InformationRequestDto informationRequestDtoToSave = InformationRequestDto.builder()
                         .author_id(this.sessionData.getUser().getId())
-                        .content(information.getContent())
-                        .title(information.getTitle())
+                        .content(informationRequestDto.content())
+                        .title(informationRequestDto.title())
                         .build();
-                this.informationFacade.saveInformation(informationRequestDto);
+                this.informationFacade.saveInformation(informationRequestDtoToSave);
                 model.addAttribute("message", "Dodano informację.");
                 return "message";
             } catch (ValidationException e){
@@ -81,18 +80,18 @@ public class InformationViewController {
 
     @PostMapping(path = "/update/{id}")
     public String updateInformationById(Model model,
-                                        @ModelAttribute Information information,
+                                        @ModelAttribute InformationRequestDto informationRequestDto,
                                         @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee()) {
             try{
-                InformationRequestDto informationRequestDto = InformationRequestDto.builder()
+                InformationRequestDto informationRequestDtoToUpdate = InformationRequestDto.builder()
                         .author_id(this.sessionData.getUser().getId())
-                        .title(information.getTitle())
-                        .content(information.getContent())
+                        .title(informationRequestDto.title())
+                        .content(informationRequestDto.content())
                         .build();
-                this.informationFacade.updateInformation(id, informationRequestDto);
+                this.informationFacade.updateInformation(id, informationRequestDtoToUpdate);
                 model.addAttribute("message", "Zmieniono informację.");
                 return "message";
             } catch (ValidationException e){

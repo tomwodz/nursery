@@ -7,7 +7,6 @@ import pl.tomwodz.nursery.domain.user.User;
 @Builder
 @Getter
 @Setter
-@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

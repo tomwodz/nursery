@@ -2,10 +2,13 @@ package pl.tomwodz.nursery.domain.information;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Sort;
 import pl.tomwodz.nursery.domain.information.dto.InformationRequestDto;
 import pl.tomwodz.nursery.domain.information.dto.InformationResponseDto;
 import pl.tomwodz.nursery.domain.validator.ValidatorFacade;
 import pl.tomwodz.nursery.infrastructure.information.controller.error.InformationNotFoundException;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -15,7 +18,9 @@ class InformationFacadeTest {
     InformationRepository informationRepository = new InformationRepositoryTestImpl();
     ValidatorFacade validatorFacade = mock(ValidatorFacade.class);
 
-    InformationFacade informationFacade = new InformationConfiguration().informationFacade(informationRepository, validatorFacade);
+    InformationFacade informationFacade = new InformationConfiguration().
+            informationFacade(informationRepository, validatorFacade
+                    );
 
     InformationRequestDto informationRequestDto = InformationRequestDto.builder()
             .author_id(1L)
