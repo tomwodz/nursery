@@ -27,11 +27,11 @@
             <input type="text" name="surname" id="surname" class="input" placeholder="Nazwisko"
                    th:field="*{childModel.surname}">
             <p>Data urodzenia:</p>
-            <input type="date" name="dayofbirth" id="dayofbirth" class="input" placeholder="2020-01-01"
+            <input type="datetime-local" name="dayofbirth" id="dayofbirth" class="input" placeholder="2020-01-01"
                    th:field="*{childModel.dayBirth}">
 
             <p th:if="${!parent}">Grupa</p>
-            <select class="select" th:field="*{childModel.groupChildren.id}" th:if="${!parent}">>
+            <select class="select" th:field="*{childModel.groupChildren_id}" th:if="${!parent}">>
                 <option th:each="group : ${groupChildren}"
                         th:value="${group.id}"
                         th:text="${group.name}">
@@ -39,7 +39,7 @@
             </select>
 
             <p th:if="${!parent}">Rodzic:</p>
-            <select class="select" th:field="*{childModel.parent.id}" th:if="${!parent}">
+            <select class="select" th:field="*{childModel.user_id}" th:if="${!parent}">
                 <option th:each="parent : ${parents}"
                         th:value="${parent.id}"
                         th:text="${parent.name} + ' ' + ${parent.surname}">

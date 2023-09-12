@@ -12,6 +12,7 @@ import pl.tomwodz.nursery.infrastructure.child.controller.error.ChildNotFoundExc
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
@@ -22,6 +23,7 @@ public class ChildFacade {
 
     private final ChildRepository childRepository;
     private final ValidatorFacade validatorFacade;
+    private final ChildFactory childFactory;
 
     public Long getQuantityChildrenByGroupId(Long id){
         return this.childRepository.findAllByGroupChildren_Id(id)
@@ -51,16 +53,17 @@ public class ChildFacade {
 
     public ChildResponseDto saveChild(ChildRequestDto childRequestDto){
         validatorFacade.validationChild(childRequestDto);
-        final Child child = ChildMapper.mapFromChildReguestDtoToChild(childRequestDto);
-        final Child savedChild = this.childRepository.save(child);
+        Child child = childFactory.mapFromChildReguestDtoToChild(childRequestDto);
+        Child savedChild = this.childRepository.save(child);
         return ChildMapper.mapFromChildToChildResponseDto(savedChild);
     }
 
     public ChildResponseDto updateChild(Long id, ChildRequestDto childRequestDto){
         validatorFacade.validationChild(childRequestDto);
         this.existsById(id);
-        final Child child = ChildMapper.mapFromUpdateChildRequestDtoToChild(id, childRequestDto);
-        final Child savedChild = this.childRepository.save(child);
+        Child child = childFactory.mapFromChildReguestDtoToChild(childRequestDto);
+        child.setId(id);
+        Child savedChild = this.childRepository.save(child);
         return ChildMapper.mapFromChildToChildResponseDto(savedChild);
     }
 
@@ -96,5 +99,15 @@ public class ChildFacade {
                 .stream()
                 .map(ChildMapper::mapFromChildToChildResponseDto)
                 .toList();
+    }
+
+    public boolean checkExistenceOfParentChildRelationship(Long idChild, Long idParent){
+        Optional<Child> childBox = this.childRepository.findById(idChild);
+        if(childBox.isEmpty()){
+               throw new ChildNotFoundException("not found child id: " + idChild);}
+        if (childBox.get().getParent().getId() == idParent){
+            return true;
+        }
+        return false;
     }
 }

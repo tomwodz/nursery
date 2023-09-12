@@ -2,19 +2,17 @@ package pl.tomwodz.nursery.domain.presence;
 
 import jakarta.persistence.*;
 import lombok.*;
-import pl.tomwodz.nursery.domain.child.Child;
+import pl.tomwodz.nursery.domain.child.dto.SimpleChildQueryDto;
 
 import java.time.LocalDateTime;
 
-@Builder
 @Getter
 @Setter
-@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name ="tpresence")
-public class Presence {
+class Presence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +23,11 @@ public class Presence {
     private LocalDateTime dataTimeDeparture;
 
     @ManyToOne
-    Child child;
+    SimpleChildQueryDto child;
 
+    public Presence(LocalDateTime dataTimeEntry, LocalDateTime dataTimeDeparture, SimpleChildQueryDto child) {
+        this.dataTimeEntry = dataTimeEntry;
+        this.dataTimeDeparture = dataTimeDeparture;
+        this.child = child;
+    }
 }

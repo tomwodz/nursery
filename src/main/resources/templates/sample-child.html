@@ -18,7 +18,7 @@
         <div class="div-inline-block">
             <div><a th:text="${child.name} + ' ' + ${child.surname}" th:href="@{/view/child/{id}(id=${child.id()})}" class="btn-user"></a></div>
             <div th:text="${groupChildren.name()}" class="btn-group"></div>
-            <div th:text="${child.dayBirth()}"></div>
+            <div th:text="${#temporals.format(child.dayBirth(), 'dd-MM-yyyy')}" class="btn-date"></div>
             <div><a th:href="@{/view/child/update/{id}(id=${child.id()})}" class="btn-update">Edytuj</a></div>
         </div>
     </section>
@@ -30,7 +30,7 @@
             <div><a th:text="${groupChildren.name()}"
                     th:href="@{/view/groupchildren/{id}(id=${child.groupChildren_id()})}"
                     class="btn-group"></a></div>
-            <div th:text="${child.dayBirth()}"></div>
+            <div th:text="${#temporals.format(child.dayBirth(), 'dd-MM-yyyy')}" class="btn-date"></div>
             <div><a th:href="@{/view/child/update/{id}(id=${child.id()})}" class="btn-update">Edytuj</a></div>
         </div>
     </section>

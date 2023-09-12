@@ -2,11 +2,13 @@ package pl.tomwodz.nursery.domain.child.dto;
 
 import lombok.Builder;
 
+import java.time.LocalDateTime;
+
 @Builder
 public record ChildRequestDto(
                               String name,
                               String surname,
                               Long groupChildren_id,
-                              String dayBirth,
+                              LocalDateTime dayBirth,
                               Long user_id) {
 }

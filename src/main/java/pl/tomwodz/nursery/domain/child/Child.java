@@ -4,18 +4,17 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import pl.tomwodz.nursery.domain.groupchildren.dto.SimpleGroupChildrenQueryDto;
-import pl.tomwodz.nursery.domain.user.User;
+import pl.tomwodz.nursery.domain.user.dto.SimpleUserQueryDto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-@Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name ="tchild")
-public class Child {
+class Child {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,23 +25,23 @@ public class Child {
 
     @Column(columnDefinition = "varchar(50)", nullable = false)
     private String surname;
+
     @ManyToOne
     private SimpleGroupChildrenQueryDto groupChildren;
 
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dayBirth;
+    private LocalDateTime dayBirth;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private User parent;
+    private SimpleUserQueryDto parent;
 
-    public Child(String name, String surname, LocalDate dayOfBirth) {
+    public Child(String name, String surname, SimpleGroupChildrenQueryDto groupChildren, LocalDateTime dayBirth, SimpleUserQueryDto parent) {
         this.name = name;
         this.surname = surname;
-        this.dayBirth = dayOfBirth;
+        this.groupChildren = groupChildren;
+        this.dayBirth = dayBirth;
+        this.parent = parent;
     }
 
-    public Child(Long id) {
-        this.id = id;
-    }
 }

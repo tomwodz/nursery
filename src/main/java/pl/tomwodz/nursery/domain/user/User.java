@@ -3,16 +3,13 @@ package pl.tomwodz.nursery.domain.user;
 import jakarta.persistence.*;
 import lombok.*;
 import pl.tomwodz.nursery.domain.address.Address;
-import pl.tomwodz.nursery.domain.child.Child;
-
+import pl.tomwodz.nursery.domain.child.dto.SimpleChildQueryDto;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Builder
 @Getter
 @Setter
-@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -50,21 +47,9 @@ public class User {
     private Role role = Role.PARENT;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent")
-    private List<Child> child;
+    private List<SimpleChildQueryDto> child;
 
     private boolean active = true;
-
-    public User(Long id) {
-        this.id = id;
-    }
-
-    public User(String name, String surname, String email, String phoneNumber, Address address) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-    }
 
     public enum Role {
         ADMIN,
@@ -76,4 +61,23 @@ public class User {
         return new ArrayList<>(Arrays.asList(Role.values()));
     }
 
+    public User(String login, String password, String name, String surname,
+                String email, String phoneNumber, Address address) {
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+    }
+
+    public User(Long id, String name, String surname, String email, String phoneNumber, Address address) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+    }
 }

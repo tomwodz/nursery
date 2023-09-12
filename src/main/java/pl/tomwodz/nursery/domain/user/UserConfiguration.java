@@ -9,6 +9,7 @@ class UserConfiguration {
 
     @Bean
     UserFacade userFacade(UserRepository userRepository, ValidatorFacade validatorFacade){
-        return new UserFacade(userRepository, validatorFacade);
+        UserFactory userFactory = new UserFactory();
+        return new UserFacade(userRepository, validatorFacade, userFactory);
     }
 }

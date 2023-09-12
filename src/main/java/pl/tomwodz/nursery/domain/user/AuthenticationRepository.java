@@ -1,4 +1,4 @@
-package pl.tomwodz.nursery.domain.authentication;
+package pl.tomwodz.nursery.domain.user;
 
 import org.springframework.data.repository.Repository;
 import pl.tomwodz.nursery.domain.user.User;

@@ -1,4 +1,4 @@
-package pl.tomwodz.nursery.infrastructure.authentication.controller.error;
+package pl.tomwodz.nursery.infrastructure.user.controller.error;
 
 public class LoginAlreadyExistException extends RuntimeException {
     public LoginAlreadyExistException(String message) {

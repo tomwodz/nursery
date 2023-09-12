@@ -6,6 +6,9 @@ import pl.tomwodz.nursery.domain.child.dto.ChildRequestDto;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenRequestDto;
 import pl.tomwodz.nursery.domain.information.dto.InformationRequestDto;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ValidatorFacadeTest {
@@ -61,7 +64,9 @@ class ValidatorFacadeTest {
     void invalidNameChildShouldBeThrowException(){
 
         //given
-        ChildRequestDto childRequestDto = new ChildRequestDto("t","Test",1L,"2020-01-02",1L);
+        LocalDateTime time = LocalDateTime.of(2022,12,03 ,00,00);
+        ChildRequestDto childRequestDto = new ChildRequestDto("t","Test",1L,
+              time,1L);
         ValidatorFacade validatorFacade = new ValidatorConfiguration().validatorFacade();
 
         //then
@@ -69,19 +74,5 @@ class ValidatorFacadeTest {
         assertThrows(ValidationException.class, () -> validatorFacade.validationChild(childRequestDto));
 
     }
-
-    @Test
-    void invalidDayBirthShouldBeThrowException(){
-
-        //given
-        ChildRequestDto childRequestDto = new ChildRequestDto("Test","Test",1L,"test",1L);
-        ValidatorFacade validatorFacade = new ValidatorConfiguration().validatorFacade();
-
-        //then
-        //when
-        assertThrows(ValidationException.class, () -> validatorFacade.validationChild(childRequestDto));
-
-    }
-
 
 }

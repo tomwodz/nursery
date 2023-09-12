@@ -8,6 +8,7 @@ class PresenceConfiguration {
 
     @Bean
     PresenceFacade presenceFacade (PresenceRepository presenceRepository){
-        return new PresenceFacade(presenceRepository);
+        PresenceFactory presenceFactory = new PresenceFactory();
+        return new PresenceFacade(presenceRepository, presenceFactory);
     }
 }

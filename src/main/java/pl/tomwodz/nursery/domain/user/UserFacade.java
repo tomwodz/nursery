@@ -8,13 +8,10 @@ import pl.tomwodz.nursery.domain.user.dto.UpdateUserRequestDto;
 import pl.tomwodz.nursery.domain.user.dto.UserRequestDto;
 import pl.tomwodz.nursery.domain.user.dto.UserResponseDto;
 import pl.tomwodz.nursery.domain.validator.ValidatorFacade;
-import pl.tomwodz.nursery.infrastructure.authentication.controller.error.LoginAlreadyExistException;
 import pl.tomwodz.nursery.infrastructure.user.controller.error.UserNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
-
-import static pl.tomwodz.nursery.domain.user.UserMapper.mapFromUserRequestDtoToUser;
 
 @AllArgsConstructor
 @Transactional
@@ -22,6 +19,7 @@ public class UserFacade {
 
     private final UserRepository userRepository;
     private final ValidatorFacade validatorFacade;
+    private final UserFactory userFactory;
 
     public UserResponseDto findUserById(Long id){
         return this.userRepository.findById(id)
@@ -62,10 +60,10 @@ public class UserFacade {
 
     public UserResponseDto saveUser(UserRequestDto userRequestDto){
         validatorFacade.validationUser(userRequestDto);
-        User user = mapFromUserRequestDtoToUser(userRequestDto);
+        User user = userFactory.mapFromUserRequestDtoToUser(userRequestDto);
         user.setRole(User.Role.PARENT);
         user.setActive(true);
-        final User userSaved = this.userRepository.save(user);
+        User userSaved = this.userRepository.save(user);
         return UserMapper.fromUserToUserResponseDto(userSaved);
     }
 
@@ -75,12 +73,12 @@ public class UserFacade {
         if(userFromDb.isEmpty()){
             new UserNotFoundException("not found user id: " + id);
         }
-        User user = UserMapper.mapFromUpdateUserRequestDtoToUser(id, updateUserRequestDto);
+        User user = this.userFactory.mapFromUpdateUserRequestDtoToUser(id, updateUserRequestDto);
         user.setLogin(userFromDb.get().getLogin());
         user.setRole(userFromDb.get().getRole());
         user.setPassword(userFromDb.get().getPassword());
         user.setActive(userFromDb.get().isActive());
-        final User userSaved = this.userRepository.save(user);
+        User userSaved = this.userRepository.save(user);
         return UserMapper.fromUserToUserResponseDto(userSaved);
     }
 

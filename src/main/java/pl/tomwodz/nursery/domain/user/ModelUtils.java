@@ -1,7 +1,7 @@
-package pl.tomwodz.nursery.infrastructure.session;
+package pl.tomwodz.nursery.domain.user;
 
 import org.springframework.ui.Model;
-import pl.tomwodz.nursery.infrastructure.session.SessionData;
+import pl.tomwodz.nursery.domain.user.SessionData;
 
 public class ModelUtils {
     public static void addCommonDataToModel(Model model, SessionData sessionData){

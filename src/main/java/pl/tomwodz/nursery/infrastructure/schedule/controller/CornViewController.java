@@ -6,9 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.tomwodz.nursery.infrastructure.session.ModelUtils;
+import pl.tomwodz.nursery.domain.user.ModelUtils;
 import pl.tomwodz.nursery.infrastructure.schedule.CronGenerator;
-import pl.tomwodz.nursery.infrastructure.session.SessionData;
+import pl.tomwodz.nursery.domain.user.SessionData;
 
 @Controller
 @RequestMapping(path = "/view/corn")

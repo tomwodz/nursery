@@ -1,12 +1,10 @@
-package pl.tomwodz.nursery.domain.authentication;
+package pl.tomwodz.nursery.domain.user;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
-import pl.tomwodz.nursery.domain.user.User;
-import pl.tomwodz.nursery.infrastructure.session.SessionData;
 
 import java.util.Optional;
 

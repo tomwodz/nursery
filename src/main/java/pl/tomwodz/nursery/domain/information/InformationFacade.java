@@ -43,9 +43,10 @@ public class InformationFacade {
     }
 
     public InformationResponseDto updateInformation(Long id, InformationRequestDto informationRequestDto){
-        this.existsById(id);
         validatorFacade.validationInformation(informationRequestDto);
-        Information information = informationFactory.mapFromUpdateInformationRequestDtoToInformation(id, informationRequestDto);
+        this.existsById(id);
+        Information information = informationFactory.mapFromInformationRequestDtoToInformation(informationRequestDto);
+        information.setId(id);
         Information savedInformation = this.informationRepository.save(information);
         return mapFromInformationToInformationResponseDto(savedInformation);
     }

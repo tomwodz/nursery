@@ -1,8 +1,7 @@
-package pl.tomwodz.nursery.domain.authentication;
+package pl.tomwodz.nursery.domain.user;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.tomwodz.nursery.infrastructure.session.SessionData;
 
 @Configuration
 class AuthenticationConfiguration {

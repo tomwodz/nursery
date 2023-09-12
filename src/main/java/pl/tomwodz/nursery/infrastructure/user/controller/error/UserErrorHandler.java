@@ -11,7 +11,6 @@ import pl.tomwodz.nursery.infrastructure.child.controller.ChildRestController;
 import pl.tomwodz.nursery.infrastructure.information.controller.InformationRestController;
 import pl.tomwodz.nursery.infrastructure.user.controller.UserRestController;
 import pl.tomwodz.nursery.infrastructure.user.controller.UserViewController;
-import pl.tomwodz.nursery.infrastructure.authentication.controller.error.LoginAlreadyExistException;
 import pl.tomwodz.nursery.infrastructure.validator.error.AddressValidationException;
 
 import java.time.LocalDateTime;

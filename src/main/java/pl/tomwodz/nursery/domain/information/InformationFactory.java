@@ -14,14 +14,4 @@ class InformationFactory {
                 new SimpleUserQueryDto(requestDto.author_id()));
     }
 
-    Information mapFromUpdateInformationRequestDtoToInformation(Long id, InformationRequestDto requestDto) {
-        return new Information (
-                id,
-                LocalDateTime.now(),
-                requestDto.title(),
-                requestDto.content(),
-                new SimpleUserQueryDto(requestDto.author_id()));
-
-    }
-
 }

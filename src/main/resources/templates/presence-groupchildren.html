@@ -23,16 +23,16 @@
     <section class="section-search-presence">
         <h3>Wyszukaj według Grupy</h3>
         <form method="post" action="/view/presence/groupchildren/">
-            <select class="input-search-presence" th:field="*{PresenceByGroupChildrenBetweenDates.groupChildren.id}">
+            <select class="input-search-presence" th:field="*{PresenceByGroupChildrenBetweenDates.id}">
                 <option th:each="group : ${groupsChildren}"
                         th:value="${group.id}"
                         th:text="${group.name}">
                 </option>
             </select>
-            <input type="datetime-local" name="dateFrom" id="dateFrom" class="input-search-presence"
-                   th:field="*{PresenceByGroupChildrenBetweenDates.dataFrom}">
-            <input type="datetime-local" name="dateTo" id="dateTo" class="input-search-presence"
-                   th:field="*{PresenceByGroupChildrenBetweenDates.dataTo}">
+            <input type="datetime-local" name="dataTimeEntry" id="dataTimeEntry" class="input-search-presence"
+                   th:field="*{PresenceByGroupChildrenBetweenDates.dataTimeEntry}">
+            <input type="datetime-local" name="dataTimeDeparture" id="dataTimeDeparture" class="input-search-presence"
+                   th:field="*{PresenceByGroupChildrenBetweenDates.dataTimeDeparture}">
             <input type="submit" value="Wyszukaj" class="btn-presence">
         </form>
     </section>
@@ -41,10 +41,10 @@
         <h2>Obecności</h2>
         <div th:each="presence : ${presences}" class="div-inline-block">
             <div><a th:text="${children.get(presence.child_id)}"
-                    th:href="@{/view/child/{id}(id=${presence.child_id})}" class="btn-child"></a></div>
-            <div th:text="${#temporals.format(presence.dataTimeEntry, 'dd-MM-yyyy')}" class="btn-date"></div>
-            <div th:text="${#temporals.format(presence.dataTimeEntry, 'HH:mm')}" class="btn-timeentry"></div>
-            <div th:text="${#temporals.format(presence.dataTimeDeparture, 'HH:mm')}" class="btn-timedeparture"></div>
+                    th:href="@{/view/child/{id}(id=${presence.child_id()})}" class="btn-child"></a></div>
+            <div th:text="${#temporals.format(presence.dataTimeEntry(), 'dd-MM-yyyy')}" class="btn-date"></div>
+            <div th:text="${#temporals.format(presence.dataTimeEntry(), 'HH:mm')}" class="btn-timeentry"></div>
+            <div th:text="${#temporals.format(presence.dataTimeDeparture(), 'HH:mm')}" class="btn-timedeparture"></div>
             <div>
                 <a th:href="@{/view/presence/update/{id}(id=${presence.id})}" class="btn-update">Edytuj</a>
             </div>

@@ -4,10 +4,8 @@ package pl.tomwodz.nursery.infrastructure.schedule;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import pl.tomwodz.nursery.domain.child.Child;
 import pl.tomwodz.nursery.domain.child.ChildFacade;
 import pl.tomwodz.nursery.domain.child.dto.ChildResponseDto;
-import pl.tomwodz.nursery.domain.presence.Presence;
 import pl.tomwodz.nursery.domain.presence.PresenceFacade;
 import pl.tomwodz.nursery.domain.presence.dto.PresenceRequestDto;
 
@@ -38,7 +36,7 @@ public class CronGenerator {
             childrenToAutoPresence.stream()
                     .forEach(ch -> presenceFacade.savePresence(
                             PresenceRequestDto.builder()
-                                    .child_id(ch.id())
+                                    .id(ch.id())
                                     .dataTimeEntry(LocalDateTime.of(LocalDate.now(),
                                             LocalTime.of(
                                             random.nextInt(6, 8),

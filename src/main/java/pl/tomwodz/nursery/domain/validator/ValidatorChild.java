@@ -3,6 +3,8 @@ package pl.tomwodz.nursery.domain.validator;
 import pl.tomwodz.nursery.domain.child.dto.ChildRequestDto;
 import pl.tomwodz.nursery.infrastructure.validator.error.ChildValidationException;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,7 +18,7 @@ class ValidatorChild {
         }
         validateName(childRequestDto.name());
         validateSurname(childRequestDto.surname());
-        validateDayBirth(childRequestDto.dayBirth());
+        validateDayBirth(childRequestDto.dayBirth().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         return errors;
     }
     private void validateName(String name) {
@@ -34,7 +36,7 @@ class ValidatorChild {
     }
 
     private void validateDayBirth(String dayBrith) {
-        String regex = "[2]{1}[0]{1}[2]{1}[0-9]{1}-[0-9]{2}-[0-9]{2}"; //TODO regex to date
+        String regex = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))";
         if (!dayBrith.matches(regex)) {
             errors.add("day of birth not validation");
         }

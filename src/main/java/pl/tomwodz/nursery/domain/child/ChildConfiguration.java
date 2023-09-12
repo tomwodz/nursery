@@ -9,6 +9,7 @@ class ChildConfiguration {
 
     @Bean
     ChildFacade childFacade(ChildRepository childRepository, ValidatorFacade validatorFacade){
-        return new ChildFacade(childRepository, validatorFacade);
+        ChildFactory childFactory = new ChildFactory();
+        return new ChildFacade(childRepository, validatorFacade, childFactory);
     }
 }

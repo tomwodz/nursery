@@ -1,8 +1,11 @@
 package pl.tomwodz.nursery.domain.groupchildren;
 
 import jakarta.persistence.*;
-import lombok.*;
-import pl.tomwodz.nursery.domain.child.Child;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import pl.tomwodz.nursery.domain.child.dto.SimpleChildQueryDto;
 
 import java.util.List;
 
@@ -23,7 +26,7 @@ class GroupChildren {
     private String name;
 
     @OneToMany(mappedBy = "groupChildren")
-    private List<Child> child;
+    private List<SimpleChildQueryDto> child;
 
     GroupChildren(String name) {
         this.name = name;

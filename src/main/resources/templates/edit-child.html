@@ -27,7 +27,7 @@
             <input type="text" name="surname" id="surname" class="input" placeholder="Nazwisko"
                    th:field="*{childModel.surname}">
             <p>Data urodzenia:</p>
-            <input type="date" name="dayofbirth" id="dayofbirth" class="input" placeholder="2020-01-01"
+            <input type="datetime-local" name="dayofbirth" id="dayofbirth" class="input" placeholder="2020-01-01"
                    th:field="*{childModel.dayBirth}">
 
             <p th:if="${!parent}">Grupa</p>

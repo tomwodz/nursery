@@ -4,10 +4,9 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import pl.tomwodz.nursery.domain.information.dto.DeleteInformationResponseDto;
 import pl.tomwodz.nursery.domain.presence.dto.DeletePresenceResponseDto;
-import pl.tomwodz.nursery.domain.presence.dto.PresenceResponseDto;
 import pl.tomwodz.nursery.domain.presence.dto.PresenceRequestDto;
+import pl.tomwodz.nursery.domain.presence.dto.PresenceResponseDto;
 import pl.tomwodz.nursery.infrastructure.information.controller.error.InformationNotFoundException;
 import pl.tomwodz.nursery.infrastructure.presence.controller.error.PresenceNotFoundException;
 
@@ -19,6 +18,7 @@ import java.util.List;
 public class PresenceFacade {
 
     private final PresenceRepository presenceRepository;
+    private final PresenceFactory presenceFactory;
 
     public PresenceResponseDto findPresenceById(Long id) {
         return this.presenceRepository.findById(id)
@@ -45,7 +45,7 @@ public class PresenceFacade {
                                                                                    LocalDateTime dataTimeDeparture) {
         return this.presenceRepository
                 .findAllByChild_GroupChildren_IdAndDataTimeEntryAfterAndDataTimeDepartureBefore(
-                        id,dataTimeEntry, dataTimeDeparture)
+                        id, dataTimeEntry, dataTimeDeparture)
                 .stream()
                 .map(PresenceMapper::mapFromPresenceToPresenceResponseDto)
                 .toList();
@@ -70,13 +70,13 @@ public class PresenceFacade {
     }
 
     public PresenceResponseDto savePresence(PresenceRequestDto requestPresenceDto) {
-        Presence presence = PresenceMapper.mapFromRequestPresenceDtoToPresence(requestPresenceDto);
+        Presence presence = presenceFactory.mapFromRequestPresenceDtoToPresence(requestPresenceDto);
         Presence presenceSaved = this.presenceRepository.save(presence);
         return PresenceMapper.mapFromPresenceToPresenceResponseDto(presenceSaved);
     }
 
     public PresenceResponseDto updatePresence(Long id, PresenceRequestDto requestPresenceDto) {
-        Presence presence = PresenceMapper.mapFromRequestPresenceDtoToPresence(requestPresenceDto);
+        Presence presence = presenceFactory.mapFromRequestPresenceDtoToPresence(requestPresenceDto);
         presence.setId(id);
         Presence presenceSaved = this.presenceRepository.save(presence);
         return PresenceMapper.mapFromPresenceToPresenceResponseDto(presenceSaved);

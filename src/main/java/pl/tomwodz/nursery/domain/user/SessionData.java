@@ -1,12 +1,10 @@
-package pl.tomwodz.nursery.infrastructure.session;
+package pl.tomwodz.nursery.domain.user;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
-import pl.tomwodz.nursery.domain.user.User;
-
 
 @NoArgsConstructor
 @Getter

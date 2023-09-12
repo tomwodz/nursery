@@ -2,7 +2,7 @@ package pl.tomwodz.nursery.domain.address;
 
 import jakarta.persistence.*;
 import lombok.*;
-import pl.tomwodz.nursery.domain.user.User;
+import pl.tomwodz.nursery.domain.user.dto.SimpleUserQueryDto;
 
 @Builder
 @Getter
@@ -28,9 +28,16 @@ public class Address {
     private String city;
 
     @OneToOne(mappedBy = "address")
-    private User user;
+    private SimpleUserQueryDto user;
 
     public Address(String street, String zipCode, String city) {
+        this.street = street;
+        this.zipCode = zipCode;
+        this.city = city;
+    }
+
+    public Address(Long id, String street, String zipCode, String city) {
+        this.id = id;
         this.street = street;
         this.zipCode = zipCode;
         this.city = city;

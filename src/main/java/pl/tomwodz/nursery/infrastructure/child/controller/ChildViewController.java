@@ -7,22 +7,17 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.tomwodz.nursery.domain.child.Child;
 import pl.tomwodz.nursery.domain.child.ChildFacade;
-import pl.tomwodz.nursery.domain.child.ChildMapper;
 import pl.tomwodz.nursery.domain.child.dto.ChildRequestDto;
 import pl.tomwodz.nursery.domain.child.dto.ChildResponseDto;
 import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenFacade;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenResponseDto;
-import pl.tomwodz.nursery.domain.groupchildren.dto.SimpleGroupChildrenQueryDto;
-import pl.tomwodz.nursery.domain.user.User;
 import pl.tomwodz.nursery.domain.user.UserFacade;
-import pl.tomwodz.nursery.infrastructure.session.ModelUtils;
-import pl.tomwodz.nursery.infrastructure.session.SessionData;
+import pl.tomwodz.nursery.domain.user.ModelUtils;
+import pl.tomwodz.nursery.domain.user.SessionData;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Controller
 @RequestMapping(path = "/view/child")
@@ -65,23 +60,24 @@ public class ChildViewController {
         if (this.sessionData.isAdminOrEmployee()) {
             return "sample-child";
         }
-        if (this.sessionData.isParent() &&
-                checkExistenceOfParentChildRelationship(id, this.sessionData.getUser())) {
+        if (this.sessionData.isParent()
+                && this.childFacade.checkExistenceOfParentChildRelationship(id, this.sessionData.isId())) {
             return "sample-child";
         }
         return "redirect:/view/login";
     }
 
+
+
     @GetMapping(path = "/")
     public String getChildByCreate(Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
+        model.addAttribute("childModel", ChildRequestDto.builder().build());
         if (this.sessionData.isParent()) {
-            model.addAttribute("childModel", new Child());
             return "add-child";
         }
         if (this.sessionData.isAdminOrEmployee()) {
-            model.addAttribute("childModel", new Child());
             model.addAttribute("groupChildren", this.groupChildrenFacade.findAllGroupsChildren());
             model.addAttribute("parents", this.userFacade.findAllUsersByRoleParent());
             return "add-child";
@@ -90,27 +86,34 @@ public class ChildViewController {
     }
 
     @PostMapping(path = "/")
-    public String postChild(@ModelAttribute Child child, Model model) {
+    public String postChild(@ModelAttribute ChildRequestDto childRequestDto, Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee() || this.sessionData.isParent()) {
             try {
                 if (this.sessionData.isParent()) {
-                    child.setParent(this.sessionData.getUser());
-                    child.setGroupChildren(new SimpleGroupChildrenQueryDto(1L));
-                    if(child.getDayBirth()==null){
-                        throw new ValidationException("Data urodzin nie może być pusta.");
-                    }
-                    ChildRequestDto childRequestDto = ChildMapper.mapFromChildToChildRequestDto(child);
-                    this.childFacade.saveChild(childRequestDto);
+                    ChildRequestDto childRequestDtoToSave = ChildRequestDto
+                            .builder()
+                            .groupChildren_id(1L)
+                            .user_id(this.sessionData.getUser().getId())
+                            .name(childRequestDto.name())
+                            .surname(childRequestDto.surname())
+                            .dayBirth(childRequestDto.dayBirth())
+                            .build();
+                    this.childFacade.saveChild(childRequestDtoToSave);
                     model.addAttribute("message", "Dodano dziecko.");
                     return "message";
                 }
                 if (this.sessionData.isAdminOrEmployee()) {
-                    child.setParent(child.getParent());
-                    child.setGroupChildren(child.getGroupChildren());
-                    ChildRequestDto childRequestDto = ChildMapper.mapFromChildToChildRequestDto(child);
-                    this.childFacade.saveChild(childRequestDto);
+                    ChildRequestDto childRequestDtoToSaveEmployee = ChildRequestDto
+                            .builder()
+                            .groupChildren_id(childRequestDto.groupChildren_id())
+                            .user_id(childRequestDto.user_id())
+                            .name(childRequestDto.name())
+                            .surname(childRequestDto.surname())
+                            .dayBirth(childRequestDto.dayBirth())
+                            .build();
+                    this.childFacade.saveChild(childRequestDtoToSaveEmployee);
                     model.addAttribute("message", "Dodano dziecko.");
                     return "message";
                 }
@@ -133,7 +136,7 @@ public class ChildViewController {
             return "edit-child";
         }
         if (this.sessionData.isParent() &&
-                checkExistenceOfParentChildRelationship(id, this.sessionData.getUser())) {
+                this.childFacade.checkExistenceOfParentChildRelationship(id, this.sessionData.isId())) {
             model.addAttribute("childModel", this.childFacade.findChildById(id));
             return "edit-child";
         }
@@ -148,7 +151,7 @@ public class ChildViewController {
         model.addAttribute("info", this.sessionData.getInfo());
         if (this.sessionData.isAdminOrEmployee() ||
                 (this.sessionData.isParent() &&
-                        checkExistenceOfParentChildRelationship(id, this.sessionData.getUser()))) {
+                        this.childFacade.checkExistenceOfParentChildRelationship(id, this.sessionData.isId()))) {
             try {
                 ChildResponseDto childResponseDto = this.childFacade.findChildById(id);
                 ChildRequestDto childRequestDto1 = ChildRequestDto.builder()
@@ -181,33 +184,22 @@ public class ChildViewController {
     }
 
 
-    @GetMapping(path = "/delete/{id}")
+  @GetMapping(path = "/delete/{id}")
     public String deleteChildById(Model model, @PathVariable Long id) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         if(this.sessionData.isAdminOrEmployee() ||
-                this.sessionData.isParent()){ //TODO
-            model.addAttribute("message", "Nie można usunąć dziecka, które ma obecności.");
-            return "message";
-        }
-        if (this.sessionData.isAdminOrEmployee()) {
-            this.childFacade.deleteChildById(id);
-            model.addAttribute("message", "Usunięto dziecko o id: " + id);
-            return "message";}
-        if (this.sessionData.isParent() &&
-                checkExistenceOfParentChildRelationship(id, this.sessionData.getUser())) {
-            this.childFacade.deleteChildById(id);
-            model.addAttribute("message", "Usunięto dziecko o id: " + id);
-            return "message";
+                this.sessionData.isParent() &&
+                        this.childFacade.checkExistenceOfParentChildRelationship(id, this.sessionData.isId())) {
+            try {
+                this.childFacade.deleteChildById(id);
+                model.addAttribute("message", "Usunięto dziecko o id: " + id);
+                return "message";
+            } catch (Exception e) {
+                model.addAttribute("message", "Nie można usunąć dziecka, które ma obecności.");
+                return "message";
+            }
         }
         return "redirect:/view/login";
-    }
-
-    private boolean checkExistenceOfParentChildRelationship(Long id, User user) {
-        Optional<Child> childBox = user.getChild().stream().filter(child -> child.getId() == id ).findFirst();
-        if(childBox.isPresent()){
-            return true;
-        }
-        return false;
     }
 
 }

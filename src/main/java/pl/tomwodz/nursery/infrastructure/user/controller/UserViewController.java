@@ -9,20 +9,20 @@ import org.springframework.web.bind.annotation.*;
 import pl.tomwodz.nursery.domain.child.ChildFacade;
 import pl.tomwodz.nursery.domain.child.dto.ChildResponseDto;
 import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenFacade;
-import pl.tomwodz.nursery.domain.user.User;
 import pl.tomwodz.nursery.domain.user.UserFacade;
-import pl.tomwodz.nursery.domain.user.UserMapper;
 import pl.tomwodz.nursery.domain.user.dto.UpdateUserRequestDto;
+import pl.tomwodz.nursery.domain.user.dto.UserRequestDto;
 import pl.tomwodz.nursery.domain.user.dto.UserResponseDto;
-import pl.tomwodz.nursery.infrastructure.session.ModelUtils;
-import pl.tomwodz.nursery.infrastructure.session.SessionData;
+import pl.tomwodz.nursery.domain.user.ModelUtils;
+import pl.tomwodz.nursery.domain.user.SessionData;
 import pl.tomwodz.nursery.infrastructure.user.controller.error.UserNotFoundException;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static pl.tomwodz.nursery.domain.user.User.Role.EMPLOYEE;
+import static pl.tomwodz.nursery.domain.user.dto.SimpleUserQueryDto.Role.EMPLOYEE;
+
 
 @Controller
 @RequestMapping(path = "/view/user")
@@ -69,18 +69,17 @@ public class UserViewController {
     public String getUserToRegister(Model model){
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
-        model.addAttribute("userModel", new User());
+        model.addAttribute("userModel", UserRequestDto.builder().build());
         return "register";
     }
 
     @PostMapping(path = "/register")
-    public String postUser(@ModelAttribute User user, Model model) {
+    public String postUser(@ModelAttribute UserRequestDto userRequestDto, Model model) {
         ModelUtils.addCommonDataToModel(model, this.sessionData);
         model.addAttribute("info", this.sessionData.getInfo());
         try {
-            if (!this.userFacade.existsUserByLogin(user.getLogin())) {
-                this.userFacade.saveUser(
-                        UserMapper.mapFromUserToRequestUserDto(user));
+            if (!this.userFacade.existsUserByLogin(userRequestDto.login())) {
+                this.userFacade.saveUser(userRequestDto);
                 return "redirect:/view/login";
             } else {
                 this.sessionData.setInfo("Login zajęty.");

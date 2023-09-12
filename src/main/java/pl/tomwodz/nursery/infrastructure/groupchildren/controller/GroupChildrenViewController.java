@@ -7,11 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.tomwodz.nursery.infrastructure.groupchildren.controller.error.GroupChildrenNotDeleteException;
-import pl.tomwodz.nursery.infrastructure.session.ModelUtils;
+import pl.tomwodz.nursery.domain.user.ModelUtils;
 import pl.tomwodz.nursery.domain.child.ChildFacade;
 import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenFacade;
 import pl.tomwodz.nursery.domain.groupchildren.dto.GroupChildrenRequestDto;
-import pl.tomwodz.nursery.infrastructure.session.SessionData;
+import pl.tomwodz.nursery.domain.user.SessionData;
 
 @Controller
 @RequestMapping(path = "/view/groupchildren")

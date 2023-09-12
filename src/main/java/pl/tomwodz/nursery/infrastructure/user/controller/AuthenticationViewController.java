@@ -1,4 +1,4 @@
-package pl.tomwodz.nursery.infrastructure.authentication.controller;
+package pl.tomwodz.nursery.infrastructure.user.controller;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -7,9 +7,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.tomwodz.nursery.domain.authentication.AuthenticationFacade;
-import pl.tomwodz.nursery.infrastructure.session.ModelUtils;
-import pl.tomwodz.nursery.infrastructure.session.SessionData;
+import pl.tomwodz.nursery.domain.user.AuthenticationFacade;
+import pl.tomwodz.nursery.domain.user.ModelUtils;
+import pl.tomwodz.nursery.domain.user.SessionData;
 
 
 @Controller
