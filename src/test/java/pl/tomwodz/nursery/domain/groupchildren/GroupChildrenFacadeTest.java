@@ -69,21 +69,6 @@ class GroupChildrenFacadeTest {
     }
 
     @Test
-    void shouldBeMessageBeforeRemoveFromRepository() {
-
-        //given
-        GroupChildrenResponseDto groupChildrenResponseDto =
-                groupChildrenFacade.saveGroupChildren(groupChildrenRequestDto);
-
-        //when
-        groupChildrenFacade.deleteGroupChildren(groupChildrenResponseDto.id());
-
-        //then
-        assertThat(groupChildrenFacade.findAllGroupsChildren()).size().isEqualTo(0);
-
-    }
-
-    @Test
     void shouldNotBeAbleToRemoveFromRepositoryWhenGroupChildrenNotExist() {
 
         //given

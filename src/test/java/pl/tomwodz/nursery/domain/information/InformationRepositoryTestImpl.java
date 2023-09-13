@@ -1,7 +1,6 @@
 package pl.tomwodz.nursery.domain.information;
 
 import org.springframework.data.domain.Sort;
-import pl.tomwodz.nursery.domain.information.dto.InformationResponseDto;
 
 import java.util.List;
 import java.util.Map;
@@ -9,9 +8,10 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class InformationRepositoryTestImpl implements InformationRepository {
+public class InformationRepositoryTestImpl implements InformationRepository{
 
     Map<Long, Information> inMemoryDatabase = new ConcurrentHashMap<>();
+
     Random random = new Random();
 
     @Override
@@ -20,7 +20,6 @@ public class InformationRepositoryTestImpl implements InformationRepository {
                 .stream()
                 .toList();
     }
-
 
     @Override
     public Optional<Information> findById(Long id) {

@@ -6,7 +6,7 @@ import pl.tomwodz.nursery.domain.user.dto.SimpleUserQueryDto;
 
 class ChildFactory {
 
-    Child mapFromChildReguestDtoToChild(ChildRequestDto dto) {
+    Child mapFromChildRequestDtoToChild(ChildRequestDto dto) {
         return new Child (
                 dto.name(),
                 dto.surname(),

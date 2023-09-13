@@ -53,7 +53,7 @@ public class ChildFacade {
 
     public ChildResponseDto saveChild(ChildRequestDto childRequestDto){
         validatorFacade.validationChild(childRequestDto);
-        Child child = childFactory.mapFromChildReguestDtoToChild(childRequestDto);
+        Child child = childFactory.mapFromChildRequestDtoToChild(childRequestDto);
         Child savedChild = this.childRepository.save(child);
         return ChildMapper.mapFromChildToChildResponseDto(savedChild);
     }
@@ -61,7 +61,7 @@ public class ChildFacade {
     public ChildResponseDto updateChild(Long id, ChildRequestDto childRequestDto){
         validatorFacade.validationChild(childRequestDto);
         this.existsById(id);
-        Child child = childFactory.mapFromChildReguestDtoToChild(childRequestDto);
+        Child child = childFactory.mapFromChildRequestDtoToChild(childRequestDto);
         child.setId(id);
         Child savedChild = this.childRepository.save(child);
         return ChildMapper.mapFromChildToChildResponseDto(savedChild);

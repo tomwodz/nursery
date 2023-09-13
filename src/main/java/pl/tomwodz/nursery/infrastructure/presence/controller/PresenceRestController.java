@@ -16,6 +16,7 @@ public class PresenceRestController {
 
     private final PresenceFacade presenceFacade;
 
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<PresenceResponseDto> getPresenceById(@PathVariable Long id){
         return ResponseEntity.ok(this.presenceFacade.findPresenceById(id));

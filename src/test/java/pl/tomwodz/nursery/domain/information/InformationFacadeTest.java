@@ -16,7 +16,9 @@ import static org.mockito.Mockito.mock;
 
 class InformationFacadeTest {
     InformationRepository informationRepository = new InformationRepositoryTestImpl();
+
     ValidatorFacade validatorFacade = mock(ValidatorFacade.class);
+
 
     InformationFacade informationFacade = new InformationConfiguration().
             informationFacade(informationRepository, validatorFacade
@@ -59,7 +61,7 @@ class InformationFacadeTest {
         informationFacade.deleteInformation(informationResponseDto.id());
 
         //then
-        assertThat(informationFacade.findAllInformations()).size().isEqualTo(0);
+        assertThat(informationFacade.findAllInformations().size()).isEqualTo(0);
 
     }
 
