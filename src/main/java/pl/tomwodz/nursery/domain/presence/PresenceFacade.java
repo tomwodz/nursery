@@ -93,7 +93,7 @@ public class PresenceFacade {
 
     private void existsById(Long id){
         if(!this.presenceRepository.existsById(id)){
-            throw new InformationNotFoundException("not found presence id: " + id);
+            throw new PresenceNotFoundException("not found presence id: " + id);
         }
     }
 }

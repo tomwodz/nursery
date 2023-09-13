@@ -90,6 +90,16 @@ VALUES
 ('Justyna', 'Kowalska', '2022-12-03', 3, 4);
 
 INSERT INTO
+    tchild (name, surname, day_birth, group_children_id, parent_id)
+VALUES
+    ('Iza', 'Kowalska', '2021-12-03', 3, 4);
+
+INSERT INTO
+    tchild (name, surname, day_birth, group_children_id, parent_id)
+VALUES
+    ('Arek', 'Kowalski', '2020-12-03', 3, 4);
+
+INSERT INTO
 tinformation (id, title, content, date_creation, author_id)
 VALUES
 (nextval('tinformation_id_seq'), 'Rusza rekrutacja do żłobka', 'Prosimy o składanie dokumnetów do...', '2023-08-30 11:21:07.517650', 1);

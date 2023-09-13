@@ -88,12 +88,12 @@ public class PresenceViewController {
         }
 
         if (this.sessionData.isAdminOrEmployee()) {
-            this.presenceFacade.savePresence(
+            this.presenceFacade.savePresence(/*
                     PresenceRequestDto.builder()
                             .id(requestDto.id())
                             .dataTimeEntry(requestDto.dataTimeEntry())
                             .dataTimeDeparture(requestDto.dataTimeDeparture())
-                            .build());
+                            .build()*/requestDto);
             return "redirect:/view/presence/child/";
         }
         return "redirect:/view/login";
