@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.tomwodz.nursery.domain.child.ChildFacade;
 import pl.tomwodz.nursery.domain.child.dto.ChildResponseDto;
 import pl.tomwodz.nursery.domain.groupchildren.GroupChildrenFacade;
+import pl.tomwodz.nursery.domain.user.User;
 import pl.tomwodz.nursery.domain.user.UserFacade;
 import pl.tomwodz.nursery.domain.user.dto.UpdateUserRequestDto;
 import pl.tomwodz.nursery.domain.user.dto.UserRequestDto;
@@ -97,6 +98,7 @@ public class UserViewController {
         UserResponseDto userBox = this.userFacade.findUserById(id);
         model.addAttribute("info", this.sessionData.getInfo());
         model.addAttribute("userModel", this.userFacade.findUserById(id));
+        model.addAttribute("roleModel", User.Role.values());
         if (this.sessionData.isAdmin() ||
                 (this.sessionData.isEmployee() && !userBox.role().equals(EMPLOYEE)) ||
                 (this.sessionData.isId() == userBox.id())) {
@@ -118,6 +120,7 @@ public class UserViewController {
                 (this.sessionData.isId() == userBox.id())) {
             this.userFacade.updateUser(id, updateUserRequestDto);
             model.addAttribute("userModel", this.userFacade.findUserById(id));
+            model.addAttribute("roleModel", User.Role.values());
             this.sessionData.setInfo("Zaktualizowano użytkownika");
             return "edit-user";
         } }

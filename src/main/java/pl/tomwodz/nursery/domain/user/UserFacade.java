@@ -10,6 +10,8 @@ import pl.tomwodz.nursery.domain.user.dto.UserResponseDto;
 import pl.tomwodz.nursery.domain.validator.ValidatorFacade;
 import pl.tomwodz.nursery.infrastructure.user.controller.error.UserNotFoundException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +43,7 @@ public class UserFacade {
     public UserResponseDto findUserByChildId(Long id){
         return this.userRepository.findFirstByChild_Id(id)
                 .map(UserMapper::fromUserToUserResponseDto)
-                .orElseThrow(()-> new UserNotFoundException("nor found user id: " + id));
+                .orElseThrow(()-> new UserNotFoundException("not found user id: " + id));
     }
 
     public List<UserResponseDto> findAllUsersByRoleParent(){
@@ -68,14 +70,24 @@ public class UserFacade {
     }
 
     public UserResponseDto updateUser(Long id, UpdateUserRequestDto updateUserRequestDto){
+        this.existsById(id);
         validatorFacade.validationUserToUpdate(updateUserRequestDto);
         Optional<User> userFromDb = this.userRepository.findById(id);
-        if(userFromDb.isEmpty()){
-            new UserNotFoundException("not found user id: " + id);
-        }
         User user = this.userFactory.mapFromUpdateUserRequestDtoToUser(id, updateUserRequestDto);
+        if(updateUserRequestDto.role() == null){
+            user.setRole(userFromDb.get().getRole());
+        } else {
+            if(updateUserRequestDto.role().equals("EMPLOYEE")){
+                user.setRole(User.Role.EMPLOYEE);
+            }
+            if(updateUserRequestDto.role().equals("PARENT")){
+                user.setRole(User.Role.PARENT);
+            }
+            if(updateUserRequestDto.role().equals("ADMIN")){
+                user.setRole(User.Role.ADMIN);
+            }
+        }
         user.setLogin(userFromDb.get().getLogin());
-        user.setRole(userFromDb.get().getRole());
         user.setPassword(userFromDb.get().getPassword());
         user.setActive(userFromDb.get().isActive());
         User userSaved = this.userRepository.save(user);
@@ -91,7 +103,7 @@ public class UserFacade {
                 .build();
     }
 
-    public void changeActiveUserById(Long id){
+    public boolean changeActiveUserById(Long id){
         Optional<User> userBox = this.userRepository.findById(id);
         if(userBox.isPresent()){
             if(userBox.get().isActive() == true){
@@ -101,6 +113,7 @@ public class UserFacade {
             }
         }
         this.userRepository.save(userBox.get());
+        return userBox.get().isActive();
     }
 
     private void existsById(Long id){

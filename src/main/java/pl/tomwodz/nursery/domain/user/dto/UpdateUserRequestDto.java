@@ -33,5 +33,8 @@ public record UpdateUserRequestDto(
 
         @NotNull(message = "city must not be null")
         @Size(min = 3, max = 24, message = "city must must have  3-24 chars")
-        String city) {
+        String city,
+        String role
+
+) {
 }

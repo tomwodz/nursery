@@ -24,12 +24,12 @@
         <input type="text" name="street" id="street" class="input" placeholder="Ulica" th:field="*{userModel.street}">
         <input type="text" name="zipCode" id="zipCode" class="input" placeholder="Kod pocztowy" th:field="*{userModel.zipCode}">
         <input type="text" name="city" id="city" class="input" placeholder="Miasto" th:field="*{userModel.city}">
-     <!--       <select  th:if="${admin}" class="select" th:field="*{userModel.role}">
-                <option th:each="role : ${userModel.getTypeOfRole()}"
+            <select  th:if="${admin}" class="select" th:field="*{userModel.role}">
+                <option th:each="role : ${roleModel}"
                         th:value="${role}"
                         th:text="${role}">
                 </option>
-            </select>-->
+            </select>
         <div>
             <input type="submit" value="Edytuj użytkownika" class="btn-update">
         </div>
