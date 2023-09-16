@@ -1,13 +1,10 @@
 package pl.tomwodz.nursery.domain.user;
 
 import org.junit.jupiter.api.Test;
-import pl.tomwodz.nursery.domain.information.dto.InformationRequestDto;
-import pl.tomwodz.nursery.domain.information.dto.InformationResponseDto;
 import pl.tomwodz.nursery.domain.user.dto.UpdateUserRequestDto;
 import pl.tomwodz.nursery.domain.user.dto.UserRequestDto;
 import pl.tomwodz.nursery.domain.user.dto.UserResponseDto;
 import pl.tomwodz.nursery.domain.validator.ValidatorFacade;
-import pl.tomwodz.nursery.infrastructure.information.controller.error.InformationNotFoundException;
 import pl.tomwodz.nursery.infrastructure.user.controller.error.UserNotFoundException;
 
 import static org.assertj.core.api.Assertions.assertThat;

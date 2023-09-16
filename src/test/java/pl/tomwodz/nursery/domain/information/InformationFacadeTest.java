@@ -29,12 +29,7 @@ class InformationFacadeTest {
             .title("Test")
             .content("test")
             .build();
-    @AfterEach
-    void cleanUp(){
-        informationFacade.findAllInformations()
-                .stream()
-                .forEach(i -> informationFacade.deleteInformation(i.id()));
-    }
+
     @Test
     void shouldBeAbleToAddInformationToRepository() {
 

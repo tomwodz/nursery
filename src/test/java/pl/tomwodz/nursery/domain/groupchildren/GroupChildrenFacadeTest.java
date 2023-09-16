@@ -32,12 +32,6 @@ class GroupChildrenFacadeTest {
 
     GroupChildrenRequestDto groupChildrenRequestDto = new GroupChildrenRequestDto("Test");
 
-    @AfterEach
-    void cleanUp(){
-        groupChildrenFacade.findAllGroupsChildren()
-                .stream()
-                .forEach(g -> groupChildrenFacade.deleteGroupChildren(g.id()));
-    }
     @Test
     void shouldBeAbleToAddGroupChildrenToRepository() {
 

@@ -75,12 +75,12 @@ class ChildFacadeTest {
         ChildResponseDto childResponseFounded = childFacade.findChildById(childResponseDto.id());
 
         //then
-        assertThat(childResponseDto.id()).isNotNull();
-        assertThat(childResponseDto.name()).isEqualTo(childRequestDto.name());
-        assertThat(childResponseDto.surname()).isEqualTo(childRequestDto.surname());
-        assertThat(childResponseDto.groupChildren_id()).isEqualTo(childRequestDto.groupChildren_id());
-        assertThat(childResponseDto.user_id()).isEqualTo(childRequestDto.user_id());
-        assertThat(childResponseDto.dayBirth()).isEqualTo(childRequestDto.dayBirth());
+        assertThat(childResponseFounded.id()).isNotNull();
+        assertThat(childResponseFounded.name()).isEqualTo(childRequestDto.name());
+        assertThat(childResponseFounded.surname()).isEqualTo(childRequestDto.surname());
+        assertThat(childResponseFounded.groupChildren_id()).isEqualTo(childRequestDto.groupChildren_id());
+        assertThat(childResponseFounded.user_id()).isEqualTo(childRequestDto.user_id());
+        assertThat(childResponseFounded.dayBirth()).isEqualTo(childRequestDto.dayBirth());
         assertThat(childFacade.findAllChildren().size()).isEqualTo(1);
 
     }
