@@ -1,6 +1,7 @@
 package pl.tomwodz.nursery.domain.presence;
 
 import org.junit.jupiter.api.Test;
+import pl.tomwodz.nursery.domain.child.ChildFacade;
 import pl.tomwodz.nursery.domain.presence.dto.PresenceRequestDto;
 import pl.tomwodz.nursery.domain.presence.dto.PresenceResponseDto;
 import pl.tomwodz.nursery.infrastructure.presence.controller.error.PresenceNotFoundException;
@@ -10,11 +11,14 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 
 class PresenceFacadeTest {
 
     PresenceRepository presenceRepository = new PresenceRepositoryTestImpl();
-    PresenceFacade presenceFacade = new PresenceConfiguration().presenceFacade(presenceRepository);
+
+    ChildFacade childFacade = mock(ChildFacade.class);
+    PresenceFacade presenceFacade = new PresenceConfiguration().presenceFacade(presenceRepository, childFacade);
 
     PresenceRequestDto presenceRequestDto = PresenceRequestDto.builder()
             .dataTimeEntry(LocalDateTime.now())
