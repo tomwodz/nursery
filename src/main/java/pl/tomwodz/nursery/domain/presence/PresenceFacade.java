@@ -4,10 +4,11 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import pl.tomwodz.nursery.domain.child.ChildFacade;
+import pl.tomwodz.nursery.domain.child.dto.ChildResponseDto;
 import pl.tomwodz.nursery.domain.presence.dto.DeletePresenceResponseDto;
 import pl.tomwodz.nursery.domain.presence.dto.PresenceRequestDto;
 import pl.tomwodz.nursery.domain.presence.dto.PresenceResponseDto;
-import pl.tomwodz.nursery.infrastructure.information.controller.error.InformationNotFoundException;
 import pl.tomwodz.nursery.infrastructure.presence.controller.error.PresenceNotFoundException;
 
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ public class PresenceFacade {
 
     private final PresenceRepository presenceRepository;
     private final PresenceFactory presenceFactory;
+    private final ChildFacade childFacade;
 
     public PresenceResponseDto findPresenceById(Long id) {
         return this.presenceRepository.findById(id)
@@ -91,9 +93,19 @@ public class PresenceFacade {
                 .build();
     }
 
+    public void saveAutoPresences() {
+        List<ChildResponseDto> children = this.childFacade.findAllChildren();
+        List<Presence> presencesToSave = children.stream()
+                .map(ch -> presenceFactory.mapFromChildIdToAutoPresence(ch.id()))
+                .toList();
+        presencesToSave.stream()
+                .forEach(p -> presenceRepository.save(p));
+    }
+
     private void existsById(Long id){
         if(!this.presenceRepository.existsById(id)){
             throw new PresenceNotFoundException("not found presence id: " + id);
         }
     }
+
 }

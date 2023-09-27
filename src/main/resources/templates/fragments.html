@@ -5,10 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<header class="header" th:fragment="logo">
-    <img src="/images/logo.jpg" class="img-header" alt="Piękne kwiaty">
-    <p><strong>nursery</strong><p>
-    <p>Tomasz Wodziński</p>
+<header th:fragment="header">
+    <div class="header-img">
+        <div class="header-text">
+            <h1>nursery</h1>
+            <p>tomwodz - Tomasz Wodziński</p>
+        </div>
+        <div class="header-bg"></div>
+    </div>
 </header>
 <nav class="nav" th:fragment="nav">
     <div>
