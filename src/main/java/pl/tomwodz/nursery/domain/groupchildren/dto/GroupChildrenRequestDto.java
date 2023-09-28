@@ -6,8 +6,8 @@ import lombok.Builder;
 
 @Builder
 public record GroupChildrenRequestDto(
-        @NotNull(message = "name must not be null")
-        @Size(min = 3, max = 20, message = "name must must have 3-20 chars")
+        @NotNull(message = "{groupChildren.not.null}")
+        @Size(min = 3, max = 20, message = "{groupChildren.name.size.3-20}")
         String name
 ) {
 }
