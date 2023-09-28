@@ -7,33 +7,34 @@ import lombok.Builder;
 @Builder
 public record UpdateUserRequestDto(
 
-        @NotNull(message = "name must not be null")
-        @Size(min = 3, max = 50, message = "name must must have 3-50 chars")
+        @NotNull(message = "{name.not.null}")
+        @Size(min = 3, max = 50, message = "{name.size3-50}")
         String name,
 
-        @NotNull(message = "surname must not be null")
-        @Size(min = 3, max = 50, message = "surname must must have 3-50 chars")
+        @NotNull(message = "{surname.not.null}")
+        @Size(min = 3, max = 50, message = "{surname.size3-50}")
         String surname,
 
-        @NotNull(message = "email must not be null")
-        @Size(min = 3, max = 50, message = "email must must have 3-50 chars")
+        @NotNull(message = "{email.not.null}")
+        @Size(min = 3, max = 50, message = "{email.size3-50}")
         String email,
 
-        @NotNull(message = "phone number must not be null")
-        @Size(min = 11, max = 11, message = "phone number must must have 11 chars")
+        @NotNull(message = "{phoneNumber.not.null}")
+        @Size(min = 11, max = 11, message = "{phoneNumber.size11}")
         String phoneNumber,
 
-        @NotNull(message = "street must not be null")
-        @Size(min = 3, max = 50, message = "street must must have 3-24 chars")
+        @NotNull(message = "{street.not.null}")
+        @Size(min = 11, max = 11, message = "{street.size3-24}")
         String street,
 
-        @NotNull(message = "zipCode must not be null")
-        @Size(min = 6, max = 6, message = "zipCode must must have 6 chars")
+        @NotNull(message = "{zipCode.not.null}")
+        @Size(min = 11, max = 11, message = "{zipCode.size6}")
         String zipCode,
 
-        @NotNull(message = "city must not be null")
-        @Size(min = 3, max = 24, message = "city must must have  3-24 chars")
+        @NotNull(message = "{city.not.null}")
+        @Size(min = 11, max = 11, message = "{city.size3-24}")
         String city,
+        @NotNull(message = "{role.not.null}")
         String role
 
 ) {
